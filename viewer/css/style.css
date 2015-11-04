@@ -1,0 +1,404 @@
+body {
+  background-color: #f5f5f5!important;
+}
+.topbar {
+  background-color: white!important;
+  border-bottom: 1px solid #e5e5e5;
+  position: relative;
+  height: 41px;
+}
+#logoBlock {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-image: url('../img/logo/weave-128.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+h3 {
+  font-size: 18px!important;
+  margin-top: 0px!important;
+  margin-left: 50px!important;
+  line-height: 40px!important;
+}
+.icon {
+  width: 23px;
+  height: 23px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position:center;
+  margin-left: 5px;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+  .sample {
+    background-image: url('../img/sample.png');
+  }
+  .folder {
+    background-image: url('../img/folder.png');
+  }
+  .folder-open {
+    background-image: url('../img/folder_open.png');
+  }
+  .run {
+    background-image: url('../img/run.png');
+  }
+  .disable {
+    opacity: .65;
+    cursor: not-allowed;
+  }
+
+code {
+  padding: 2px 4px;
+  color: #d14;
+  background-color: #f7f7f9;
+  border: 1px solid #e1e1e8;
+  white-space: nowrap;
+  position: relative;
+  float: right;
+  right: 20px;
+  top: -40px;
+}
+
+.devicePanel {
+  overflow: hidden!important;
+  margin: 5px;
+  padding: 0px;
+  font-size: 14px;
+  color: #555;
+  border-radius: 4px;
+}
+
+.devices {
+  max-height: 80%;
+}
+.device-container {
+  border: 1px solid #ccc!important;
+}
+  .deviceType {
+    font-weight: bold;
+  }
+  .deviceName {
+  }
+
+  .panel {
+    margin-bottom: 5px!important;
+    height: 210px!important;
+    padding-right: 0px!important;
+  }
+  .panel .row {
+    padding: 10px;
+    height: 210px !important;
+  }
+
+  .panel .info {
+  }
+    .panel .info .status {
+      margin-top: 5px;
+      min-height: 14px;
+      color: #a50;
+      font-size: 12px;
+      top: -5px;
+    }
+
+  .deviceSkin {
+    width: 100%;
+    height: 180px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position:center;
+  }
+    .UI {
+      background-color: black;
+      position: relative;
+      margin: 0 auto;
+    }
+    .UI img {
+      width: 95%;
+    }
+    .callStart {
+      background-image: url('../img/phonecall.jpg');
+      background-size: 70%;
+      background-repeat: no-repeat;
+      background-position:center;
+    }
+    .phoneSkin {
+      background-image: url('../img/device/nexus5.png');
+    }
+      .phoneSkin .UI {
+        width: 80px;
+        height: 141px;
+        top: 17px;
+      }
+      .phoneSkin .landscape {
+        width: 141px;
+        height: 80px;
+        top: 46px;
+        left: -1px;
+      }
+      .phoneSkin .activeUI {
+        background-color: white!important;
+      }
+    .tabletSkin {
+      background-image: url('../img/device/nexus9.png');
+    }
+      .tabletSkin .UI {
+        width: 106px;
+        height: 141px;
+        top: 19px;
+      }
+      .tabletSkin .landscape {
+        width: 141px;
+        height: 80px;
+        top: 46px;
+        left: -1px;
+      }
+      .tabletSkin .activeUI {
+        background-color: white!important;
+      }
+    .watchSkin {
+      background-image: url('../img/device/wear.png');
+    }
+      .watchSkin .UI {
+        width: 132px;
+        height: 132px;
+        top: 24px;
+      }
+      .watchSkin .UI * {
+        width: 90%;
+        height: 45%;
+        margin-left: 8px;
+        text-align: left;
+        vertical-align: text-bottom;
+        padding-top: 30px;
+        background-size: 40px 40px;
+        background-repeat: no-repeat;
+        background-position:right;
+        background-color: white;
+        font-size: 14px!important;
+      }
+      .watchSkin .UI button {
+        margin-top: 50%;
+        padding-top: 30px;
+        border: 0px;
+      }
+      .watchSkin .UI img {
+        margin-top: 50%;
+        padding-top: 30px;
+        border: 0px;
+      }
+      .watchSkin .UI p {
+        position: absolute;
+        bottom: 0px;
+        padding-left: 4px;
+        padding-top: 10px;
+      }
+      .watchSkin .UI .prev {
+        background-image: url('../img/icon/prev.bmp');
+      }
+      .watchSkin .UI .next {
+        background-image: url('../img/icon/next.bmp');
+      }
+      .watchSkin .UI .play {
+        background-image: url('../img/icon/play.bmp');
+      }
+      .watchSkin .UI .GoogleMaps {
+        background-image: url('../img/icon/GoogleMaps.jpg');
+      }
+      .watchSkin .UI .Gmail {
+        background-image: url('../img/icon/Gmail.png');
+      }
+      .watchSkin .UI .Calendar {
+        background-image: url('../img/icon/Calendar.png');
+      }
+      .watchSkin .activeUI {
+        background-color: black!important;
+      }
+    .glassSkin {
+      background-color: black;
+      width: 224px;
+      height: 126px;
+      margin:0 auto;
+      margin-top: 20px;
+      color: white;
+      font-size: 40px!important;
+      /* 640x360 = 16:9 */
+    }
+      .glassSkin .UI{
+        width: 224px;
+        height: 126px;
+      }
+      .glassSkin .UI * {
+        text-align: center;
+        padding-top: 10px;
+        font-size: 20px!important;
+      }
+      .glassSkin .UI button {
+        padding-left: 10px;
+      }
+      .glassSkin .activeUI {
+      }
+
+  .panel .events {
+    padding-left: 5px;
+    margin-left: -25px!important;
+    max-height: 200px;
+  }
+    .manualEvts {
+      padding: 5px;
+      width: 150%;
+    }
+    .manualEvts button {
+      margin-bottom: 3px;
+      position: relative;
+      float: left;
+      margin-left: 2px;
+      font-size: 12px;
+    }
+    .live {
+      font-style: italic;
+      color: red;
+    }
+    .evt {
+      background-size: 70%;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 36px;
+      height: 27px;
+    }
+    .evt_swipeLeft {
+      background-image: url('../img/left.png')!important;
+    }
+    .evt_swipeRight {
+      background-image: url('../img/right.png')!important;
+    }
+    .evt_swipeUp {
+      background-image: url('../img/up.png')!important;
+    }
+    .evt_swipeDown {
+      background-image: url('../img/down.png')!important;
+    }
+    .evt_rotateCW {
+      background-image: url('../img/rotateCW.png')!important;
+    }
+    .evt_rotateCCW {
+      background-image: url('../img/rotateCCW.png')!important;
+    }
+    .evt_listen {
+      background-image: url('../img/listen.png')!important;
+    }
+    .evt_talk {
+      background-image: url('../img/talk.png')!important;
+    }
+    .evt_shake {
+      background-image: url('../img/shake.png')!important;
+    }
+  .device_delete {
+    right: 0px;
+    top: -210px;
+    width: 30px;
+    height: 30px;
+    position: relative;
+    background-image: url('../img/close.png')!important;
+    background-repeat: no-repeat!important;
+    background-position: center!important;
+  }
+
+button span {
+  color: darkgrey;
+  font-size: 12px;
+  position: relative;
+  vertical-align: middle;
+}
+
+.app {
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+}
+
+.appGmail {
+  background-image: url('../img/app/gmail.png');
+}
+
+.appGoogleMaps {
+  background-image: url('../img/app/maps.png');
+}
+
+.appPhotos {
+  background-image: url('../img/app/photos.png');
+}
+
+.appCalendar {
+  background-image: url('../img/app/calendar.png');
+}
+
+.logPanel {
+  position: fixed;
+  bottom: 10px;
+  width: 100%;
+  height: 140px;
+}
+  .logPanel .panel {
+    margin: 5px;
+    bottom: 0px;
+    height: 100%!important;
+  }
+  .console {
+    height: 100%;
+    color: grey;
+    overflow-y: auto;
+    font-family: "source-code-pro", Consolas, monospace !important;
+    font-size: 12px;
+    padding: 6px!important;
+  }
+  .log_v {
+  }
+  .log_d {
+    color: blue;
+  }
+  .log_i {
+    color: green;
+  }
+  .log_w {
+    color: DarkOrange;
+  }
+  .log_e {
+    color: red;
+  }
+
+dialog {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  padding: 0;
+  min-width: 180px;
+}
+  dialog::backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+
+  dialog .dlg_content {
+    padding: 10pt;
+  }
+
+  dialog .dlg_content button {
+    margin-left: 5pt;
+  }
+
+  dialog .dlg_close {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    background-image: url('../img/close.png')!important;
+
+  }

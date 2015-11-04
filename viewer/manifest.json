@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+  "name": "Weave Plugin",
+  "version": "0.1",
+  "icons": { "16": "img/logo/weave-16.png", "128": "img/logo/weave-128.png" },
+  "permissions": [
+    {"socket": [
+      "tcp-connect",
+      "tcp-listen"]},
+    {"fileSystem": [
+      "write", "retainEntries", "directory"]}
+  ],
+  "app": {
+    "background": {
+      "scripts": ["background.js"]
+    }
+  }
+}

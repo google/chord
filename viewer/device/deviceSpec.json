@@ -1,0 +1,1417 @@
+{
+  "deviceCapabilities": {
+    "phone_nexus5": {
+      "showable": {
+        "size": "normal",
+        "shape": "16:9",
+        "glanceability": "low",
+        "interruption": "high",
+        "privacy": "low"
+      },
+      "shakable": {
+        "size": "medium",
+        "on": [
+          "shake"
+        ]
+      },
+      "rotatable": {
+        "size": "medium",
+        "on": [
+          "rotateLandscape",
+          "rotatePortrait"
+        ]
+      },
+      "touchable": {
+        "size": "normal",
+        "on": [
+          "tap",
+          "doubleTap",
+          "longTap",
+          "swipeLeft",
+          "swipeRight",
+          "swipeUp",
+          "swipeDown"
+        ]
+      },
+      "keyable": {
+        "method": "screen",
+        "on": [
+          "keypress"
+        ]
+      },
+      "phoneable": {
+        "privacy": "high",
+        "on": [
+          "callStart",
+          "callEnd"
+        ]
+      },
+      "speakable": {
+        "privacy": "low",
+        "on": [
+          "playStart",
+          "playEnd"
+        ]
+      },
+      "hearable": {
+        "on": [
+          "listen",
+          "listenEnd"
+        ]
+      },
+      "recordable": {
+        "on": [
+          "recordStart",
+          "recordEnd"
+        ]
+      },
+      "locationTrackable": {
+        "on": [
+          "locationChange"
+        ]
+      }
+    },
+    "phone_nexus6": {
+      "showable": {
+        "size": "normal",
+        "shape": "16:9",
+        "glanceability": "low",
+        "interruption": "high",
+        "privacy": "low"
+      },
+      "shakable": {
+        "size": "medium",
+        "on": [
+          "shake"
+        ]
+      },
+      "rotatable": {
+        "size": "medium",
+        "on": [
+          "rotateLandscape",
+          "rotatePortrait"
+        ]
+      },
+      "touchable": {
+        "size": "normal",
+        "on": [
+          "tap",
+          "doubleTap",
+          "longTap",
+          "swipeLeft",
+          "swipeRight",
+          "swipeUp",
+          "swipeDown"
+        ]
+      },
+      "keyable": {
+        "method": "screen",
+        "on": [
+          "keypress"
+        ]
+      },
+      "phoneable": {
+        "privacy": "high",
+        "on": [
+          "callStart",
+          "callEnd"
+        ]
+      },
+      "speakable": {
+        "privacy": "low",
+        "on": [
+          "playStart",
+          "playEnd"
+        ]
+      },
+      "hearable": {
+        "on": [
+          "listen",
+          "listenEnd"
+        ]
+      },
+      "recordable": {
+        "on": [
+          "recordStart",
+          "recordEnd"
+        ]
+      },
+      "locationTrackable": {
+        "on": [
+          "locationChange"
+        ]
+      }
+    },
+    "phone_iphon6": {
+      "showable": {
+        "size": "normal",
+        "shape": "16:9",
+        "glanceability": "low",
+        "interruption": "high",
+        "privacy": "low"
+      },
+      "shakable": {
+        "size": "medium",
+        "on": [
+          "shake"
+        ]
+      },
+      "rotatable": {
+        "size": "medium",
+        "on": [
+          "rotateLandscape",
+          "rotatePortrait"
+        ]
+      },
+      "touchable": {
+        "size": "normal",
+        "on": [
+          "tap",
+          "doubleTap",
+          "longTap",
+          "swipeLeft",
+          "swipeRight",
+          "swipeUp",
+          "swipeDown"
+        ]
+      },
+      "keyable": {
+        "method": "screen",
+        "on": [
+          "keypress"
+        ]
+      },
+      "phoneable": {
+        "privacy": "high",
+        "on": [
+          "callStart",
+          "callEnd"
+        ]
+      },
+      "speakable": {
+        "privacy": "low",
+        "on": [
+          "playStart",
+          "playEnd"
+        ]
+      },
+      "hearable": {
+        "on": [
+          "listen",
+          "listenEnd"
+        ]
+      },
+      "recordable": {
+        "on": [
+          "recordStart",
+          "recordEnd"
+        ]
+      },
+      "locationTrackable": {
+        "on": [
+          "locationChange"
+        ]
+      }
+    },
+    "phone_lumia520": {
+      "showable": {
+        "size": "normal",
+        "shape": "16:9",
+        "glanceability": "low",
+        "interruption": "high",
+        "privacy": "low"
+      },
+      "shakable": {
+        "size": "medium",
+        "on": [
+          "shake"
+        ]
+      },
+      "rotatable": {
+        "size": "medium",
+        "on": [
+          "rotateLandscape",
+          "rotatePortrait"
+        ]
+      },
+      "touchable": {
+        "size": "normal",
+        "on": [
+          "tap",
+          "doubleTap",
+          "longTap",
+          "swipeLeft",
+          "swipeRight",
+          "swipeUp",
+          "swipeDown"
+        ]
+      },
+      "keyable": {
+        "method": "screen",
+        "on": [
+          "keypress"
+        ]
+      },
+      "phoneable": {
+        "privacy": "high",
+        "on": [
+          "callStart",
+          "callEnd"
+        ]
+      },
+      "speakable": {
+        "privacy": "low",
+        "on": [
+          "playStart",
+          "playEnd"
+        ]
+      },
+      "hearable": {
+        "on": [
+          "listen",
+          "listenEnd"
+        ]
+      },
+      "recordable": {
+        "on": [
+          "recordStart",
+          "recordEnd"
+        ]
+      },
+      "locationTrackable": {
+        "on": [
+          "locationChange"
+        ]
+      }
+    },
+    "phone_galaxy-s5": {
+      "showable": {
+        "size": "normal",
+        "shape": "16:9",
+        "glanceability": "low",
+        "interruption": "high",
+        "privacy": "low"
+      },
+      "shakable": {
+        "size": "medium",
+        "on": [
+          "shake"
+        ]
+      },
+      "rotatable": {
+        "size": "medium",
+        "on": [
+          "rotateLandscape",
+          "rotatePortrait"
+        ]
+      },
+      "touchable": {
+        "size": "normal",
+        "on": [
+          "tap",
+          "doubleTap",
+          "longTap",
+          "swipeLeft",
+          "swipeRight",
+          "swipeUp",
+          "swipeDown"
+        ]
+      },
+      "keyable": {
+        "method": "screen",
+        "on": [
+          "keypress"
+        ]
+      },
+      "phoneable": {
+        "privacy": "high",
+        "on": [
+          "callStart",
+          "callEnd"
+        ]
+      },
+      "speakable": {
+        "privacy": "low",
+        "on": [
+          "playStart",
+          "playEnd"
+        ]
+      },
+      "hearable": {
+        "on": [
+          "listen",
+          "listenEnd"
+        ]
+      },
+      "recordable": {
+        "on": [
+          "recordStart",
+          "recordEnd"
+        ]
+      },
+      "locationTrackable": {
+        "on": [
+          "locationChange"
+        ]
+      }
+    },
+    "phone_xperia-z3": {
+      "showable": {
+        "size": "normal",
+        "shape": "16:9",
+        "glanceability": "low",
+        "interruption": "high",
+        "privacy": "low"
+      },
+      "shakable": {
+        "size": "medium",
+        "on": [
+          "shake"
+        ]
+      },
+      "rotatable": {
+        "size": "medium",
+        "on": [
+          "rotateLandscape",
+          "rotatePortrait"
+        ]
+      },
+      "touchable": {
+        "size": "normal",
+        "on": [
+          "tap",
+          "doubleTap",
+          "longTap",
+          "swipeLeft",
+          "swipeRight",
+          "swipeUp",
+          "swipeDown"
+        ]
+      },
+      "keyable": {
+        "method": "screen",
+        "on": [
+          "keypress"
+        ]
+      },
+      "phoneable": {
+        "privacy": "high",
+        "on": [
+          "callStart",
+          "callEnd"
+        ]
+      },
+      "speakable": {
+        "privacy": "low",
+        "on": [
+          "playStart",
+          "playEnd"
+        ]
+      },
+      "hearable": {
+        "on": [
+          "listen",
+          "listenEnd"
+        ]
+      },
+      "recordable": {
+        "on": [
+          "recordStart",
+          "recordEnd"
+        ]
+      },
+      "locationTrackable": {
+        "on": [
+          "locationChange"
+        ]
+      }
+    },
+    "phone_galaxy-note4": {
+      "showable": {
+        "size": "normal",
+        "shape": "16:9",
+        "glanceability": "low",
+        "interruption": "high",
+        "privacy": "low"
+      },
+      "shakable": {
+        "size": "medium",
+        "on": [
+          "shake"
+        ]
+      },
+      "rotatable": {
+        "size": "medium",
+        "on": [
+          "rotateLandscape",
+          "rotatePortrait"
+        ]
+      },
+      "touchable": {
+        "size": "normal",
+        "on": [
+          "tap",
+          "doubleTap",
+          "longTap",
+          "swipeLeft",
+          "swipeRight",
+          "swipeUp",
+          "swipeDown"
+        ]
+      },
+      "keyable": {
+        "method": "screen",
+        "on": [
+          "keypress"
+        ]
+      },
+      "phoneable": {
+        "privacy": "high",
+        "on": [
+          "callStart",
+          "callEnd"
+        ]
+      },
+      "speakable": {
+        "privacy": "low",
+        "on": [
+          "playStart",
+          "playEnd"
+        ]
+      },
+      "hearable": {
+        "on": [
+          "listen",
+          "listenEnd"
+        ]
+      },
+      "recordable": {
+        "on": [
+          "recordStart",
+          "recordEnd"
+        ]
+      },
+      "locationTrackable": {
+        "on": [
+          "locationChange"
+        ]
+      }
+    },
+    "phone_galaxy-s6-edge": {
+      "showable": {
+        "size": "normal",
+        "shape": "16:9",
+        "glanceability": "low",
+        "interruption": "high",
+        "privacy": "low"
+      },
+      "shakable": {
+        "size": "medium",
+        "on": [
+          "shake"
+        ]
+      },
+      "rotatable": {
+        "size": "medium",
+        "on": [
+          "rotateLandscape",
+          "rotatePortrait"
+        ]
+      },
+      "touchable": {
+        "size": "normal",
+        "on": [
+          "tap",
+          "doubleTap",
+          "longTap",
+          "swipeLeft",
+          "swipeRight",
+          "swipeUp",
+          "swipeDown"
+        ]
+      },
+      "keyable": {
+        "method": "screen",
+        "on": [
+          "keypress"
+        ]
+      },
+      "phoneable": {
+        "privacy": "high",
+        "on": [
+          "callStart",
+          "callEnd"
+        ]
+      },
+      "speakable": {
+        "privacy": "low",
+        "on": [
+          "playStart",
+          "playEnd"
+        ]
+      },
+      "hearable": {
+        "on": [
+          "listen",
+          "listenEnd"
+        ]
+      },
+      "recordable": {
+        "on": [
+          "recordStart",
+          "recordEnd"
+        ]
+      },
+      "locationTrackable": {
+        "on": [
+          "locationChange"
+        ]
+      }
+    },
+    "phone_htc-one-m9": {
+      "showable": {
+        "size": "normal",
+        "shape": "16:9",
+        "glanceability": "low",
+        "interruption": "high",
+        "privacy": "low"
+      },
+      "shakable": {
+        "size": "medium",
+        "on": [
+          "shake"
+        ]
+      },
+      "rotatable": {
+        "size": "medium",
+        "on": [
+          "rotateLandscape",
+          "rotatePortrait"
+        ]
+      },
+      "touchable": {
+        "size": "normal",
+        "on": [
+          "tap",
+          "doubleTap",
+          "longTap",
+          "swipeLeft",
+          "swipeRight",
+          "swipeUp",
+          "swipeDown"
+        ]
+      },
+      "keyable": {
+        "method": "screen",
+        "on": [
+          "keypress"
+        ]
+      },
+      "phoneable": {
+        "privacy": "high",
+        "on": [
+          "callStart",
+          "callEnd"
+        ]
+      },
+      "speakable": {
+        "privacy": "low",
+        "on": [
+          "playStart",
+          "playEnd"
+        ]
+      },
+      "hearable": {
+        "on": [
+          "listen",
+          "listenEnd"
+        ]
+      },
+      "recordable": {
+        "on": [
+          "recordStart",
+          "recordEnd"
+        ]
+      },
+      "locationTrackable": {
+        "on": [
+          "locationChange"
+        ]
+      }
+    },
+    "tablet_nexus9": {
+      "showable": {
+        "size": "large",
+        "shape": "16:9",
+        "glanceability": "low",
+        "interruption": "low",
+        "privacy": "low"
+      },
+      "shakable": {
+        "size": "large",
+        "on": [
+          "shake"
+        ]
+      },
+      "rotatable": {
+        "size": "large",
+        "on": [
+          "rotateLandscape",
+          "rotatePortrait"
+        ]
+      },
+      "touchable": {
+        "size": "large",
+        "on": [
+          "tap",
+          "doubleTap",
+          "longTap",
+          "swipeLeft",
+          "swipeRight",
+          "swipeUp",
+          "swipeDown"
+        ]
+      },
+      "keyable": {
+        "method": "screen",
+        "on": [
+          "keypress"
+        ]
+      },
+      "speakable": {
+        "privacy": "low",
+        "on": [
+          "playStart",
+          "playEnd"
+        ]
+      },
+      "hearable": {
+        "on": [
+          "listen",
+          "listenEnd"
+        ]
+      },
+      "recordable": {
+        "on": [
+          "recordStart",
+          "recordEnd"
+        ]
+      },
+      "locationTrackable": {
+        "on": [
+          "locationChange"
+        ]
+      }
+    },
+    "tablet_galaxy-tab4": {
+      "showable": {
+        "size": "large",
+        "shape": "16:10",
+        "glanceability": "low",
+        "interruption": "low",
+        "privacy": "low"
+      },
+      "shakable": {
+        "size": "large",
+        "on": [
+          "shake"
+        ]
+      },
+      "rotatable": {
+        "size": "large",
+        "on": [
+          "rotateLandscape",
+          "rotatePortrait"
+        ]
+      },
+      "touchable": {
+        "size": "large",
+        "on": [
+          "tap",
+          "doubleTap",
+          "longTap",
+          "swipeLeft",
+          "swipeRight",
+          "swipeUp",
+          "swipeDown"
+        ]
+      },
+      "keyable": {
+        "method": "screen",
+        "on": [
+          "keypress"
+        ]
+      },
+      "speakable": {
+        "privacy": "low",
+        "on": [
+          "playStart",
+          "playEnd"
+        ]
+      },
+      "hearable": {
+        "on": [
+          "listen",
+          "listenEnd"
+        ]
+      },
+      "recordable": {
+        "on": [
+          "recordStart",
+          "recordEnd"
+        ]
+      },
+      "locationTrackable": {
+        "on": [
+          "locationChange"
+        ]
+      }
+    },
+    "tablet_surface3": {
+      "showable": {
+        "size": "large",
+        "shape": "3:2",
+        "glanceability": "low",
+        "interruption": "low",
+        "privacy": "low"
+      },
+      "shakable": {
+        "size": "large",
+        "on": [
+          "shake"
+        ]
+      },
+      "rotatable": {
+        "size": "large",
+        "on": [
+          "rotateLandscape",
+          "rotatePortrait"
+        ]
+      },
+      "touchable": {
+        "size": "large",
+        "on": [
+          "tap",
+          "doubleTap",
+          "longTap",
+          "swipeLeft",
+          "swipeRight",
+          "swipeUp",
+          "swipeDown"
+        ]
+      },
+      "keyable": {
+        "method": "screen",
+        "on": [
+          "keypress"
+        ]
+      },
+      "speakable": {
+        "privacy": "low",
+        "on": [
+          "playStart",
+          "playEnd"
+        ]
+      },
+      "hearable": {
+        "on": [
+          "listen",
+          "listenEnd"
+        ]
+      },
+      "recordable": {
+        "on": [
+          "recordStart",
+          "recordEnd"
+        ]
+      },
+      "locationTrackable": {
+        "on": [
+          "locationChange"
+        ]
+      }
+    },
+    "watch_lg-g-watch": {
+      "showable": {
+        "size": "small",
+        "shape": "square",
+        "glanceability": "high",
+        "interruption": "low",
+        "privacy": "low"
+      },
+      "shakable": {
+        "size": "small",
+        "on": [
+          "shake"
+        ]
+      },
+      "rotatable": {
+        "size": "small",
+        "on": [
+          "rotateCCW",
+          "rotateCW"
+        ]
+      },
+      "touchable": {
+        "size": "small",
+        "on": [
+          "tap",
+          "doubleTap",
+          "longTap",
+          "swipeLeft",
+          "swipeRight",
+          "swipeUp",
+          "swipeDown"
+        ]
+      },
+      "keyable": {
+        "method": "screen",
+        "on": [
+          "keypress"
+        ]
+      },
+      "phoneable": {
+        "privacy": "low",
+        "on": [
+          "callStart",
+          "callEnd"
+        ]
+      },
+      "speakable": {
+        "privacy": "low",
+        "on": [
+          "playStart",
+          "playEnd"
+        ]
+      },
+      "hearable": {
+        "on": [
+          "listen",
+          "listenEnd"
+        ]
+      },
+      "locationTrackable": {
+        "on": [
+          "locationChange"
+        ]
+      }
+    },
+    "watch_moto360": {
+      "showable": {
+        "size": "small",
+        "shape": "round",
+        "glanceability": "high",
+        "interruption": "low",
+        "privacy": "low"
+      },
+      "shakable": {
+        "size": "small",
+        "on": [
+          "shake"
+        ]
+      },
+      "rotatable": {
+        "size": "small",
+        "on": [
+          "rotateCCW",
+          "rotateCW"
+        ]
+      },
+      "touchable": {
+        "size": "small",
+        "on": [
+          "tap",
+          "doubleTap",
+          "longTap",
+          "swipeLeft",
+          "swipeRight",
+          "swipeUp",
+          "swipeDown"
+        ]
+      },
+      "keyable": {
+        "method": "screen",
+        "on": [
+          "keypress"
+        ]
+      },
+      "phoneable": {
+        "privacy": "low",
+        "on": [
+          "callStart",
+          "callEnd"
+        ]
+      },
+      "speakable": {
+        "privacy": "low",
+        "on": [
+          "playStart",
+          "playEnd"
+        ]
+      },
+      "hearable": {
+        "on": [
+          "listen",
+          "listenEnd"
+        ]
+      },
+      "locationTrackable": {
+        "on": [
+          "locationChange"
+        ]
+      }
+    },
+    "watch_samsung-gear-llive": {
+      "showable": {
+        "size": "small",
+        "shape": "square",
+        "glanceability": "high",
+        "interruption": "low",
+        "privacy": "low"
+      },
+      "shakable": {
+        "size": "small",
+        "on": [
+          "shake"
+        ]
+      },
+      "rotatable": {
+        "size": "small",
+        "on": [
+          "rotateCCW",
+          "rotateCW"
+        ]
+      },
+      "touchable": {
+        "size": "small",
+        "on": [
+          "tap",
+          "doubleTap",
+          "longTap",
+          "swipeLeft",
+          "swipeRight",
+          "swipeUp",
+          "swipeDown"
+        ]
+      },
+      "keyable": {
+        "method": "screen",
+        "on": [
+          "keypress"
+        ]
+      },
+      "phoneable": {
+        "privacy": "low",
+        "on": [
+          "callStart",
+          "callEnd"
+        ]
+      },
+      "speakable": {
+        "privacy": "low",
+        "on": [
+          "playStart",
+          "playEnd"
+        ]
+      },
+      "hearable": {
+        "on": [
+          "listen",
+          "listenEnd"
+        ]
+      },
+      "locationTrackable": {
+        "on": [
+          "locationChange"
+        ]
+      }
+    },
+    "watch_sony-smartwatch3": {
+      "showable": {
+        "size": "small",
+        "shape": "square",
+        "glanceability": "high",
+        "interruption": "low",
+        "privacy": "low"
+      },
+      "shakable": {
+        "size": "small",
+        "on": [
+          "shake"
+        ]
+      },
+      "rotatable": {
+        "size": "small",
+        "on": [
+          "rotateCCW",
+          "rotateCW"
+        ]
+      },
+      "touchable": {
+        "size": "small",
+        "on": [
+          "tap",
+          "doubleTap",
+          "longTap",
+          "swipeLeft",
+          "swipeRight",
+          "swipeUp",
+          "swipeDown"
+        ]
+      },
+      "keyable": {
+        "method": "screen",
+        "on": [
+          "keypress"
+        ]
+      },
+      "phoneable": {
+        "privacy": "low",
+        "on": [
+          "callStart",
+          "callEnd"
+        ]
+      },
+      "speakable": {
+        "privacy": "low",
+        "on": [
+          "playStart",
+          "playEnd"
+        ]
+      },
+      "hearable": {
+        "on": [
+          "listen",
+          "listenEnd"
+        ]
+      },
+      "locationTrackable": {
+        "on": [
+          "locationChange"
+        ]
+      }
+    },
+    "eyewear_google-glass": {
+      "showable": {
+        "size": "large",
+        "shape": "square",
+        "glanceability": "high",
+        "interruption": "high",
+        "privacy": "high"
+      },
+      "shakable": {
+        "size": "large",
+        "on": [
+          "shake"
+        ]
+      },
+      "touchable": {
+        "size": "small",
+        "on": [
+          "tap",
+          "doubleTap",
+          "longTap",
+          "swipeLeft",
+          "swipeRight",
+          "swipeUp",
+          "swipeDown"
+        ]
+      },
+      "keyable": {
+        "method": "pad",
+        "on": [
+          "keypress"
+        ]
+      },
+      "phoneable": {
+        "privacy": "high",
+        "on": [
+          "callStart",
+          "callEnd"
+        ]
+      },
+      "speakable": {
+        "privacy": "high",
+        "on": [
+          "playStart",
+          "playEnd"
+        ]
+      },
+      "hearable": {
+        "on": [
+          "listen",
+          "listenEnd"
+        ]
+      },
+      "recordable": {
+        "on": [
+          "recordStart",
+          "recordEnd"
+        ]
+      },
+      "locationTrackable": {
+        "on": [
+          "locationChange"
+        ]
+      }
+    },
+    "keyboard_mac-keyboard": {
+      "keyable": {
+        "method": "key",
+        "on": [
+          "keypress"
+        ]
+      }
+    },
+    "wristband_jawbone-up4": {
+      "showable": {
+        "size": "small",
+        "shape": "long",
+        "glanceability": "high",
+        "interruption": "low",
+        "privacy": "low"
+      },
+      "shakable": {
+        "size": "small",
+        "on": [
+          "shake"
+        ]
+      },
+      "touchable": {
+        "size": "small",
+        "on": [
+          "tap"
+        ]
+      },
+      "locationTrackable": {
+        "on": [
+          "locationChange"
+        ]
+      }
+    },
+    "wristband_fitbit-surge": {
+      "showable": {
+        "size": "small",
+        "shape": "square",
+        "glanceability": "high",
+        "interruption": "low",
+        "privacy": "low"
+      },
+      "shakable": {
+        "size": "small",
+        "on": [
+          "shake"
+        ]
+      },
+      "touchable": {
+        "size": "small",
+        "on": [
+          "tap"
+        ]
+      },
+      "locationTrackable": {
+        "on": [
+          "locationChange"
+        ]
+      }
+    },
+    "lightbulb_philips-lightbulb": {
+      "showable": {
+        "size": "small",
+        "shape": "dot",
+        "glanceability": "high",
+        "interruption": "low",
+        "privacy": "low"
+      }
+    }
+  },
+  "devices": {
+    "phone_nexus5": {
+      "id": "phone_nexus5",
+      "fullname": "Nexus 5",
+      "type": "phone",
+      "name": "Nexus5",
+      "os": "Android",
+      "joint": "hand",
+      "img": "nexus5.jpg"
+    },
+    "phone_nexus6": {
+      "id": "phone_nexus6",
+      "fullname": "Nexus 6",
+      "type": "phone",
+      "name": "Nexus6",
+      "os": "Android",
+      "joint": "hand",
+      "img": "nexus6.png"
+    },
+    "phone_iphon6": {
+      "id": "phone_iphon6",
+      "fullname": "iPhone6",
+      "type": "phone",
+      "name": "iPhon6",
+      "os": "iOS",
+      "joint": "hand",
+      "img": "iphone6.jpeg"
+    },
+    "phone_lumia520": {
+      "id": "phone_lumia520",
+      "fullname": "Nokia Lumia 520",
+      "type": "phone",
+      "name": "Lumia520",
+      "os": "Windows",
+      "joint": "hand",
+      "img": "NokiaLumia520.jpg"
+    },
+    "phone_galaxy-s5": {
+      "id": "phone_galaxy-s5",
+      "fullname": "Samsung Galaxy S5",
+      "type": "phone",
+      "name": "Galaxy-S5",
+      "os": "Android",
+      "joint": "hand",
+      "img": "galaxy-s-5.jpg"
+    },
+    "phone_xperia-z3": {
+      "id": "phone_xperia-z3",
+      "fullname": "Sony Xperia Z3",
+      "type": "phone",
+      "name": "Xperia-Z3",
+      "os": "Android",
+      "joint": "hand",
+      "img": "SonyXperiaZ3.jpeg"
+    },
+    "phone_galaxy-note4": {
+      "id": "phone_galaxy-note4",
+      "fullname": "Samsung Galaxy Note 4",
+      "type": "phone",
+      "name": "Galaxy-Note4",
+      "os": "Android",
+      "joint": "hand",
+      "img": "SamsungGalaxyNote4.jpeg"
+    },
+    "phone_galaxy-s6-edge": {
+      "id": "phone_galaxy-s6-edge",
+      "fullname": "Samsung Galaxy S6 Edge",
+      "type": "phone",
+      "name": "Galaxy-S6-Edge",
+      "os": "Android",
+      "joint": "hand",
+      "img": "GalaxyS6Edge.jpeg"
+    },
+    "phone_htc-one-m9": {
+      "id": "phone_htc-one-m9",
+      "fullname": "HTC One M9",
+      "type": "phone",
+      "name": "HTC-One-M9",
+      "os": "Android",
+      "joint": "hand",
+      "img": "HTCOneM9.png"
+    },
+    "tablet_nexus9": {
+      "id": "tablet_nexus9",
+      "fullname": "Nexus 9",
+      "type": "tablet",
+      "name": "Nexus9",
+      "os": "Android",
+      "joint": "hand",
+      "img": "nexus9.png"
+    },
+    "tablet_galaxy-tab4": {
+      "id": "tablet_galaxy-tab4",
+      "fullname": "Samsung Galaxy Tab 4",
+      "type": "tablet",
+      "name": "Galaxy-Tab4",
+      "os": "Android",
+      "joint": "hand",
+      "img": "GalaxyTab4.jpeg"
+    },
+    "tablet_surface3": {
+      "id": "tablet_surface3",
+      "fullname": "Microsoft Surface 3",
+      "type": "tablet",
+      "name": "Surface3",
+      "os": "Windows",
+      "joint": "hand",
+      "img": "Surface3.jpg"
+    },
+    "watch_lg-g-watch": {
+      "id": "watch_lg-g-watch",
+      "fullname": "LG G watch",
+      "type": "watch",
+      "name": "LG-G-watch",
+      "os": "Android",
+      "joint": "wrist",
+      "img": "wear_LG_G.png"
+    },
+    "watch_moto360": {
+      "id": "watch_moto360",
+      "fullname": "Moto 360",
+      "type": "watch",
+      "name": "Moto360",
+      "os": "Android",
+      "joint": "wrist",
+      "img": "wear_Moto360.png"
+    },
+    "watch_samsung-gear-llive": {
+      "id": "watch_samsung-gear-llive",
+      "fullname": "Samsung Gear Live",
+      "type": "watch",
+      "name": "Samsung-Gear-Llive",
+      "os": "Android",
+      "joint": "wrist",
+      "img": "wear_SamsungGearLive.png"
+    },
+    "watch_sony-smartwatch3": {
+      "id": "watch_sony-smartwatch3",
+      "fullname": "Sony SmartWatch 3",
+      "type": "watch",
+      "name": "Sony-Smartwatch3",
+      "os": "Android",
+      "joint": "wrist",
+      "img": "wear_SonySmartWatch3.png"
+    },
+    "eyewear_google-glass": {
+      "id": "eyewear_google-glass",
+      "fullname": "Google Glass",
+      "type": "eyewear",
+      "name": "Google-Glass",
+      "os": "Android",
+      "joint": "head",
+      "img": "Google-Glass.jpg"
+    },
+    "keyboard_mac-keyboard": {
+      "id": "keyboard_mac-keyboard",
+      "fullname": "Mac Keyboard",
+      "type": "keyboard",
+      "name": "Mac-Keyboard",
+      "joint": "hand",
+      "img": "mackeyboard.jpg"
+    },
+    "wristband_jawbone-up4": {
+      "id": "wristband_jawbone-up4",
+      "fullname": "Jawbone up4",
+      "type": "wristband",
+      "name": "Jawbone-Up4",
+      "os": "Jawbone",
+      "joint": "wrist",
+      "img": "jawbone-up.png"
+    },
+    "wristband_fitbit-surge": {
+      "id": "wristband_fitbit-surge",
+      "fullname": "Fitbit Surge",
+      "type": "wristband",
+      "name": "Fitbit-Surge",
+      "os": "Fitbit",
+      "joint": "wrist",
+      "img": "fitbit-surge.jpg"
+    },
+    "lightbulb_philips-lightbulb": {
+      "id": "lightbulb_philips-lightbulb",
+      "fullname": "Philips Lightbulb",
+      "type": "lightbulb",
+      "name": "Philips-Lightbulb",
+      "joint": "",
+      "img": "philips_lightbulb.jpg"
+    }
+  }
+}

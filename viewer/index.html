@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="third_party/bootstrap/bootstrap.min.css">
+  <title>Weave: Designing Cross-Device Interactions</title>
+</head>
+<body>
+  <script src="third_party/chromium/sha1.js"></script>
+  <script src="third_party/chromium/http.js"></script>
+  <script src="third_party/jQuery/jquery.min.js"></script>
+  <script src="third_party/bootstrap/bootstrap.min.js"></script>
+  <script src="js/server.js"></script>
+  <script src="js/weave.js"></script>
+  <script src="js/viewer.js"></script>
+
+  <div class="topbar">
+    <div id="logoBlock"></div>
+    <h3>
+      <span id="setTitle">Weave</span>
+      <div class="icon sample"></div>
+      <div class="icon folder disable"></div>
+      <div class="icon run"></div>
+    </h3>
+  </div>
+
+  <div class="devicePanel">
+    <div id="devices"></div>
+    <div id="live"></div>
+  </div>
+
+  <div class="logPanel">
+    <div class="panel panel-default">
+      <div class="panel-body console" id="logConsole"></div>
+    </div>
+    <code>log</code>
+  </div>
+
+  <dialog id="dialog">
+    <div class="dlg_content"></div>
+    <div class="dlg_close"></div>
+  </dialog>
+</body>
+</html>
