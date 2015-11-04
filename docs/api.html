@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../viewer/third_party/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Learning Weave: Designing Cross-Device Interactions</title>
+</head>
+<body>
+  <div class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Weave</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="api.html">API</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container main">
+    <div class="page-header">
+      <h1>Weave API</h1>
+    </div>
+
+    <!-- DEVICE SELECTION -->
+    <div class="page-header">
+      <h2><a class="link" name="device-selection" href="#device-selection">#</a>Device Selection</h2>
+    </div>
+    <div class="method">
+      <p class="name">weave.select(selector)</p>
+      <p class="detail">Return a <span class="weaveCode">WeaveSelection</span> object that includes all the matched device(s) on a local network based on the selector string.</p>
+      <p class="detail"><span class="weaveCode">selector</span> is a list of filter criteria in string. Any white space will be ignored.</p>
+      <p class="detail">The following snippet selects any device that has a normal-size, low-privacy touchable display.</p>
+      <pre class="prettyprint codeEx">weave.select('.showable[size="normal"][privacy="low"].touchable')</pre>
+      <p class="detail">The following snippet selects any Android watch.</p>
+      <pre class="prettyprint codeEx">weave.select(':watch[os="android"]')</pre>
+      <p class="detail">Properties can always be specified:</p>
+      <table class="table table-striped">
+        <tr style="font-weight: bold;">
+          <td>Property</td>
+          <td>Options</td>
+        </tr>
+        <tr>
+          <td>type</td>
+          <td>":phone", ":watch", ":glass"</td>
+        </tr>
+        <tr>
+          <td>os</td>
+          <td>"android", "iOS", "windows"</td>
+        </tr>
+      </table>
+      <p class="detail">List of device capability options:</p>
+      <table class="table table-striped" style="width: 95%!important;">
+        <tr style="font-weight: bold;">
+          <td>Component</td>
+          <td>Keyword</td>
+          <td>Specification</td>
+          <td>Action</td>
+          <td>Event (.on)</td>
+        </tr>
+        <tr>
+          <td>Display/LED</td>
+          <td>showable</td>
+          <td>size [xlarge, large, normal, small]; glanceability [high, normal, low]; privacy [high, normal, low], interruption [high, normal, low]</td>
+          <td>.show, .play</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td>Speaker</td>
+          <td>speakable</td>
+          <td>privacy [high, normal, low]</td>
+          <td>.play</td>
+          <td>listenStart, listenEnd</td>
+        </tr>
+        <tr>
+          <td>Touch screen</td>
+          <td>touchable</td>
+          <td>size [xlarge, large, normal, small]</td>
+          <td>-</td>
+          <td>tap, doubleTap, longTap, swipe, touchStart, touchMove, touchEnd</td>
+        </tr>
+        <tr>
+          <td>Accelerometer</td>
+          <td>shakable</td>
+          <td>size [xlarge, large, medium, small]</td>
+          <td>-</td>
+          <td>shake</td>
+        </tr>
+        <tr>
+          <td>Rotation sensor</td>
+          <td>rotatable</td>
+          <td>size [xlarge, large, medium, small]</td>
+          <td>-</td>
+          <td>rotateCW, crotateCCW</td>
+        </tr>
+        <tr>
+          <td>Phone</td>
+          <td>phoneable</td>
+          <td>-</td>
+          <td>.call</td>
+          <td>-</td>
+        </tr>
+      </table>
+      <p class="detail">* Future work: microphone (hearable), Camera (camerable), GPS (locationTrackable), health-related (stepTrackable)</p>
+    </div>
+
+    <div class="method">
+      <p class="name">weave.selectAll()</p>
+      <p class="detail">Return a <span class="weaveCode">WeaveSelection</span> object that includes all the device(s) on the Weave local network.</p>
+      <p class="detail">The followings are equal: <span class="weaveCode">selectAll()</span>, <span class="weaveCode">select()</span>, <span class="weaveCode">select('')</span>, <span class="weaveCode">select('all')</span></p>
+    </div>
+
+    <div class="method">
+      <p class="name">weave.getDeviceByType(type)</p>
+      <p class="name">weave.getDeviceByJoint(joint)</p>
+      <p class="name">weave.getDeviceByID(id)</p>
+      <p class="detail">Return a <span class="weaveCode">WeaveSelection</span> object that includes matched device(s).</p>
+    </div>
+
+    <div class="method">
+      <p class="name">.not(selector)</p>
+      <p class="detail">To exclude the device(s) based on the selector string.</p>
+      <pre class="prettyprint codeEx">weave.select('.showable').not('.phoneable')</pre>
+    </div>
+
+    <div class="method">
+      <p class="name">.not(WeaveSelection)</p>
+      <p class="detail">To exclude the device(s) of the WeaveSelection object.</p>
+      <pre class="prettyprint codeEx">weave.select('.showable').not(':glass')</pre>
+    </div>
+
+    <div class="method">
+      <p class="name">.not(device)</p>
+      <p class="detail">To exclude the specific device object.</p>
+      <pre class="prettyprint codeEx">weave.select('.showable').not(event.getDevice())</pre>
+    </div>
+
+    <!-- EVENT HANDLER -->
+    <div class="page-header">
+      <h2><a class="link" name="event-handler" href="#event-handler">#</a>Event Handler</h2>
+    </div>
+
+    <div class="method">
+      <p class="name">.on(eventType, handler)</p>
+      <p class="detail">When an event occurs on the specified device, trigger the callback function.</p>
+      <p class="detail">The argument "<span class="weaveCode arg">event</span>" in the callback function contains necessary information about the user event. For examples, <span class="weaveCode arg">event.getDevice()</span> or <span class="weaveCode arg">event.getDevices()</span> returns the source device(s) as a <span class="weaveCode">WeaveSelection</span> object that triggered the event; <span class="weaveCode arg">event.getValue()</span> returns the corresponding value, such as the button value.</p>
+      <pre class="prettyprint codeEx">weave.select('.shakable.showable'))
+.on('shake', function(event) {
+  event.getDevice().show('shaken');
+});</pre>
+    </div>
+
+    <!-- DEVICE ACTIONS -->
+    <div class="page-header">
+      <h2><a class="link" name="device-action" href="#device-action">#</a>Device Action</h2>
+    </div>
+
+    <div class="method">
+      <p class="name">.show(Panel)</p>
+      <p class="detail">Render a UI panel on the device.</p>
+      <pre class="prettyprint codeEx">weave.select('.showable').show(weave.getLayoutById('panel'));</pre>
+    </div>
+
+    <div class="method">
+      <p class="name">.show(String)</p>
+      <p class="detail">Render a string on the device.</p>
+      <pre class="prettyprint codeEx">weave.select('.showable').show('Hello World.');</pre>
+    </div>
+
+    <div class="method">
+      <p class="name">.play(filepath)</p>
+      <p class="detail">Play a media file of the filepath on the device.</p>
+      <pre class="prettyprint codeEx">weave.select('.speakable').play('audio/ring.mp3');</pre>
+    </div>
+
+    <div class="method">
+      <p class="name">.call(num)</p>
+      <p class="detail">Make a phone call to the number.</p>
+      <pre class="prettyprint codeEx">weave.select('.phoneable').call('6501234567');</pre>
+    </div>
+
+    <div class="method">
+      <p class="name">.startApp(appname)</p>
+      <p class="detail">Launch a device application.</p>
+      <pre class="prettyprint codeEx">weave.select('.showable').startApp('GoogleMaps');</pre>
+      <p class="detail">Available build-in supports:</p>
+      <table class="table table-striped">
+        <tr style="font-weight: bold;">
+          <td>App</td>
+          <td>Value</td>
+        </tr>
+        <tr>
+          <td>Google Maps</td>
+          <td>GoogleMaps</td>
+        </tr>
+        <tr>
+          <td>Gmail</td>
+          <td>Gmail</td>
+        </tr>
+        <tr>
+          <td>Google Calendar</td>
+          <td>Calendar</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- UI -->
+    <div class="page-header">
+      <h2><a class="link" name="ui-layout" href="#ui-layout">#</a>UI Layout</h2>
+    </div>
+
+    <div class="method">
+      <p class="name">weave.getLayoutById(panelID)</p>
+      <p class="detail">Return a <span class="weaveCode">Panel</span> object by analyzing the HTML content defined by the developer.</p>
+      <pre class="prettyprint codeEx">weave.select('.showable').show(weave.getLayoutById('panel'));</pre>
+    </div>
+
+    <!-- DEVICE MANIPULATION -->
+    <div class="page-header">
+      <h2><a class="link" name="device-manipulation" href="#device-manipulation">#</a>Device Manipulation</h2>
+    </div>
+
+    <div class="method">
+      <p class="detail">By default, Weave sees each device as the same:</p>
+      <p class="detail">It picks *one* suitable device for the action.</p>
+      <p class="detail">An event handler or an action will be attached to the devices *individually*.</p>
+    </div>
+
+    <p style="margin-top:20px;">The following methods provide other device behaviors:</p>
+
+    <div class="method">
+      <p class="name">.all()</p>
+      <p class="detail">Return a <span class="weaveCode">WeaveSelection</span> object that each device will behave the same:</p>
+      <p class="detail">An action will be applied to all the devices (e.g., <span class="weaveCode func">.show</span> the same content on all displays).</p>
+      <pre class="prettyprint codeEx">weave.select('.showable').all().show("all on");</pre>
+      <p class="detail">An event handler will be triggered only when the event occurs on all the devices (e.g., all devices <span class="weaveCode func">.shake</span> at the same time).</p>
+    </div>
+
+    <div class="method">
+      <p class="name">.combine()</p>
+      <p class="detail">Return a <span class="weaveCode">WeaveSelection</span> object that encapsulates the devices as one conceptual device:</p>
+      <p class="detail">An action will be distributed to devices. For example, the content will be distributed to <span class="weaveCode func">.show</span> on individual screens.</p>
+      <p class="detail">Developers can specify a new event condition using the same format of device selection. An event handler will be triggered only when the event occurs on the specified devices.</p>
+      <pre class="prettyprint codeEx">var combinedDevice = weave.selectAll().combine();
+combinedDevice.show(weave.getLayoutById('panel'));
+combinedDevice.on("swipeDown[joint='hand'], swipeUp[joint='watch']",
+  function(event) {
+    // pinch over two devices
+  });</pre>
+    </div>
+
+    <!-- CLASS -->
+    <div class="page-header">
+      <h2><a class="link" name="classes" href="#classes">#</a>Weave Classes</h2>
+    </div>
+
+    <div class="method">
+      <p class="name">WeaveSelection</p>
+      <p class="detail">Include a list of devices, behaviors (devices to behave individually, all as a group, or combined), and methods (to apply to the devices based on the behavior). A WeaveSelection object can be chainable to run multiple methods in sequence.</p>
+      <div class="submethod">
+        <p class="name">.size()</p>
+        <p class="detail">Return the number of devices in this selection.</p>
+      </div>
+      <div class="submethod">
+        <p class="name">.getDeviceName(), .getDeviceNames()</p>
+        <p class="detail">Return the device name(s) in string, separated by comma.</p>
+      </div>
+      <div class="submethod">
+        <p class="name">.getDeviceHasUIByID(id)</p>
+        <p class="detail">Return the device(s) that is showing an UI element with the specified id.</p>
+      </div>
+      <div class="submethod">
+        <p class="name">.updateUIAttr(elementID, attribute, value)</p>
+        <p class="detail">Replace the value of an attribute with the specified element id.</p>
+        <pre class="prettyprint codeEx">weave.select('.showable')
+  .show(weave.getLayoutById('panel'))
+  .updateUIAttr('imageView', 'src', 'img/new_image.png');</pre>
+      </div>
+
+    <div class="method">
+      <p class="name">Device</p>
+      <p class="detail">Maintain the properties, status, and methods of one device.</p>
+      <div class="submethod">
+        <p class="name">.is(selector)</p>
+        <p class="detail">Return true is the device is capable of the selector option.</p>
+        <pre class="prettyprint codeEx">phoneableDevice.is('.phoneable')</pre>
+      </div>
+      <div class="submethod">
+        <p class="name">.size()</p>
+        <p class="detail">Always return 1.</p>
+      </div>
+      <div class="submethod">
+        <p class="name">.getDeviceName()</p>
+        <p class="detail">Return the device name in string.</p>
+      </div>
+      <div class="submethod">
+        <p class="name">.updateUIAttr(elementID, attribute, value)</p>
+        <p class="detail">Replace the value of an attribute with the specified element id.</p>
+      </div>
+    </div>
+
+    <div class="method">
+      <p class="name">Log</p>
+      <p class="detail">Show log messages in the log panel, including 5 color options:</p>
+      <div class="submethod">
+        <p class="detail">
+          <span class="weaveCode">
+            Log.v(<span class="log_v">message</span>)
+          </span><br/>
+          <span class="weaveCode">
+            Log.d(<span class="log_d">message</span>)
+          </span><br/>
+          <span class="weaveCode">
+            Log.i(<span class="log_i">message</span>)
+          </span><br/>
+          <span class="weaveCode">
+            Log.w(<span class="log_w">message</span>)
+          </span><br/>
+          <span class="weaveCode">
+            Log.e(<span class="log_e">message</span>)
+          </span>
+        </p>
+      </div>
+      </div>
+
+  <div style="margin-bottom:150px;"></div>
+
+  </div>
+</body>
+</html>

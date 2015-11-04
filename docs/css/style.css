@@ -1,0 +1,77 @@
+.main {
+  max-width: 680px;
+}
+.pre-next {
+  margin-top:50px;
+  margin-bottom: 250px;
+}
+.link {
+  margin-right: 10px;
+}
+
+img {
+  border: 1px solid lightgrey;
+}
+
+.fig {
+  width: 600px;
+}
+
+.weaveCode {
+  font-family: "source-code-pro", Consolas, monospace !important;
+  color: #080;
+}
+.func {
+  color: orange;
+}
+.arg {
+  color: #708;
+}
+
+.note {
+  color: #05a;
+}
+
+p {
+  font-size: 18px;
+}
+
+.method {
+  margin-top: 30px;
+}
+.method .name {
+  font-family: "source-code-pro", Consolas, monospace !important;
+}
+.method .detail{
+  margin-left: 30px;
+}
+.method .codeEx{
+  margin-left: 30px;
+  width: 90%
+}
+.method table {
+  margin-left: 30px;
+  font-family: "source-code-pro", Consolas, monospace !important;
+  width: 80%;
+}
+.submethod {
+  margin-left: 60px;
+}
+.submethod .detail{
+}
+
+.log_v {
+  color: grey;
+}
+.log_d {
+  color: blue;
+}
+.log_i {
+  color: green;
+}
+.log_w {
+  color: DarkOrange;
+}
+.log_e {
+  color: red;
+}

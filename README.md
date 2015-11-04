@@ -10,16 +10,18 @@ Weave also contributes an environment for developers to test cross-device behavi
 
 ## Requirements and Setup
 
-This is a Chrome packaged app running JavaScript. Please install Chrome and load this directory via the Chrome Developer Tool.
+This is a Chrome packaged app running JavaScript. Please install Chrome and load the directory /viewer via the Chrome Developer Tool.
 
 ## Publication
 
-This is not an official Google product. This is research work and the paper has been published at the academic conference CHI2015:
+This is research work and the paper has been published at the academic conference CHI2015:
 Pei-Yu (Peggy) Chi and Yang Li. 2015. Weave: Scripting Cross-Device Wearable Interaction. In Proceedings of the 33rd Annual ACM Conference on Human Factors in Computing Systems (CHI '15). ACM, New York, NY, USA, 3923-3932. DOI=http://dx.doi.org/10.1145/2702123.2702451
+
+## Disclaimer
+This is not an official Google product. The application uses third party libraries listed under the directory /third_party
 
 ## Contacts
 
 This package is active and maintained. If you have any questions, please send them to:
 
-Peggy Chi (peggychi@google.com)
-Yang Li (liyang@google.com)
+Peggy Chi (peggychi@google.com) and Yang Li (liyang@google.com)
