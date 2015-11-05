@@ -1,4 +1,4 @@
-# Weave: Designing Cross-Device Interactions
+# Weave: Scripting Cross-Device Interactions
 
 Weave is a framework for developers to create cross-device wearable interaction by scripting. This directory contains the implementation for the Weave framework and a viewer for a set of interactive emulators.
 
