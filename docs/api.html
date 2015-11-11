@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="../viewer/third_party/bootstrap/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
-  <title>Learning Weave: Designing Cross-Device Interactions</title>
+  <title>Learning Weave: Scripting Cross-Device Interactions</title>
 </head>
 <body>
   <div class="navbar navbar-inverse" role="navigation">
@@ -31,7 +31,7 @@
     <div class="method">
       <p class="name">weave.select(selector)</p>
       <p class="detail">Return a <span class="weaveCode">WeaveSelection</span> object that includes all the matched device(s) on a local network based on the selector string.</p>
-      <p class="detail"><span class="weaveCode">selector</span> is a list of filter criteria in string. Any white space will be ignored.</p>
+      <p class="detail"><span class="weaveCode">selector</span> is a list of filter criteria in string. Whitespace will be eliminated.</p>
       <p class="detail">The following snippet selects any device that has a normal-size, low-privacy touchable display.</p>
       <pre class="prettyprint codeEx">weave.select('.showable[size="normal"][privacy="low"].touchable')</pre>
       <p class="detail">The following snippet selects any Android watch.</p>
