@@ -25,3 +25,5 @@ This is not an official Google product. The application uses third party librari
 This package is active and maintained. If you have any questions, please send them to:
 
 Peggy Chi (peggychi@cs.berkeley.edu) and Yang Li (liyang@google.com)
+
+![Weave UI](/docs/img/weave_UI.png)

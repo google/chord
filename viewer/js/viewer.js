@@ -21,7 +21,7 @@
  */
 
 /**
- * The viewer object handling UI interactions.
+ * The file paths to device spec, script, and info.
  * @constructor
  */
 var filepaths = {
@@ -39,7 +39,6 @@ var filepaths = {
 $(document).ready(function() {
   window.requestFileSystem = window.requestFileSystem ||
     window.webkitRequestFileSystem;
-
   $.getJSON(filepaths.DEVICE_INFO_URL, function(data) { // load device specs
     weave.setup(data.deviceCapabilities, data.devices);
     viewer.init('dialog');
@@ -48,7 +47,6 @@ $(document).ready(function() {
     window.Log = emulatorManager.showSystemLog;
     Log.v('Weave plugin ready');
   });
-
   $(window).keydown(function(e) { // Handles the window keydown input event
   });
 });
