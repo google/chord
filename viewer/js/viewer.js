@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 The Weave Authors. All Rights Reserved.
+ * Copyright 2015 The Chord Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /**
- * @fileoverview Manages the Weave viewer,
+ * @fileoverview Manages the Chord viewer,
  * including a test panel with a set of emulators and a log panel.
  * @author peggychi@google.com (Peggy Chi)
  */
@@ -40,12 +40,12 @@ $(document).ready(function() {
   window.requestFileSystem = window.requestFileSystem ||
     window.webkitRequestFileSystem;
   $.getJSON(filepaths.DEVICE_INFO_URL, function(data) { // load device specs
-    weave.setup(data.deviceCapabilities, data.devices);
+    chord.setup(data.deviceCapabilities, data.devices);
     viewer.init('dialog');
     emulatorManager.init('devices', 'phone-watch-tablet');
     scriptManager.init('.icon.sample', '.icon.folder')
     window.Log = emulatorManager.showSystemLog;
-    Log.v('Weave plugin ready');
+    Log.v('Chord plugin ready');
   });
   $(window).keydown(function(e) { // Handles the window keydown input event
   });
@@ -121,7 +121,7 @@ var emulatorManager = {
     $.get(filepaths.DEVICE_TEMPLATE, function(content) {
       self.deviceTemplate = content;
       self.updateDevicePreset(self.devicePreset, function() {
-        setUpEvents(weave.actionCapabilityMap);
+        setUpEvents(chord.actionCapabilityMap);
         self.showDevices();
         /**
          * Sets up input events to be simulated.
@@ -178,7 +178,7 @@ var emulatorManager = {
         numEmulatedDevices.glass = 1;
         break;
     }
-    weave.setEmulatedDevices(numEmulatedDevices, false, callback);
+    chord.setEmulatedDevices(numEmulatedDevices, false, callback);
   },
   /**
    * Renders the emulators.
@@ -190,12 +190,12 @@ var emulatorManager = {
       exists.push(false);
     });
     this.deviceIds = IDs;
-    for (d in weave.devices) { // update panel
-      var device = weave.devices[d];
+    for (d in chord.devices) { // update panel
+      var device = chord.devices[d];
       var idx = this.deviceIds.indexOf(device.id);
       if (idx < 0) {
         this.addDevicePanel(device, !device.live);
-        weave.devices[d].addEmulator(this);
+        chord.devices[d].addEmulator(this);
         this.deviceIds.push(device.id);
       }
       else exists[idx] = true;
@@ -210,7 +210,7 @@ var emulatorManager = {
   },
   /**
    * Updates the emulators.
-   * @param {Object} device A Weave device.
+   * @param {Object} device A Chord device.
    * @param {boolean} isEmulator Is an emulator.
    */
   addDevicePanel: function(device, isEmulator) {
@@ -222,7 +222,7 @@ var emulatorManager = {
     $('#' + this.rootId).prepend($(panelHTML).fadeIn('slow'));
     var div = $('#' + device.id + ' > div .manualEvts');
     var removeDevice = function(deviceId, type) {
-      var success = weave.deleteDevice(deviceId);
+      var success = chord.deleteDevice(deviceId);
       if (success) {
         Log.e('Delete device: ' + type);
         self.showDevices();
@@ -273,7 +273,7 @@ var emulatorManager = {
      * @param {string} deviceId The device ID.
      */
     function simulateEvent(eventType, deviceId) {
-      weave.getDeviceById(deviceId).on(eventType);
+      chord.getDeviceById(deviceId).on(eventType);
     }
   },
   /**
@@ -283,7 +283,7 @@ var emulatorManager = {
    * @param {string} name The new device name.
    */
   addManulDevice: function(id, type, name) {
-    weave.addEmulatedDevices(id, type, name);
+    chord.addEmulatedDevices(id, type, name);
     this.showDevices();
   },
   /**
@@ -509,22 +509,21 @@ var scriptManager = {
     });
   },
   /**
-   * Executes the Weave script by writing and retrieving from local storage.
-   * @param {string} code The Weave script.
+   * Executes the Chord script by writing and retrieving from local storage.
+   * @param {string} code The Chord script.
    */
   runScript: function(code) {
     resetEmulators();
     window.requestFileSystem(window.TEMPORARY, 1024*1024,
       onInitFs, errorHandler);
     function onInitFs(fs) {
-      fs.root.getFile('weave.js', {create: true}, function(fileEntry) {
+      fs.root.getFile('chord.js', {create: true}, function(fileEntry) {
         fileEntry.createWriter(function(fileWriter) {
           fileWriter.truncate(0);
           fileWriter.onwriteend = function(e) {
             if (fileWriter.length === 0) {
               var blob = new Blob([code], {type: 'text/plain'});
               fileWriter.write(blob);
-              console.log(code.replace(/\n/g, ''));
               loadScript(fileEntry.toURL());
             }
           };
@@ -552,7 +551,7 @@ var scriptManager = {
     function errorHandler() {
     }
     /**
-     * Resets the Weave emulator view.
+     * Resets the Chord emulator view.
      */
     function resetEmulators() {
       emulatorManager.resetAll();

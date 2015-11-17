@@ -16,10 +16,10 @@
 
  /* Bump: shake 2+ devices to join as a group */
 
-weave.launchMethod = weave.launchOption.default;
+chord.launchMethod = chord.launchOption.default;
 
 function service() {
-  weave.select('.showable.shakable.speakable')
+  chord.select('.showable.shakable.speakable')
     .all({minNumOfDevices: 2}) // at least 2 devices
     .show('Bump to join')
     .on('shake', function(event) {

@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "Weave Plugin",
+  "name": "Chord Plugin",
   "version": "0.1",
-  "icons": { "16": "img/logo/weave-16.png", "128": "img/logo/weave-128.png" },
+  "icons": { "16": "img/logo/chord-16.png", "128": "img/logo/chord-128.png" },
   "permissions": [
     {"socket": [
       "tcp-connect",

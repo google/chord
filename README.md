@@ -1,12 +1,14 @@
-# Weave: Scripting Cross-Device Interactions
+# Chord: Scripting Cross-Device Interactions
 
-Weave is a framework for developers to create cross-device wearable interaction by scripting. This directory contains the implementation for the Weave framework and a viewer for a set of interactive emulators.
+Chord is a framework for developers to create cross-device wearable interaction by scripting. This directory contains the implementation for the Chord framework and a viewer for a set of interactive emulators.
+
+This project is previously named "Weave". We changed the name to differentiate with the Brillo and Weave protocol.
 
 ## Goals
 
-Weave provides a set of high-level APIs, based on JavaScript, for developers to easily distribute UI output and combine user input and sensing events across devices. These high-level APIs as well as their underlying scripting concepts allow developers to focus on their target interaction behaviors and think about target devices regarding their capabilities and affordances, rather than low-level specifications.
+Chord provides a set of high-level APIs, based on JavaScript, for developers to easily distribute UI output and combine user input and sensing events across devices. These high-level APIs as well as their underlying scripting concepts allow developers to focus on their target interaction behaviors and think about target devices regarding their capabilities and affordances, rather than low-level specifications.
 
-Weave also contributes an environment for developers to test cross-device behaviors, and when ready, deploy these behaviors to its runtime environment on users’ ad-hoc network of mobile and wearable devices.
+Chord also contributes an environment for developers to test cross-device behaviors, and when ready, deploy these behaviors to its runtime environment on users’ ad-hoc network of mobile and wearable devices.
 
 ## Requirements and Setup
 
@@ -26,4 +28,4 @@ This package is active and maintained. If you have any questions, please send th
 
 Peggy Chi (peggychi@cs.berkeley.edu) and Yang Li (liyang@google.com)
 
-![Weave UI](/docs/img/weave_UI.png)
+![Chord UI](/docs/img/chord_UI.png)

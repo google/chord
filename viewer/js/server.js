@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 The Weave Authors. All Rights Reserved.
+ * Copyright 2015 The Chord Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
  /**
- * @fileoverview Implements the Weave server that handles
+ * @fileoverview Implements the Chord server that handles
  * code update from a text editor and device updates from proxies.
  * @author peggychi@google.com (Peggy Chi)
  */

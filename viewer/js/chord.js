@@ -1,5 +1,5 @@
 /**
- * Copyright 2015 The Weave Authors. All Rights Reserved.
+ * Copyright 2015 The Chord Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,22 +15,22 @@
  */
 
  /**
- * @fileoverview Implements the Weave framework that handles
+ * @fileoverview Implements the Chord framework that handles
  * the device selection, actions, and events.
  * @author peggychi@google.com (Peggy Chi)
  */
 
-weave = (function() {
+chord = (function() {
   /**
-   * Whether this Weave object is running on server or web.
+   * Whether this Chord object is running on server or web.
    * @type {boolean}
    */
   var isWebUI = typeof window !== 'undefined';
   /**
-   * The Weave engine.
+   * The Chord engine.
    * @type {!Object}
    */
-  var weave = {
+  var chord = {
     /**
      * On-network device list.
      * @type {!Array<Device>}
@@ -95,7 +95,7 @@ weave = (function() {
      */
     layouts: {},
     /**
-     * Available Weave application IDs.
+     * Available Chord application IDs.
      * @type {!Array<string>}
      */
     services: [],
@@ -124,19 +124,19 @@ weave = (function() {
      * @param {!string} selectorStr The device selection criteria.
      * @param {boolean=} skipReport
      *    Whether this should not report to the server.
-     * @return {!WeaveSelection} A collection of devices.
+     * @return {!ChordSelection} A collection of devices.
      */
     select: function(selector, report) {
       if (typeof(selector) !== 'object') {
         selector = this.parseSelector(selector.toLowerCase());
       }
-      var selection = new WeaveSelection(selector, this.getDevices(selector));
+      var selection = new ChordSelection(selector, this.getDevices(selector));
       return selection;
     },
 
     /**
      * Selects all the devices on the network.
-     * @return {!WeaveSelection} A collection of devices.
+     * @return {!ChordSelection} A collection of devices.
      */
     selectAll: function() {
       return this.select('*');
@@ -145,7 +145,7 @@ weave = (function() {
     /**
      * Changes all the devices on the network to behave the same.
      * @param {Object=} option Details options to manipulate the mode.
-     * @return {!WeaveSelection} A collection of devices in the 'all' mode.
+     * @return {!ChordSelection} A collection of devices in the 'all' mode.
      */
     all: function(option) {
       var devices = this.selectAll();
@@ -159,7 +159,7 @@ weave = (function() {
     /**
      * Combines devices on the network as one virtual device.
      * @param {Object=} option Details options to manipulate the mode.
-     * @return {!WeaveSelection} A collection of devices in the 'combine' mode.
+     * @return {!ChordSelection} A collection of devices in the 'combine' mode.
      */
     combine: function(option) {
       var devices = this.selectAll();
@@ -183,7 +183,7 @@ weave = (function() {
     /**
      * Retrieves a set of device by joint.
      * @param {!string} joint The joint of interest.
-     * @return {!WeaveSelection} The devices that match the joint.
+     * @return {!ChordSelection} The devices that match the joint.
      */
     getDeviceByJoint: function(joint) {
       var matchedDevices = [];
@@ -192,13 +192,13 @@ weave = (function() {
           matchedDevices.push(device);
         }
       }
-      return new WeaveSelection(null, matchedDevices);
+      return new ChordSelection(null, matchedDevices);
     },
 
     /**
      * Retrieves a set of device by type.
      * @param {!string} type The device type of interest.
-     * @return {!WeaveSelection} The devices that match the type.
+     * @return {!ChordSelection} The devices that match the type.
      */
     getDeviceByType: function(type) {
       var matchedDevices = [];
@@ -207,7 +207,7 @@ weave = (function() {
           matchedDevices.push(device);
         }
       }
-      return new WeaveSelection(null, matchedDevices);
+      return new ChordSelection(null, matchedDevices);
     },
 
     /**
@@ -529,13 +529,13 @@ weave = (function() {
     },
 
     /**
-     * Creates a Weave-capable device.
+     * Creates a Chord-capable device.
      * @param {!string} id The device id.
      * @param {!string} type The device type.
      * @param {!string} name The device name.
      * @param {!boolean} live
      *    Whether it should a physical device on the network.
-     * @return {!Device} The Weave-capable device.
+     * @return {!Device} The Chord-capable device.
      */
     createDevice: function(id, type, name, live) {
       var device = this.deviceTemplates[type].cloneDevice({});
@@ -567,9 +567,9 @@ weave = (function() {
     },
 
     /**
-     * Creates Weave-capable device objects.
+     * Creates Chord-capable device objects.
      * @param {!Object} capabilities Device capabilities by types.
-     * @param {!Object} deviceList A list of weave-capable devices.
+     * @param {!Object} deviceList A list of chord-capable devices.
      */
     createDevices: function(capabilities, deviceList) {
       var self = this;
@@ -580,7 +580,7 @@ weave = (function() {
       /**
        * Creates a list of devices, each with capabilities defined.
        * @param {!Object} capabilities Device capabilities by types.
-       * @param {!Object} deviceList A list of weave-capable devices.
+       * @param {!Object} deviceList A list of chord-capable devices.
        */
       function createDeviceList(capabilities, deviceList) {
         self.capabilityList = [];
@@ -620,9 +620,9 @@ weave = (function() {
     },
 
     /**
-     * Sets up a full list of Weave-capable devices.
+     * Sets up a full list of Chord-capable devices.
      * @param {!Object} capabilities Device capabilities by types.
-     * @param {!Object} deviceList A list of weave-capable devices.
+     * @param {!Object} deviceList A list of chord-capable devices.
      */
     setup: function(capabilities, deviceList) {
       this.createDevices(capabilities, deviceList);
@@ -632,7 +632,7 @@ weave = (function() {
     /**
      * Sets up devices for the web UI with emulators.
      * @param {!Object} capabilities Device capabilities by types.
-     * @param {!Object} deviceList A list of weave-capable devices.
+     * @param {!Object} deviceList A list of chord-capable devices.
      */
     setupWeb: function(capabilities, deviceList) {
       this.createDevices(capabilities, deviceList);
@@ -754,14 +754,14 @@ weave = (function() {
   };
 
   /**
-   * The class representing a Weave device selection set.
+   * The class representing a Chord device selection set.
    * @param {!Object} selector The device selector.
    * @param {!Array<Device>} devices List of devices.
    * @constructor
    */
-  var WeaveSelection = function(selector, devices) {
-    if (!(this instanceof WeaveSelection))
-      return new WeaveSelection(selector, devices);
+  var ChordSelection = function(selector, devices) {
+    if (!(this instanceof ChordSelection))
+      return new ChordSelection(selector, devices);
     var devices = devices;
     var selector = selector;
     var mode = SelectionMode.default;
@@ -771,7 +771,7 @@ weave = (function() {
     var id = Math.random().toString(36).substring(5);
 
     /**
-     * Detects available Weave-capable devices in the device set.
+     * Detects available Chord-capable devices in the device set.
      * @param {!string} action The action.
      * @return {!boolean} Whether there is any device available.
      */
@@ -821,16 +821,16 @@ weave = (function() {
     this.not = function(exclusion) {
       if (exclusion instanceof Device) { // directly remove the device
         removeByIdx(devices.indexOf(exclusion));
-      } else if (exclusion instanceof WeaveSelection) {
+      } else if (exclusion instanceof ChordSelection) {
         // remove a list of devices
         var exludeDevices = exclusion.getDevices();
         for (var i = 0, excluded; excluded = exludeDevices[i]; i++) {
           removeByIdx(devices.indexOf(excluded));
         }
       } else if (typeof exclusion === 'string') { // remove by selector
-        var selector = weave.parseSelector(exclusion);
-        var exludeDevices = new WeaveSelection(selector,
-            weave.getDevices(selector));
+        var selector = chord.parseSelector(exclusion);
+        var exludeDevices = new ChordSelection(selector,
+            chord.getDevices(selector));
         this.not(exludeDevices);
       }
       return this;
@@ -896,7 +896,7 @@ weave = (function() {
       if (matchedDevices.length === 1) {
         return matchedDevices[0];
       } else {
-        return new WeaveSelection(null, matchedDevices);
+        return new ChordSelection(null, matchedDevices);
       }
     };
     this.updateUIAttr = function(id, attr, value) {
@@ -911,7 +911,7 @@ weave = (function() {
     };
     /** action methods **/
     this.on = function(eventType, fn) {
-      var selector = weave.parseSelector(eventType); // parse selector
+      var selector = chord.parseSelector(eventType); // parse selector
       if (canRunService(eventType)) {
         if (mode !== SelectionMode.combine) { // default or all mode
           var eventManager = new EventManager(this, eventType, fn);
@@ -925,12 +925,12 @@ weave = (function() {
           for (var key in selector) {
             var action = (key.indexOf(':') >= 0) ?
                 key.substring(0, key.indexOf(':')) : key;
-            var capability = weave.actionCapabilityMap[action];
+            var capability = chord.actionCapabilityMap[action];
             if (capability !== undefined) {
               for (var i = 0, device; device = devices[i]; i++) {
                 var newSelector = {};
                 newSelector[capability] = selector[key];
-                if (weave.deviceSupports(device, newSelector)) {
+                if (chord.deviceSupports(device, newSelector)) {
                   device.on(key, function(event, manager) {
                     manager.eventTriggered(event);
                   }, eventManager);
@@ -1006,7 +1006,7 @@ weave = (function() {
     };
     this.play = function(filepath) {
       if (devices === undefined || devices.length === 0) {
-        console.log('[weave] no device available');
+        console.log('[chord] no device available');
         return;
       }
       switch (mode) {
@@ -1086,7 +1086,7 @@ weave = (function() {
   };
 
   /**
-   * The class representing a Weave device.
+   * The class representing a Chord device.
    * @param {!string} type The device type.
    * @param {!string} name The device name.
    * @param {!string} joint Human joint that the device will be operated.
@@ -1151,7 +1151,7 @@ weave = (function() {
           }
         }
       }
-      if (this.type === weave.deviceType.watch) {
+      if (this.type === chord.deviceType.watch) {
         var self = this;
         this.on('pageChange', function(event) {
           var info = event.getValue().split(',');
@@ -1186,26 +1186,26 @@ weave = (function() {
   Device.fn.renderUI = function(html, UIelements, numElements) {
     this.UIelements = UIelements;
     this.html = this.wrapHtml(html, numElements);
-    if (this.type === weave.deviceType.phone) {
+    if (this.type === chord.deviceType.phone) {
       return this.html;
     }
-    else if (this.type === weave.deviceType.watch ||
-        this.type === weave.deviceType.glass) {
+    else if (this.type === chord.deviceType.watch ||
+        this.type === chord.deviceType.glass) {
       return this.UIelements;
     }
   };
   Device.fn.renderEmulatorUI = function() {
     if (this.html === '') return '';
-    if (this.type === weave.deviceType.phone ||
-        this.type === weave.deviceType.tablet) {
+    if (this.type === chord.deviceType.phone ||
+        this.type === chord.deviceType.tablet) {
       return this.html;
     }
     this.renderEmulatorCards();
     this.UIcardIdx = {row: 0, col: 0};
-    if (this.type === weave.deviceType.watch) {
+    if (this.type === chord.deviceType.watch) {
       return this.UIcards[this.UIcardIdx.row][this.UIcardIdx.col];
     }
-    else if (this.type === weave.deviceType.glass) {
+    else if (this.type === chord.deviceType.glass) {
       return this.UIcards[this.UIcardIdx.col];
     }
   };
@@ -1215,10 +1215,10 @@ weave = (function() {
       var newRow = [];
       for (var j = 0, member; member = el.members[j]; j++) {
         var newCard = this.renderEmulatorCardHTML(el.type, member);
-        if (this.type === weave.deviceType.watch) {
+        if (this.type === chord.deviceType.watch) {
           newRow.push(newCard);
         }
-        else if (this.type === weave.deviceType.glass) {
+        else if (this.type === chord.deviceType.glass) {
           this.UIcards.push(newCard);
         }
       }
@@ -1288,7 +1288,7 @@ weave = (function() {
     if (typeof fn == 'function') { // add listener
       if (this['on' + evt] === undefined) {
         this['on' + evt] = [];
-        if (this.live) weaveServer.on(this.id, evt);
+        if (this.live) chordServer.on(this.id, evt);
       }
       // event bubbling: single-device event has higher priority
       this['on' + evt].push({fn: fn, manager: manager});
@@ -1325,7 +1325,7 @@ weave = (function() {
       }
       if (evt.lastIndexOf('swipe', 0) === 0 && this.UIcards.length !== 0) {
         // for UI simulation
-        if (this.type === weave.deviceType.watch) {
+        if (this.type === chord.deviceType.watch) {
           switch (evt) {
             case 'swipeLeft':
               if (this.UIcardIdx.col > 0) {
@@ -1352,7 +1352,7 @@ weave = (function() {
           this.UI = this.emulator.showUI(this,
               this.UIcards[this.UIcardIdx.row][this.UIcardIdx.col]);
         }
-        else if (this.type === weave.deviceType.glass) {
+        else if (this.type === chord.deviceType.glass) {
           switch (evt) {
             case 'swipeLeft':
               if (this.UIcardIdx.col > 0) {
@@ -1408,7 +1408,7 @@ weave = (function() {
     this.wakeup();
     this.UI = this.emulator.showUI(this, this.renderEmulatorUI());
     if (this.live) {
-      weaveServer.show(this.id, toShow);
+      chordServer.show(this.id, toShow);
     }
     if (fn !== undefined) {
       fn(this); // when shown, callback if user specifies
@@ -1426,7 +1426,7 @@ weave = (function() {
       audioElement.setAttribute('src', filepath);
       audioElement.setAttribute('autoplay', 'autoplay');
     }
-    if (this.live) weaveServer.play(this.id, filepath);
+    if (this.live) chordServer.play(this.id, filepath);
     // when shown, callback if user specifies
     if (fn !== undefined) {
       fn(this);
@@ -1440,7 +1440,7 @@ weave = (function() {
       this.emulator.call(this, calleeNum);
     }
     if (this.live) {
-      weaveServer.call(this.id, calleeNum);
+      chordServer.call(this.id, calleeNum);
     }
     // when shown, callback if user specifies
     if (fn !== undefined) {
@@ -1453,7 +1453,7 @@ weave = (function() {
       this.emulator.wakeup(this);
     }
     if (this.live) {
-      weaveServer.wakeup(this.id);
+      chordServer.wakeup(this.id);
     }
     return this;
   };
@@ -1461,14 +1461,14 @@ weave = (function() {
     this.show('');
     this.emulator.reset(this.id);
     this.selectionId = null;
-    // if (this.live) weaveServer.reset(this.id);
+    // if (this.live) chordServer.reset(this.id);
     return this;
   };
   Device.fn.startApp = function(appName, selectionId) {
     if (isWebUI) {
       this.emulator.startApp(this, appName);
     } else if (this.live) {
-      weaveServer.startApp(this.id, appName);
+      chordServer.startApp(this.id, appName);
     }
     return this;
   };
@@ -1476,7 +1476,7 @@ weave = (function() {
     if (isWebUI) {
       this.emulator.killApp(this, appName);
     } else if (this.live) {
-      weaveServer.killApp(this.id, appName);
+      chordServer.killApp(this.id, appName);
     }
     return this;
   };
@@ -1490,7 +1490,7 @@ weave = (function() {
   };
 
   /**
-   * The class representing a Weave event.
+   * The class representing a Chord event.
    * @param {!Array<Device>} devices The devices in the event.
    * @param {!SelectionMode} mode The device mode.
    * @param {!string} eventType The triggered event type.
@@ -1502,7 +1502,7 @@ weave = (function() {
     this.eventType = eventType;
     this.timestamp = new Date(); // current time
     this.vals = vals;
-    this.selection = new WeaveSelection(null, this.devices);
+    this.selection = new ChordSelection(null, this.devices);
     this.selection.setMode(mode);
   };
   Event.prototype.getDevices = function() {
@@ -1525,7 +1525,7 @@ weave = (function() {
   };
 
   /**
-   * The class representing a Weave single-device event.
+   * The class representing a Chord single-device event.
    * @param {!Device} device The single device in the event.
    * @param {!string} eventType The triggered event type.
    * @param {!Object} val The values related to the event.
@@ -1543,8 +1543,8 @@ weave = (function() {
   };
 
   /**
-   * The class representing a Weave event manager.
-   * @param {!WeaveSelection} selection The devices to attach to the event.
+   * The class representing a Chord event manager.
+   * @param {!ChordSelection} selection The devices to attach to the event.
    * @param {!string} eventType The triggered event type.
    * @param {!function} fn The callback function.
    * @constructor
@@ -1553,7 +1553,7 @@ weave = (function() {
     if (!(this instanceof EventManager)) {
       return new EventManager(selection, eventType, fn);
     }
-    this.parent = selection; // WeaveSelection source
+    this.parent = selection; // ChordSelection source
     this.eventType = eventType;
     this.callbackFunc = fn; // developer callback function
 
@@ -1617,7 +1617,7 @@ weave = (function() {
   };
 
   /**
-   * The class representing a Weave UI manager.
+   * The class representing a Chord UI manager.
    * @constructor
    */
   var uiManager = {
@@ -1687,39 +1687,39 @@ weave = (function() {
 
 
   /**
-   * The abstract class representing a Weave server module for IDE
+   * The abstract class representing a Chord server module for IDE
    * to communicate with the backend server to update live devices.
    * @constructor
    */
-  var WeaveBasicServer = function() {
-    if (this.constructor === WeaveBasicServer) {
+  var ChordBasicServer = function() {
+    if (this.constructor === ChordBasicServer) {
       throw new Error('Can\'t instantiate abstract class');
     }
     this.callback = {};
   };
-  WeaveBasicServer.prototype.on = function(deviceId, evt) {
+  ChordBasicServer.prototype.on = function(deviceId, evt) {
   };
-  WeaveBasicServer.prototype.show = function(deviceId, selectionId, content) {
+  ChordBasicServer.prototype.show = function(deviceId, selectionId, content) {
   };
-  WeaveBasicServer.prototype.play = function(deviceId, media) {
+  ChordBasicServer.prototype.play = function(deviceId, media) {
   };
-  WeaveBasicServer.prototype.call = function(deviceId, calleeNum) {
+  ChordBasicServer.prototype.call = function(deviceId, calleeNum) {
   };
-  WeaveBasicServer.prototype.wakeup = function(deviceId) {
+  ChordBasicServer.prototype.wakeup = function(deviceId) {
   };
-  WeaveBasicServer.prototype.startApp = function(deviceId, appName) {
+  ChordBasicServer.prototype.startApp = function(deviceId, appName) {
   };
-  WeaveBasicServer.prototype.killApp = function(deviceId, appName) {
+  ChordBasicServer.prototype.killApp = function(deviceId, appName) {
   };
 
   /**
-   * The class representing a Weave server module for web Authoring UI
+   * The class representing a Chord server module for web Authoring UI
    * to communicate with the backend server to update live devices.
    * @constructor
    */
-  var WeaveWebServer = function() {
-    if (!(this instanceof WeaveWebServer)) {
-      return new WeaveWebServer();
+  var ChordWebServer = function() {
+    if (!(this instanceof ChordWebServer)) {
+      return new ChordWebServer();
     }
     this.host = '127.0.0.1';
     this.port = 9999;
@@ -1727,147 +1727,147 @@ weave = (function() {
     this.callback = {};
     this.manageSockets();
   };
-  WeaveWebServer.prototype = Object.create(WeaveBasicServer.prototype);
-  WeaveWebServer.prototype.constructor = WeaveWebServer;
-  WeaveWebServer.prototype.manageSockets = function() { // push info from server
+  ChordWebServer.prototype = Object.create(ChordBasicServer.prototype);
+  ChordWebServer.prototype.constructor = ChordWebServer;
+  ChordWebServer.prototype.manageSockets = function() { // push info from server
     return; // tmp
     this.socket.on('deviceSetup', function(data) {
-      weave.setupWeb(data.capabilities, data.deviceList);
+      chord.setupWeb(data.capabilities, data.deviceList);
     });
     this.socket.on('username', function(data) {
-      weave.username = data.username;
-      weave.allUsers = data.users;
+      chord.username = data.username;
+      chord.allUsers = data.users;
     });
     this.socket.on('scriptPaths', function(data) {
-      if (weaveServer.callback['getScript'] === null) {
+      if (chordServer.callback['getScript'] === null) {
         return;
       }
       if (data === null) {
-        weaveServer.callback['getScript'](null); // no service available
+        chordServer.callback['getScript'](null); // no service available
       } else {
-        weaveServer.callback['getScript'](data); // load scripts
+        chordServer.callback['getScript'](data); // load scripts
       }
     });
     this.socket.on('availableServices', function(data) {
-      weave.services = data;
+      chord.services = data;
     });
     this.socket.on('report', function(deviceId, data) {
       if (data.type === 'tap:button') {
-        weave.getDeviceById(deviceId).onUI(data.type, data.value);
+        chord.getDeviceById(deviceId).onUI(data.type, data.value);
       } else {
-        weave.getDeviceById(deviceId).on(data.type, data.value || '');
+        chord.getDeviceById(deviceId).on(data.type, data.value || '');
       }
     });
     this.socket.on('updateDevice', function(deviceId, data) {
       var success = (data.action === 'deviceRegister') ?
-          weave.updateNetworkDevices(true, data.id, data.type, data.name) :
-          weave.updateNetworkDevices(false, deviceId);
+          chord.updateNetworkDevices(true, data.id, data.type, data.name) :
+          chord.updateNetworkDevices(false, deviceId);
       if (success) {
-        weaveServer.callback['updateEmulator']();
+        chordServer.callback['updateEmulator']();
       }
     });
     this.socket.on('updateSuccess', function(deviceId, data) {
       if (data.action === 'createLayout') {
-        weaveServer.callback[data.action](true,
+        chordServer.callback[data.action](true,
             data.layoutID, data.content);
       } else {
-        weave.services = data.services;
-        weaveServer.callback[data.action](data.serviceID);
+        chord.services = data.services;
+        chordServer.callback[data.action](data.serviceID);
       }
     });
     this.socket.on('updateError', function(deviceId, data) {
-      weaveServer.callback[data.action](data.serviceID, data.errorMsg);
+      chordServer.callback[data.action](data.serviceID, data.errorMsg);
     });
     this.socket.on('showEmulators', function() {
-      weaveServer.callback['updateEmulator']();
+      chordServer.callback['updateEmulator']();
     });
   };
-  WeaveWebServer.prototype.addCallback = function(type, fn) {
+  ChordWebServer.prototype.addCallback = function(type, fn) {
     this.callback[type] = fn;
   };
-  WeaveWebServer.prototype.getScript = function(userID, appSet, fn) {
-    weave.userID = userID;
+  ChordWebServer.prototype.getScript = function(userID, appSet, fn) {
+    chord.userID = userID;
     this.addCallback('getScript', fn);
     // this.socket.emit('getScript', userID, appSet);
   };
-  WeaveWebServer.prototype.saveScript = function(appSet, content) {
+  ChordWebServer.prototype.saveScript = function(appSet, content) {
     this.socket.emit('saveScript', appSet, content);
   };
-  WeaveWebServer.prototype.createLayout = function(serviceID, layoutID, fn) {
+  ChordWebServer.prototype.createLayout = function(serviceID, layoutID, fn) {
     if (fn !== undefined) {
       this.addCallback('createLayout', fn);
     }
     this.socket.emit('createLayout', serviceID, layoutID);
   };
-  WeaveWebServer.prototype.saveLayout = function(appSet, content, filename) {
-    weave.layouts[filename] = content;
+  ChordWebServer.prototype.saveLayout = function(appSet, content, filename) {
+    chord.layouts[filename] = content;
     this.socket.emit('saveLayout', appSet, content, filename);
   };
-  WeaveWebServer.prototype.createService =
+  ChordWebServer.prototype.createService =
       function(serviceName, launchMode, fn) {
     this.updateService('createService', serviceName, null, launchMode, fn);
   };
-  WeaveWebServer.prototype.saveService = function(
+  ChordWebServer.prototype.saveService = function(
       serviceName, serviceID, launchMode, fn) {
     this.updateService('saveService', serviceName, serviceID, launchMode, fn);
   };
-  WeaveWebServer.prototype.deleteService = function(
+  ChordWebServer.prototype.deleteService = function(
       serviceName, serviceID, launchMode, fn) {
     this.updateService('deleteService', serviceName, serviceID, launchMode, fn);
   };
-  WeaveWebServer.prototype.updateService = function(
+  ChordWebServer.prototype.updateService = function(
       updateMode, serviceName, serviceID, launchMode, fn) {
     if (fn !== undefined) {
       this.addCallback(updateMode, fn);
     }
     this.socket.emit(updateMode, serviceName, serviceID, launchMode);
   };
-  WeaveWebServer.prototype.logAction = function(data) {
+  ChordWebServer.prototype.logAction = function(data) {
     this.socket.emit('logAction', data);
   };
-  WeaveWebServer.prototype.getDevices = function(fn) {
+  ChordWebServer.prototype.getDevices = function(fn) {
     if (fn !== undefined) {
       this.addCallback('getDevices', fn);
-      this.socket.emit('getScript', weave.userID, appSet);
+      this.socket.emit('getScript', chord.userID, appSet);
     } else {
       this.callback['getDevices']();
     }
   };
-  WeaveWebServer.prototype.showEmulators = function() {
+  ChordWebServer.prototype.showEmulators = function() {
     this.socket.emit('showEmulators');
   };
-  WeaveWebServer.prototype.on = function(deviceId, evt) {
+  ChordWebServer.prototype.on = function(deviceId, evt) {
     this.socket.emit('on', deviceId, evt);
   };
-  WeaveWebServer.prototype.show = function(deviceId, selectionId, content) {
+  ChordWebServer.prototype.show = function(deviceId, selectionId, content) {
     this.socket.emit('show', deviceId, content);
   };
-  WeaveWebServer.prototype.play = function(deviceId, media) {
+  ChordWebServer.prototype.play = function(deviceId, media) {
     this.socket.emit('play', deviceId, media);
   };
-  WeaveWebServer.prototype.call = function(deviceId, calleeNum) {
+  ChordWebServer.prototype.call = function(deviceId, calleeNum) {
     this.socket.emit('call', deviceId, calleeNum);
   };
-  WeaveWebServer.prototype.wakeup = function(deviceId) {
+  ChordWebServer.prototype.wakeup = function(deviceId) {
     this.socket.emit('wakeup', deviceId);
   };
-  WeaveWebServer.prototype.startApp = function(deviceId, appName) {
+  ChordWebServer.prototype.startApp = function(deviceId, appName) {
     this.socket.emit('startApp', deviceId, appName);
   };
-  WeaveWebServer.prototype.killApp = function(deviceId, appName) {
+  ChordWebServer.prototype.killApp = function(deviceId, appName) {
     this.socket.emit('killApp', deviceId, appName);
   };
 
   /**
-   * The Weave web server.
+   * The Chord web server.
    * @type {Object}
    */
-  var weaveServer = new WeaveWebServer();
+  var chordServer = new ChordWebServer();
 
-  weave.init();
+  chord.init();
   if (isWebUI) {
-    window.weave = weave;
-    window.weaveServer = weaveServer;
+    window.chord = chord;
+    window.chordServer = chordServer;
   }
-  return weave;
+  return chord;
 })();
