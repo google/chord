@@ -314,10 +314,10 @@ chord = (function() {
               ruleSet['name'] = subCapGroup.split('#')[1]; // #moto360
               subCap = '*';
             }
-            if (!(subCap.slice(0,1) === ':')) {
+            if (!(subCap.slice(0, 1) === ':')) {
               selector[subCap] = ruleSet;
             } else {
-              ruleSet['type'] = {and: [subCap.replace(/:/g, '')]}
+              ruleSet['type'] = {and: [subCap.replace(/:/g, '')]};
               selector['*'] = ruleSet;
             }
           }
@@ -460,7 +460,7 @@ chord = (function() {
         }
       }
       suggestions.sort(function(a, b) { // sort the suggestions by coverage
-        return a.selection.length - b.selection.length
+        return a.selection.length - b.selection.length;
       });
       if (deviceIds.length !== 0) { // add names
         addSuggestion(suggestSelector('*', {
@@ -521,7 +521,7 @@ chord = (function() {
       }
 
       function addSuggestion(suggestion) {
-        suggestion.selection.filter(function (el) {
+        suggestion.selection.filter(function(el) {
           return excludedIds.indexOf(el) === -1;
         });
         suggestions.push(suggestion);
@@ -1627,7 +1627,6 @@ chord = (function() {
       if (html !== '') {
         // parse HTML to generate UI elements
         var pageObj = {};
-        // var preload = $(html).children();
         var preload = $('<div>').append(html).children();
         if (preload.prop('tagName') === undefined) { // string only
           var groupName = 'P', group = [];
