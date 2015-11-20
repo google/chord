@@ -4,8 +4,9 @@ Chord is a framework for developers to create cross-device wearable interaction
 by scripting. This directory contains the implementation for the Chord framework
 and a viewer for a set of interactive emulators.
 
-This project is previously named "Weave". We changed the name to differentiate
-with the Brillo and Weave protocol.
+This project is previously named "Weave". We renamed this project to avoid
+confusion with the [Brillo and Weave
+platform](https://developers.google.com/brillo/).
 
 ## Goals
 
@@ -13,8 +14,8 @@ Chord provides a set of high-level APIs, based on JavaScript, for developers to
 easily distribute UI output and combine user input and sensing events across
 devices. These high-level APIs as well as their underlying scripting concepts
 allow developers to focus on their target interaction behaviors and think about
-target devices regarding their capabilities and affordances, rather than low-
-level specifications.
+target devices regarding their capabilities and affordances, rather than
+low-level specifications.
 
 Chord also contributes an environment for developers to test cross-device
 behaviors, and when ready, deploy these behaviors to its runtime environment on
@@ -22,10 +23,16 @@ users’ ad-hoc network of mobile and wearable devices.
 
 ## Requirements and Setup
 
-This is a Chrome packaged app. Please install
+Chord is implemented as a Chrome packaged app. Please install
 [Chrome](https://www.google.com/chrome/browser/) and load the directory /viewer
 (see [instructions to launch a Chrome app]
 (https://developer.chrome.com/apps/first_app#five)).
+
+## Progress
+
+This current version enables developers to load sample codes and interact with
+the emulators. In our next update, users will be able to load their Chord
+script, connect live Android devices on the network, and test with devices.
 
 ## Publication
 

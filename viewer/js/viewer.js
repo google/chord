@@ -47,8 +47,6 @@ $(document).ready(function() {
     window.Log = emulatorManager.showSystemLog;
     Log.v('Chord plugin ready');
   });
-  $(window).keydown(function(e) { // Handles the window keydown input event
-  });
 });
 
 /**

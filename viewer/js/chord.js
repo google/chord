@@ -961,7 +961,8 @@ chord = (function() {
         this.numElements = analysis[1];
         switch (mode) {
           case SelectionMode.default: // pick one to show
-            getOneDevice().show(html, id, fn, this.UIelements, this.numElements);
+            getOneDevice().show(html, id, fn,
+              this.UIelements, this.numElements);
             break;
           case SelectionMode.all: // show the same content to all
             for (var i = 0, device; device = devices[i]; i++) {
