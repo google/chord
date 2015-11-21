@@ -1289,7 +1289,9 @@ chord = (function() {
     if (typeof fn == 'function') { // add listener
       if (this['on' + evt] === undefined) {
         this['on' + evt] = [];
-        if (this.live) chordServer.on(this.id, evt);
+        if (this.live) {
+          chordServer.on(this.id, evt);
+        }
       }
       // event bubbling: single-device event has higher priority
       this['on' + evt].push({fn: fn, manager: manager});
@@ -1427,7 +1429,9 @@ chord = (function() {
       audioElement.setAttribute('src', filepath);
       audioElement.setAttribute('autoplay', 'autoplay');
     }
-    if (this.live) chordServer.play(this.id, filepath);
+    if (this.live) {
+      chordServer.play(this.id, filepath);
+    }
     // when shown, callback if user specifies
     if (fn !== undefined) {
       fn(this);
@@ -1462,7 +1466,9 @@ chord = (function() {
     this.show('');
     this.emulator.reset(this.id);
     this.selectionId = null;
-    // if (this.live) chordServer.reset(this.id);
+    if (this.live) {
+      chordServer.reset(this.id);
+    }
     return this;
   };
   Device.fn.startApp = function(appName, selectionId) {
@@ -1685,33 +1691,6 @@ chord = (function() {
     }
   };
 
-
-  /**
-   * The abstract class representing a Chord server module for IDE
-   * to communicate with the backend server to update live devices.
-   * @constructor
-   */
-  var ChordBasicServer = function() {
-    if (this.constructor === ChordBasicServer) {
-      throw new Error('Can\'t instantiate abstract class');
-    }
-    this.callback = {};
-  };
-  ChordBasicServer.prototype.on = function(deviceId, evt) {
-  };
-  ChordBasicServer.prototype.show = function(deviceId, selectionId, content) {
-  };
-  ChordBasicServer.prototype.play = function(deviceId, media) {
-  };
-  ChordBasicServer.prototype.call = function(deviceId, calleeNum) {
-  };
-  ChordBasicServer.prototype.wakeup = function(deviceId) {
-  };
-  ChordBasicServer.prototype.startApp = function(deviceId, appName) {
-  };
-  ChordBasicServer.prototype.killApp = function(deviceId, appName) {
-  };
-
   /**
    * The class representing a Chord server module for web Authoring UI
    * to communicate with the backend server to update live devices.
@@ -1725,116 +1704,9 @@ chord = (function() {
     this.port = 9999;
     this.socket = null;
     this.callback = {};
-    this.manageSockets();
-  };
-  ChordWebServer.prototype = Object.create(ChordBasicServer.prototype);
-  ChordWebServer.prototype.constructor = ChordWebServer;
-  ChordWebServer.prototype.manageSockets = function() { // push info from server
-    return; // tmp
-    this.socket.on('deviceSetup', function(data) {
-      chord.setupWeb(data.capabilities, data.deviceList);
-    });
-    this.socket.on('username', function(data) {
-      chord.username = data.username;
-      chord.allUsers = data.users;
-    });
-    this.socket.on('scriptPaths', function(data) {
-      if (chordServer.callback['getScript'] === null) {
-        return;
-      }
-      if (data === null) {
-        chordServer.callback['getScript'](null); // no service available
-      } else {
-        chordServer.callback['getScript'](data); // load scripts
-      }
-    });
-    this.socket.on('availableServices', function(data) {
-      chord.services = data;
-    });
-    this.socket.on('report', function(deviceId, data) {
-      if (data.type === 'tap:button') {
-        chord.getDeviceById(deviceId).onUI(data.type, data.value);
-      } else {
-        chord.getDeviceById(deviceId).on(data.type, data.value || '');
-      }
-    });
-    this.socket.on('updateDevice', function(deviceId, data) {
-      var success = (data.action === 'deviceRegister') ?
-          chord.updateNetworkDevices(true, data.id, data.type, data.name) :
-          chord.updateNetworkDevices(false, deviceId);
-      if (success) {
-        chordServer.callback['updateEmulator']();
-      }
-    });
-    this.socket.on('updateSuccess', function(deviceId, data) {
-      if (data.action === 'createLayout') {
-        chordServer.callback[data.action](true,
-            data.layoutID, data.content);
-      } else {
-        chord.services = data.services;
-        chordServer.callback[data.action](data.serviceID);
-      }
-    });
-    this.socket.on('updateError', function(deviceId, data) {
-      chordServer.callback[data.action](data.serviceID, data.errorMsg);
-    });
-    this.socket.on('showEmulators', function() {
-      chordServer.callback['updateEmulator']();
-    });
   };
   ChordWebServer.prototype.addCallback = function(type, fn) {
     this.callback[type] = fn;
-  };
-  ChordWebServer.prototype.getScript = function(userID, appSet, fn) {
-    chord.userID = userID;
-    this.addCallback('getScript', fn);
-    // this.socket.emit('getScript', userID, appSet);
-  };
-  ChordWebServer.prototype.saveScript = function(appSet, content) {
-    this.socket.emit('saveScript', appSet, content);
-  };
-  ChordWebServer.prototype.createLayout = function(serviceID, layoutID, fn) {
-    if (fn !== undefined) {
-      this.addCallback('createLayout', fn);
-    }
-    this.socket.emit('createLayout', serviceID, layoutID);
-  };
-  ChordWebServer.prototype.saveLayout = function(appSet, content, filename) {
-    chord.layouts[filename] = content;
-    this.socket.emit('saveLayout', appSet, content, filename);
-  };
-  ChordWebServer.prototype.createService =
-      function(serviceName, launchMode, fn) {
-    this.updateService('createService', serviceName, null, launchMode, fn);
-  };
-  ChordWebServer.prototype.saveService = function(
-      serviceName, serviceID, launchMode, fn) {
-    this.updateService('saveService', serviceName, serviceID, launchMode, fn);
-  };
-  ChordWebServer.prototype.deleteService = function(
-      serviceName, serviceID, launchMode, fn) {
-    this.updateService('deleteService', serviceName, serviceID, launchMode, fn);
-  };
-  ChordWebServer.prototype.updateService = function(
-      updateMode, serviceName, serviceID, launchMode, fn) {
-    if (fn !== undefined) {
-      this.addCallback(updateMode, fn);
-    }
-    this.socket.emit(updateMode, serviceName, serviceID, launchMode);
-  };
-  ChordWebServer.prototype.logAction = function(data) {
-    this.socket.emit('logAction', data);
-  };
-  ChordWebServer.prototype.getDevices = function(fn) {
-    if (fn !== undefined) {
-      this.addCallback('getDevices', fn);
-      this.socket.emit('getScript', chord.userID, appSet);
-    } else {
-      this.callback['getDevices']();
-    }
-  };
-  ChordWebServer.prototype.showEmulators = function() {
-    this.socket.emit('showEmulators');
   };
   ChordWebServer.prototype.on = function(deviceId, evt) {
     this.socket.emit('on', deviceId, evt);
@@ -1850,6 +1722,9 @@ chord = (function() {
   };
   ChordWebServer.prototype.wakeup = function(deviceId) {
     this.socket.emit('wakeup', deviceId);
+  };
+  ChordWebServer.prototype.reset = function(deviceId) {
+    this.socket.emit('reset', deviceId);
   };
   ChordWebServer.prototype.startApp = function(deviceId, appName) {
     this.socket.emit('startApp', deviceId, appName);
