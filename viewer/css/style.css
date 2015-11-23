@@ -1,13 +1,17 @@
 body {
   background-color: #f5f5f5!important;
 }
+
+/* Header */
+
 .topbar {
   background-color: white!important;
   border-bottom: 1px solid #e5e5e5;
   position: relative;
   height: 41px;
 }
-#logoBlock {
+
+#logo {
   position: absolute;
   width: 40px;
   height: 40px;
@@ -16,12 +20,14 @@ body {
   background-repeat: no-repeat;
   background-position: center;
 }
+
 h3 {
   font-size: 18px!important;
   margin-top: 0px!important;
   margin-left: 50px!important;
   line-height: 40px!important;
 }
+
 .icon {
   width: 23px;
   height: 23px;
@@ -33,34 +39,29 @@ h3 {
   display: inline-block;
   vertical-align: middle;
 }
+
   .sample {
     background-image: url('../img/sample.png');
   }
+
   .folder {
     background-image: url('../img/folder.png');
   }
+
   .folder-open {
     background-image: url('../img/folder_open.png');
   }
+
   .run {
     background-image: url('../img/run.png');
   }
+
   .disable {
     opacity: .65;
     cursor: not-allowed;
   }
 
-code {
-  padding: 2px 4px;
-  color: #d14;
-  background-color: #f7f7f9;
-  border: 1px solid #e1e1e8;
-  white-space: nowrap;
-  position: relative;
-  float: right;
-  right: 20px;
-  top: -40px;
-}
+/* Main device panel */
 
 .devicePanel {
   overflow: hidden!important;
@@ -74,12 +75,14 @@ code {
 .devices {
   max-height: 80%;
 }
+
 .device-container {
   border: 1px solid #ccc!important;
 }
   .deviceType {
     font-weight: bold;
   }
+
   .deviceName {
   }
 
@@ -88,6 +91,7 @@ code {
     height: 210px!important;
     padding-right: 0px!important;
   }
+
   .panel .row {
     padding: 10px;
     height: 210px !important;
@@ -95,6 +99,7 @@ code {
 
   .panel .info {
   }
+
     .panel .info .status {
       margin-top: 5px;
       min-height: 14px;
@@ -110,62 +115,76 @@ code {
     background-repeat: no-repeat;
     background-position:center;
   }
+
     .UI {
       background-color: black;
       position: relative;
       margin: 0 auto;
     }
+
     .UI img {
       width: 95%;
     }
+
     .callStart {
       background-image: url('../img/phonecall.jpg');
       background-size: 70%;
       background-repeat: no-repeat;
-      background-position:center;
+      background-position: center;
     }
+
     .phoneSkin {
       background-image: url('../img/device/nexus5.png');
     }
+
       .phoneSkin .UI {
         width: 80px;
         height: 141px;
         top: 17px;
       }
+
       .phoneSkin .landscape {
         width: 141px;
         height: 80px;
         top: 46px;
         left: -1px;
       }
+
       .phoneSkin .activeUI {
         background-color: white!important;
       }
+
     .tabletSkin {
       background-image: url('../img/device/nexus9.png');
     }
+
       .tabletSkin .UI {
         width: 106px;
         height: 141px;
         top: 19px;
       }
+
       .tabletSkin .landscape {
         width: 141px;
         height: 80px;
         top: 46px;
         left: -1px;
       }
+
       .tabletSkin .activeUI {
         background-color: white!important;
       }
+
     .watchSkin {
       background-image: url('../img/device/wear.png');
     }
+
       .watchSkin .UI {
         width: 132px;
         height: 132px;
         top: 24px;
       }
+
       .watchSkin .UI * {
         width: 90%;
         height: 45%;
@@ -175,69 +194,83 @@ code {
         padding-top: 30px;
         background-size: 40px 40px;
         background-repeat: no-repeat;
-        background-position:right;
+        background-position: right;
         background-color: white;
         font-size: 14px!important;
       }
+
       .watchSkin .UI button {
         margin-top: 50%;
         padding-top: 30px;
         border: 0px;
       }
+
       .watchSkin .UI img {
         margin-top: 50%;
         padding-top: 30px;
         border: 0px;
       }
+
       .watchSkin .UI p {
         position: absolute;
         bottom: 0px;
         padding-left: 4px;
         padding-top: 10px;
       }
+
       .watchSkin .UI .prev {
         background-image: url('../img/icon/prev.bmp');
       }
+
       .watchSkin .UI .next {
         background-image: url('../img/icon/next.bmp');
       }
+
       .watchSkin .UI .play {
         background-image: url('../img/icon/play.bmp');
       }
+
       .watchSkin .UI .GoogleMaps {
         background-image: url('../img/icon/GoogleMaps.jpg');
       }
+
       .watchSkin .UI .Gmail {
         background-image: url('../img/icon/Gmail.png');
       }
+
       .watchSkin .UI .Calendar {
         background-image: url('../img/icon/Calendar.png');
       }
+
       .watchSkin .activeUI {
         background-color: black!important;
       }
+
     .glassSkin {
       background-color: black;
       width: 224px;
-      height: 126px;
+      height: 126px; /* 640x360 = 16:9 */
       margin:0 auto;
       margin-top: 20px;
       color: white;
       font-size: 40px!important;
-      /* 640x360 = 16:9 */
     }
-      .glassSkin .UI{
+
+      .glassSkin .UI {
         width: 224px;
         height: 126px;
       }
+
       .glassSkin .UI * {
         text-align: center;
         padding-top: 10px;
         font-size: 20px!important;
       }
+
       .glassSkin .UI button {
         padding-left: 10px;
       }
+
       .glassSkin .activeUI {
       }
 
@@ -246,10 +279,12 @@ code {
     margin-left: -25px!important;
     max-height: 200px;
   }
+
     .manualEvts {
       padding: 5px;
       width: 150%;
     }
+
     .manualEvts button {
       margin-bottom: 3px;
       position: relative;
@@ -257,10 +292,12 @@ code {
       margin-left: 2px;
       font-size: 12px;
     }
+
     .live {
       font-style: italic;
       color: red;
     }
+
     .evt {
       background-size: 70%;
       background-repeat: no-repeat;
@@ -268,33 +305,56 @@ code {
       width: 36px;
       height: 27px;
     }
+
+    .evt:hover:after {
+      background: rgba(10, 10, 10, .7);
+      border-radius: 5px;
+      bottom: 28px;
+      color: #fff;
+      content: attr(evtname);
+      max-width: 80px;
+      left: -20px;
+      padding: 5px;
+      position: absolute;
+      z-index: 100;
+    }
+
     .evt_swipeLeft {
       background-image: url('../img/left.png')!important;
     }
+
     .evt_swipeRight {
       background-image: url('../img/right.png')!important;
     }
+
     .evt_swipeUp {
       background-image: url('../img/up.png')!important;
     }
+
     .evt_swipeDown {
       background-image: url('../img/down.png')!important;
     }
+
     .evt_rotateCW {
       background-image: url('../img/rotateCW.png')!important;
     }
+
     .evt_rotateCCW {
       background-image: url('../img/rotateCCW.png')!important;
     }
+
     .evt_listen {
       background-image: url('../img/listen.png')!important;
     }
+
     .evt_talk {
       background-image: url('../img/talk.png')!important;
     }
+
     .evt_shake {
       background-image: url('../img/shake.png')!important;
     }
+
   .device_delete {
     right: 0px;
     top: -210px;
@@ -319,21 +379,23 @@ button span {
   background-size: contain;
 }
 
-.appGmail {
-  background-image: url('../img/app/gmail.png');
-}
+  .appGmail {
+    background-image: url('../img/app/gmail.png');
+  }
 
-.appGoogleMaps {
-  background-image: url('../img/app/maps.png');
-}
+  .appGoogleMaps {
+    background-image: url('../img/app/maps.png');
+  }
 
-.appPhotos {
-  background-image: url('../img/app/photos.png');
-}
+  .appPhotos {
+    background-image: url('../img/app/photos.png');
+  }
 
-.appCalendar {
-  background-image: url('../img/app/calendar.png');
-}
+  .appCalendar {
+    background-image: url('../img/app/calendar.png');
+  }
+
+/* Log panel */
 
 .logPanel {
   position: fixed;
@@ -368,6 +430,20 @@ button span {
   .log_e {
     color: red;
   }
+
+/* Dialog boxes */
+
+code {
+  padding: 2px 4px;
+  color: #d14;
+  background-color: #f7f7f9;
+  border: 1px solid #e1e1e8;
+  white-space: nowrap;
+  position: relative;
+  float: right;
+  right: 20px;
+  top: -40px;
+}
 
 dialog {
   border: 1px solid rgba(0, 0, 0, 0.3);
