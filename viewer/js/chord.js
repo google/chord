@@ -114,6 +114,11 @@ chord = (function() {
      * @type {Array<string>}
      */
     allUsers: null,
+    /**
+     * Path to the script directory.
+     * @type {string}
+     */
+    scriptDir: '',
 
     /** @constructor */
     init: function() {
@@ -740,6 +745,14 @@ chord = (function() {
     getLayoutById: function(id) {
       var layout = this.layouts[id];
       return layout === undefined ? null : layout;
+    },
+
+    /**
+     * Sets the path to the script directory.
+     * @param {!string} path The directory path.
+     */
+    setDir: function(path) {
+      this.scriptDir = path;
     }
   };
 
@@ -951,12 +964,8 @@ chord = (function() {
     };
     this.show = function(html, fn) {
       if (canRunService('show')) {
-        if (html) {
-          if (html.indexOf('<') < 0 || !html.startsWith('<div')) {
-            // html = '<div>' + html + '</div>';
-          }
-        }
-        var analysis = uiManager.getUIElements(html);
+        html = resetDir(html);
+        var analysis = UiManager.getUIElements(html);
         this.UIelements = analysis[0];
         this.numElements = analysis[1];
         switch (mode) {
@@ -979,7 +988,7 @@ chord = (function() {
                     device.capability.showable.size !== 'small') {
                   // available to show
                   var toShow = this.UIelements[image[0]];
-                  var html = uiManager.renderHTML(
+                  var html = UiManager.renderHTML(
                       toShow.type, toShow.members);
                   device.show(html, id, fn, [toShow], this.numElements);
                   break;
@@ -990,7 +999,7 @@ chord = (function() {
             var html = '';
             for (var i = 0, group; group = this.UIelements[i]; i++) {
               if (group.type !== 'IMG') {
-                html += uiManager.renderHTML(group.type, group.members);
+                html += UiManager.renderHTML(group.type, group.members);
               }
             }
             for (var i = 0, device; device = devices[i]; i++) {
@@ -1004,6 +1013,10 @@ chord = (function() {
         }
       }
       return this;
+
+      function resetDir(html) { // redirect the path; TODO: examine path
+        return html.replace('src="', 'src="' + chord.scriptDir);
+      }
     };
     this.play = function(filepath) {
       if (devices === undefined || devices.length === 0) {
@@ -1107,6 +1120,7 @@ chord = (function() {
     this.joint = joint;
     this.live = live; // on network
     this.capability = capabilities;
+    this.callbacks = null;
     // UI-related
     this.html = '';
     this.UIelements = null;
@@ -1129,39 +1143,38 @@ chord = (function() {
   };
   Device.fn = Device.prototype = {
     init: function() {
-      for (var cap in this.capability) {
-        if (this.capability[cap].on != undefined) {
-          for (var idx = 0, evt; evt = this.capability[cap].on[idx]; idx++) {
-            var handler = function(event) {};
-            switch (evt) {
-              case 'rotateCCW':
-                handler = function(event) {
-                  event.getDevice().emulator.rotateCCW(event.getDevice());
-                };
-                break;
-              case 'rotateCW':
-                handler = function(event) {
-                  event.getDevice().emulator.rotateCW(event.getDevice());
-                };
-                break;
-            }
-            this.on(evt, handler);
-            // if (this.capability[cap].indexOf(evt) < 0) {
-            //   this.capability[cap].push(evt);
-            // }
+      this.initCallback();
+    }
+  };
+  Device.fn.initCallback = function() {
+    this.callbacks = {};
+    for (var cap in this.capability) { // add automatic emulator update
+      if (this.capability[cap].on != undefined) {
+        for (var idx = 0, evt; evt = this.capability[cap].on[idx]; idx++) {
+          switch (evt) {
+            case 'rotateCCW':
+              this.on(evt, function(event) {
+                event.getDevice().emulator.rotateCCW(event.getDevice());
+              });
+              break;
+            case 'rotateCW':
+              this.on(evt, function(event) {
+                event.getDevice().emulator.rotateCW(event.getDevice());
+              });
+              break;
           }
         }
       }
-      if (this.type === chord.deviceType.watch) {
-        var self = this;
-        this.on('pageChange', function(event) {
-          var info = event.getValue().split(',');
-          self.UIcardIdx.row = parseInt(info[0]);
-          self.UIcardIdx.col = parseInt(info[1]);
-          self.UI = self.emulator.showUI(self,
-            self.UIcards[self.UIcardIdx.row][self.UIcardIdx.col]);
-        });
-      }
+    }
+    if (this.type === chord.deviceType.watch) {
+      var self = this;
+      this.on('pageChange', function(event) {
+        var info = event.getValue().split(',');
+        self.UIcardIdx.row = parseInt(info[0]);
+        self.UIcardIdx.col = parseInt(info[1]);
+        self.UI = self.emulator.showUI(self,
+          self.UIcards[self.UIcardIdx.row][self.UIcardIdx.col]);
+      });
     }
   };
   Device.fn.attr = function(attr, val) {
@@ -1183,90 +1196,51 @@ chord = (function() {
   Device.fn.size = function() {
     return 1;
   };
-  /** Generate UI **/
+
   Device.fn.renderUI = function(html, UIelements, numElements) {
     this.UIelements = UIelements;
-    this.html = this.wrapHtml(html, numElements);
-    if (this.type === chord.deviceType.phone) {
-      return this.html;
-    }
-    else if (this.type === chord.deviceType.watch ||
+    if (this.type === chord.deviceType.watch ||
         this.type === chord.deviceType.glass) {
       return this.UIelements;
+    } else {
+      return wrapHtml(html, this.panelSetup, numElements);
     }
-  };
-  Device.fn.renderEmulatorUI = function() {
-    if (this.html === '') return '';
-    if (this.type === chord.deviceType.phone ||
-        this.type === chord.deviceType.tablet) {
-      return this.html;
-    }
-    this.renderEmulatorCards();
-    this.UIcardIdx = {row: 0, col: 0};
-    if (this.type === chord.deviceType.watch) {
-      return this.UIcards[this.UIcardIdx.row][this.UIcardIdx.col];
-    }
-    else if (this.type === chord.deviceType.glass) {
-      return this.UIcards[this.UIcardIdx.col];
-    }
-  };
-  Device.fn.renderEmulatorCards = function() {
-    this.UIcards = [];
-    for (var i = 0, el; el = this.UIelements[i]; i++) {
-      var newRow = [];
-      for (var j = 0, member; member = el.members[j]; j++) {
-        var newCard = this.renderEmulatorCardHTML(el.type, member);
-        if (this.type === chord.deviceType.watch) {
-          newRow.push(newCard);
+
+    function wrapHtml(html, panelSetup, numElements) {
+      if (html === '') return html;
+      var style = '<style>';
+      style += '#' + panelSetup.id +
+          ' {height:100%;padding:5px;' +
+          'font-size:20px!important;text-align:center;}';
+      style += '#' + panelSetup.id +
+          ' div {height:100%;overflow:auto;text-align:center;}';
+      style += '#' + panelSetup.id +
+          ' img {max-width:100%;max-height:100%;height:auto;}';
+      var pHeight = 10;
+      if (numElements.pRow > 0) { // layout p tag
+        style += '#' + panelSetup.id +
+            ' p {height:' + pHeight + '%;margin-bottom:5px;}';
+      }
+      if (numElements.buttonRow && numElements.buttonRow.length > 0) {
+        // layout buttons
+        var buttonWidth = panelSetup.maxW;
+        var buttonHeight = panelSetup.maxH;
+        if (numElements.pRow !== undefined) {
+          buttonHeight -= numElements.pRow * pHeight;
         }
-        else if (this.type === chord.deviceType.glass) {
-          this.UIcards.push(newCard);
-        }
+        buttonHeight = Math.max(buttonHeight / numElements.maxBtn,
+            panelSetup.minH);
+        fontSize = buttonHeight > panelSetup.min ?
+            panelSetup.fontSize : 30;
+        style += panelSetup.id + ' button {width:' + buttonWidth +
+            '%;height:' + buttonHeight + '%;margin-bottom:5px;font-size:' +
+            fontSize + 'px;}';
       }
-      if (newRow.length !== 0) {
-        this.UIcards.push(newRow);
-      }
-    }
+      style += '</style>';
+      return '<div id="' + panelSetup.id + '">' + style + html + '</div>';
+    };
   };
-  Device.fn.renderEmulatorCardHTML = function(tag, member) {
-    return '<' + tag + ' value="' + (member.val || '') + '"' + ' class="' +
-        (member.val || '') + '" src="' + (member.src || '') +
-        '">' + member.html + '</' + tag + '>';
-  };
-  Device.fn.wrapHtml = function(html, numElements) {
-    if (html === '') return html;
-    var oriHTML = html;
-    var style = '<style>';
-    style += '#' + this.panelSetup.id +
-        ' {height:100%;padding:5px;' +
-        'font-size:20px!important;text-align:center;}';
-    style += '#' + this.panelSetup.id +
-        ' div {height:100%;overflow:auto;text-align:center;}';
-    style += '#' + this.panelSetup.id +
-        ' img {max-width:100%;max-height:100%;height:auto;}';
-    var pHeight = 10;
-    if (numElements.pRow > 0) { // layout p tag
-      style += '#' + this.panelSetup.id +
-          ' p {height:' + pHeight + '%;margin-bottom:5px;}';
-    }
-    if (numElements.buttonRow && numElements.buttonRow.length > 0) {
-      // layout buttons
-      var buttonWidth = this.panelSetup.maxW;
-      var buttonHeight = this.panelSetup.maxH;
-      if (numElements.pRow !== undefined) {
-        buttonHeight -= numElements.pRow * pHeight;
-      }
-      buttonHeight = Math.max(buttonHeight / numElements.maxBtn,
-          this.panelSetup.minH);
-      fontSize = buttonHeight > this.panelSetup.min ?
-          this.panelSetup.fontSize : 30;
-      style += this.panelSetup.id + ' button {width:' + buttonWidth +
-          '%;height:' + buttonHeight + '%;margin-bottom:5px;font-size:' +
-          fontSize + 'px;}';
-    }
-    style += '</style>';
-    return '<div id="' + this.panelSetup.id + '">' + style + html + '</div>';
-  };
+
   Device.fn.updateUIAttr = function(id, attr, value) {
     var html = '', found = false;
     for (var i = 0, element; element = this.UIelements[i]; i++) {
@@ -1277,25 +1251,25 @@ chord = (function() {
           break;
         }
       }
-      html += uiManager.renderHTML(
+      html += UiManager.renderHTML(
           this.UIelements[i].type, this.UIelements[i].members);
     }
     if (found) {
       this.show(html);
     }
   };
-  /** action methods **/
+
   Device.fn.on = function(evt, fn, manager) {
     if (typeof fn == 'function') { // add listener
-      if (this['on' + evt] === undefined) {
-        this['on' + evt] = [];
+      if (this.callbacks[evt] === undefined) {
+        this.callbacks[evt] = [];
         if (this.live) {
           chordServer.on(this.id, evt);
         }
       }
       // event bubbling: single-device event has higher priority
-      this['on' + evt].push({fn: fn, manager: manager});
-      this['on' + evt].sort(function compare(a, b) {
+      this.callbacks[evt].push({fn: fn, manager: manager});
+      this.callbacks[evt].sort(function compare(a, b) {
         if (a.manager === undefined || b.manager === undefined)
           return -1;
         if (a.manager.deviceNum() < b.manager.deviceNum())
@@ -1316,8 +1290,8 @@ chord = (function() {
       }
       var newEvent = (typeof fn === 'string' || fn === undefined) ?
           new SingleDeviceEvent(this, evt, fn === '' ? null : fn) : fn;
-      if (this['on' + evt] !== undefined) {
-        for (var i = 0, listener; listener = this['on' + evt][i]; i++) {
+      if (this.callbacks[evt] !== undefined) {
+        for (var i = 0, listener; listener = this.callbacks[evt][i]; i++) {
           // propagation
           if (listener.manager !== undefined) { // listener by EventManager
             listener.fn(newEvent, listener.manager);
@@ -1376,7 +1350,7 @@ chord = (function() {
           this.UI = this.emulator.showUI(this,
               this.UIcards[this.UIcardIdx.col]);
         }
-        if (this.UI !== null && this['on' + 'tap:button'] !== undefined) {
+        if (this.UI !== null && this.callbacks['tap:button'] !== undefined) {
           this.UI.find('button').click({device: this}, function(event) {
             event.data.device.onUI('tap:button', $(this).attr('value'));
           });
@@ -1385,6 +1359,7 @@ chord = (function() {
     }
     return this;
   };
+
   Device.fn.onUI = function(type, value) {
     switch (type) {
       case 'tap:button':
@@ -1393,31 +1368,77 @@ chord = (function() {
         break;
     }
   };
+
   Device.fn.run = function(fn, data) {
     data !== undefined ? fn(this, data) : fn(this); // run the function
     return this;
   };
+
   Device.fn.show = function(html, selectionId, fn, UIelements, numElements) {
+    var self = this;
     this.selectionId = selectionId;
-    if (html.indexOf('<') < 0 || !html.startsWith('<div')) {
-      // html = '<div>' + html + '</div>';
-    }
+    this.html = html;
     if (UIelements === undefined || numElements === undefined) {
-      var analysis = uiManager.getUIElements(html);
+      var analysis = UiManager.getUIElements(html);
       UIelements = analysis[0];
       numElements = analysis[1];
     }
-    var toShow = this.renderUI(html, UIelements, numElements);
     this.wakeup();
-    this.UI = this.emulator.showUI(this, this.renderEmulatorUI());
+    this.UI = this.emulator.showUI(this,
+      renderEmulatorUI(this.html, this.type, UIelements));
     if (this.live) {
-      chordServer.show(this.id, toShow);
+      chordServer.show(this.id,
+        this.renderUI(html, UIelements, numElements));
     }
     if (fn !== undefined) {
       fn(this); // when shown, callback if user specifies
     }
     return this;
+
+    function renderEmulatorUI(html, type, UIelements) {
+      if (html === '') return '';
+      if (type === chord.deviceType.watch ||
+          type === chord.deviceType.glass) { // return cards
+        self.UIcards = renderEmulatorCards(UIelements, type);
+        self.UIcardIdx = {row: 0, col: 0};
+        if (type === chord.deviceType.watch) {
+          return self.UIcards[self.UIcardIdx.row][self.UIcardIdx.col];
+        }
+        else if (type === chord.deviceType.glass) {
+          return self.UIcards[self.UIcardIdx.col];
+        }
+      } else { // return html UI
+        return html;
+      }
+
+      function renderEmulatorCards(UIelements, type) {
+        var UIcards = [];
+        for (var i = 0, el; el = UIelements[i]; i++) {
+          var newRow = [];
+          for (var j = 0, member; member = el.members[j]; j++) {
+            var newCard = renderEmulatorCardHTML(el.type, member);
+            if (type === chord.deviceType.watch) {
+              newRow.push(newCard);
+            }
+            else if (type === chord.deviceType.glass) {
+              UIcards.push(newCard);
+            }
+          }
+          if (newRow.length !== 0) {
+            UIcards.push(newRow);
+          }
+        }
+        return UIcards;
+      }
+
+      function renderEmulatorCardHTML(tag, member) {
+        return '<' + tag + ' value="' + (member.val || '') + '"' + ' class="' +
+            (member.val || '') + '" src="' + (member.src || '') +
+            '">' + member.html + '</' + tag + '>';
+      }
+    };
   };
+
   Device.fn.play = function(filepath, selectionId, fn) {
     this.selectionId = selectionId;
     this.wakeup();
@@ -1438,6 +1459,7 @@ chord = (function() {
     }
     return this;
   };
+
   Device.fn.call = function(calleeNum, selectionId, fn) {
     this.selectionId = selectionId;
     if (isWebUI) {
@@ -1453,6 +1475,7 @@ chord = (function() {
     }
     return this;
   };
+
   Device.fn.wakeup = function() {
     if (isWebUI) {
       this.emulator.wakeup(this);
@@ -1462,8 +1485,9 @@ chord = (function() {
     }
     return this;
   };
+
   Device.fn.reset = function() {
-    this.show('');
+    this.initCallback();
     this.emulator.reset(this.id);
     this.selectionId = null;
     if (this.live) {
@@ -1471,6 +1495,7 @@ chord = (function() {
     }
     return this;
   };
+
   Device.fn.startApp = function(appName, selectionId) {
     if (isWebUI) {
       this.emulator.startApp(this, appName);
@@ -1479,6 +1504,7 @@ chord = (function() {
     }
     return this;
   };
+
   Device.fn.killApp = function(appName) {
     if (isWebUI) {
       this.emulator.killApp(this, appName);
@@ -1487,6 +1513,7 @@ chord = (function() {
     }
     return this;
   };
+
   Device.fn.cloneDevice = function() {
     var copy = new Device(this.type, this.name, this.fullname, this.joint,
         this.id, this.capabilities, this.live);
@@ -1512,21 +1539,27 @@ chord = (function() {
     this.selection = new ChordSelection(null, this.devices);
     this.selection.setMode(mode);
   };
+
   Event.prototype.getDevices = function() {
     return this.selection;
   };
+
   Event.prototype.getDevice = function() {
     return this.getDevices();
   };
+
   Event.prototype.getEventType = function() {
     return this.eventType;
   };
+
   Event.prototype.getTimestamp = function() {
     return this.timestamp;
   };
+
   Event.prototype.getValues = function() {
     return this.vals;
   };
+
   Event.prototype.getValue = function() {
     return this.getValues();
   };
@@ -1627,7 +1660,7 @@ chord = (function() {
    * The class representing a Chord UI manager.
    * @constructor
    */
-  var uiManager = {
+  var UiManager = {
     getUIElements: function(html) {
       var numElements = {total: 0, maxBtn: 0};
       var UIelements = [];
@@ -1656,6 +1689,9 @@ chord = (function() {
             var val = $(el).attr('value') || null;
             var id = $(el).attr('id') || null;
             var src = $(el).attr('src') || null;
+            if (src) {
+              src += chord.scriptDir;
+            }
             group.push({val: val, html: $(el).html(), id: id, src: src});
           }
         }

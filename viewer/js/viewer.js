@@ -24,7 +24,7 @@
  * The file paths to device spec, script, and info.
  * @constructor
  */
-var filepaths = {
+var filepath = {
   DEVICE_INFO_URL: '/device/deviceSpec.json',
   DEVICE_TEMPLATE: '/device/deviceTemplate.html',
   SAMPLES: {
@@ -33,13 +33,14 @@ var filepaths = {
     'Photo Launcher': '/samples/photoLauncher'
   },
   curDir: null,
-  scriptName: 'service.js'
+  scriptName: 'service.js',
+  VIEWER: 'viewer/'
 };
 
 $(document).ready(function() {
   window.requestFileSystem = window.requestFileSystem ||
     window.webkitRequestFileSystem;
-  $.getJSON(filepaths.DEVICE_INFO_URL, function(data) { // load device specs
+  $.getJSON(filepath.DEVICE_INFO_URL, function(data) { // load device specs
     chord.setup(data.deviceCapabilities, data.devices);
     viewer.init('dialog');
     emulatorManager.init('devices', 'phone-watch-tablet');
@@ -56,6 +57,8 @@ $(document).ready(function() {
 var viewer = {
   dialog: null,
   dialogId: '',
+  pathToShow: '.path',
+  runIcon: '.run',
   /**
    * Initializes the viewer.
    * @param {string} dialogId Id of the dialog element.
@@ -67,9 +70,9 @@ var viewer = {
       dialog.close();
     });
     $('.run').click(function() {
-      filepaths.curDir ?
-        scriptManager.loadSample(filepaths.curDir + filepaths.scriptName) :
-        Log.e('specify a sample to run script');
+      filepath.curDir ?
+        scriptManager.loadSample(filepath.curDir + filepath.scriptName) :
+        Log.e('specify a directory to run script');
     });
   },
   /**
@@ -116,7 +119,7 @@ var emulatorManager = {
     if (preset) { // emulator preset
       this.devicePreset = preset;
     }
-    $.get(filepaths.DEVICE_TEMPLATE, function(content) {
+    $.get(filepath.DEVICE_TEMPLATE, function(content) {
       self.deviceTemplate = content;
       self.updateDevicePreset(self.devicePreset, function() {
         setUpEvents(chord.actionCapabilityMap);
@@ -222,7 +225,7 @@ var emulatorManager = {
     var removeDevice = function(deviceId, type) {
       var success = chord.deleteDevice(deviceId);
       if (success) {
-        Log.e('Delete device: ' + type);
+        Log.w('Delete device: ' + type);
         self.showDevices();
       }
       return success;
@@ -320,12 +323,9 @@ var emulatorManager = {
     this.updateStatus(deviceId, 'reset');
   },
   /**
-   * Resets all the devices.
+   * Resets all the device emulators.
    */
   resetAll: function() {
-    for (var i = 0, deviceId; deviceId = this.deviceIds[i]; i++) {
-      this.reset(deviceId);
-    }
     this.shownClasses = [];
   },
   /**
@@ -475,19 +475,17 @@ var emulatorManager = {
  * @constructor
  */
 var scriptManager = {
-  scriptDir: null,
   init: function(sameplId, openDirId) {
     var self = this;
     var listOfSamples = '';
-    for (var sampleName in filepaths.SAMPLES) {
-      listOfSamples += '<p path="' + filepaths.SAMPLES[sampleName] + '">' +
+    for (var sampleName in filepath.SAMPLES) {
+      listOfSamples += '<p path="' + filepath.SAMPLES[sampleName] + '">' +
         sampleName + '</p>';
     }
     $(sameplId).click(function() { // show list of samples
       viewer.showDialog(listOfSamples, {
           'p': function() {
-            filepaths.curDir = $(this).attr('path') + '/';
-            scriptManager.loadSample(filepaths.curDir + filepaths.scriptName);
+            loadScript($(this).attr('path'));
             dialog.close();
           }
         });
@@ -496,22 +494,33 @@ var scriptManager = {
       chrome.fileSystem.chooseEntry({
           type: 'openDirectory'
         }, function (dir) {
-          if (dir) {
-            if (!dir || !dir.isDirectory) {
-              Log.e('unable to load the script directory');
-              return;
-            }
-            self.scriptDir = dir;
+          if (!dir || !dir.isDirectory) {
+            Log.e('unable to load the script directory: ' + dir);
+            return;
           }
+          console.log(dir);
+          chrome.fileSystem.getDisplayPath(dir, function(path) {
+            path = path.substring(path.lastIndexOf(filepath.VIEWER) +
+              filepath.VIEWER.length, path.length);
+            loadScript(path);
+          });
         });
     });
+
+    function loadScript(dir) {
+      filepath.curDir = dir + '/';
+      scriptManager.loadSample(filepath.curDir + filepath.scriptName);
+      $(viewer.pathToShow).html(filepath.curDir);
+      $(viewer.runIcon).removeClass('disable');
+    }
   },
   /**
    * Executes the Chord script by writing and retrieving from local storage.
    * @param {string} code The Chord script.
    */
   runScript: function(code) {
-    resetEmulators();
+    chord.resetDevices();
+    emulatorManager.resetAll();
     window.requestFileSystem(window.TEMPORARY, 1024*1024,
       onInitFs, errorHandler);
     function onInitFs(fs) {
@@ -537,22 +546,16 @@ var scriptManager = {
      */
     function loadScript(path) {
       $.getScript(path, function() {
-        Log.d('script loaded');
+        Log.d('script loaded: ' + filepath.curDir + filepath.scriptName);
         service();
       }).fail(function() {
-        Log.e('failed to load script');
+        Log.e('failed to load script: ' + path);
       });
     }
     /**
      * Handles file I/O error.
      */
     function errorHandler() {
-    }
-    /**
-     * Resets the Chord emulator view.
-     */
-    function resetEmulators() {
-      emulatorManager.resetAll();
     }
   },
   /**
@@ -562,9 +565,10 @@ var scriptManager = {
   loadSample: function(path) {
     var self = this;
     $.get(path, function(content) {
+      chord.setDir(filepath.curDir);
       self.runScript(content);
     }).fail(function() {
-      Log.e('failed to load sample: ' + e.toString());
+      Log.e('failed to load sample: ' + path);
     });
   }
 };

@@ -18,7 +18,7 @@
 
 chord.launchMethod = chord.launchOption.default;
 
-var service = function() {
+function service() {
   chord.select('.showable[size="small"].touchable')
     .show('<button value="Calendar">Calendar</button>')
     .on('tap:button', function(event) {
@@ -27,4 +27,4 @@ var service = function() {
         .show('retrieving calendar data...')
         .startApp('Calendar');
     });
-};
+}

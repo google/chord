@@ -18,15 +18,17 @@
 
 chord.launchMethod = chord.launchOption.default;
 
-var service = function() {
-  var photo = '<img src="img/photo.jpg"/>';
+function service() {
+  var photo = {
+    path: '<img src="photo.jpg"/>',
+    caption: 'Credit: WallpaperCave'
+  };
   chord.select('.shakable[size="small"]')
-    .show('<button>show photo</button>')
-    .on('tap:button', function(event) {
+    .show('Shake to view photo')
+    .on('shake', function(event) {
       event.getDevice()
-        .show('calling Steve')
-        .call('650-123-4567');
+        .show(photo.caption);
       chord.select(':tablet[os="android"]')
-       .show(photo);
+       .show(photo.path);
    });
-};
+}

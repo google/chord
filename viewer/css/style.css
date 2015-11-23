@@ -61,6 +61,12 @@ h3 {
     cursor: not-allowed;
   }
 
+.path {
+  font-size: 12px;
+  font-weight: normal;
+  color: grey;
+}
+
 /* Main device panel */
 
 .devicePanel {
@@ -123,7 +129,13 @@ h3 {
     }
 
     .UI img {
-      width: 95%;
+      max-width: 100%;
+      max-height: 100%;
+      height: auto;
+      width: auto;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .callStart {
@@ -309,7 +321,7 @@ h3 {
     .evt:hover:after {
       background: rgba(10, 10, 10, .7);
       border-radius: 5px;
-      bottom: 28px;
+      top: 28px;
       color: #fff;
       content: attr(evtname);
       max-width: 80px;
