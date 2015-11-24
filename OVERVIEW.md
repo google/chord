@@ -9,8 +9,8 @@ messages.
 ### To load a Chord script
 
 Select from the list of samples via the menu ![sample
-icon](/viewer/img/sample.png), or specify a directory you created under /viewer
-by the system dialog ![folder icon](/viewer/img/folder.png).
+icon](/viewer/img/sample.png =24x), or specify a directory you created under /viewer
+by the system dialog ![folder icon](/viewer/img/folder.png =24x).
 
 ### To test with emulators
 Interact via the device UI or the event buttons on the right-hand side.
