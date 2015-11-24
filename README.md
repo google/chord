@@ -6,8 +6,8 @@ and a viewer for a set of interactive emulators.
 
 *This project is previously named "Weave". We renamed this project to avoid
 confusion with the [Brillo and Weave
-platform](https://developers.google.com/brillo/)
-(Note: This is a different project!)*
+platform](https://developers.google.com/brillo/) (Note: This is a different
+project!)*
 
 ## Goals
 
@@ -15,8 +15,8 @@ Chord provides a set of high-level APIs, based on JavaScript, for developers to
 easily distribute UI output and combine user input and sensing events across
 devices. These high-level APIs as well as their underlying scripting concepts
 allow developers to focus on their target interaction behaviors and think about
-target devices regarding their capabilities and affordances, rather than
-low-level specifications.
+target devices regarding their capabilities and affordances, rather than low-
+level specifications.
 
 Chord also contributes an environment for developers to test cross-device
 behaviors, and when ready, deploy these behaviors to its runtime environment on
@@ -31,9 +31,11 @@ Chord is implemented as a Chrome packaged app. Please install
 
 ## Progress
 
-This current version enables developers to load sample codes and interact with
-the emulators. In our next update, users will be able to load their Chord
-script, connect live Android devices on the network, and test with devices.
+This current version enables developers to load chord scripts and interact with
+the emulators, including a smartphone, a smart watch, and a tablet.
+
+In our next update, developers will be able to connect live Android devices on
+the network, and test with devices.
 
 ## Publication
 

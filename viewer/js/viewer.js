@@ -487,6 +487,7 @@ var scriptManager = {
           'p': function() {
             loadScript($(this).attr('path'));
             dialog.close();
+            $('.folder-open').removeClass('folder-open').addClass('folder');
           }
         });
     });
@@ -503,6 +504,7 @@ var scriptManager = {
             path = path.substring(path.lastIndexOf(filepath.VIEWER) +
               filepath.VIEWER.length, path.length);
             loadScript(path);
+            $('.folder').removeClass('folder').addClass('folder-open');
           });
         });
     });
