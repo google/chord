@@ -8,12 +8,13 @@ messages.
 
 ### To load a Chord script
 
-Select from the list of samples via the menu ![sample
-icon](/viewer/img/sample.png =24x), or specify a directory you created under /viewer
-by the system dialog ![folder icon](/viewer/img/folder.png =24x).
+Select from the list of samples via the menu <img src="/viewer/img/sample.png"
+alt="sample icon" style="width: 24px;"/>, or specify a directory you created
+under /viewer by the system dialog <img src="/viewer/img/folder.png" alt="folder
+icon" style="width: 24px;"/>.
 
-### To test with emulators
-Interact via the device UI or the event buttons on the right-hand side.
+### To test with emulators Interact via the device UI or the event buttons on
+the right-hand side.
 
 ## Docs
 
