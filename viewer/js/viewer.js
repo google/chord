@@ -27,10 +27,11 @@
 var FILEPATH = {
   DEVICE_INFO_URL: '/device/deviceSpec.json',
   DEVICE_TEMPLATE: '/device/deviceTemplate.html',
+  SAMPLE_DIR: 'samples/',
   SAMPLES: {
-    'Launch Pad': '/samples/launchPad',
-    'Bump': '/samples/bump',
-    'Photo Launcher': '/samples/photoLauncher'
+    'Launch Pad': 'launchPad',
+    'Bump': 'bump',
+    'Photo Launcher': 'photoLauncher'
   },
   SCRIPT_NAME: 'service.js',
   VIEWER: 'viewer/'
@@ -40,6 +41,7 @@ var FILEPATH = {
 $(document).ready(function() {
   window.requestFileSystem = window.requestFileSystem ||
     window.webkitRequestFileSystem;
+  window.directoryEntry = window.directoryEntry || window.webkitDirectoryEntry;
   $.getJSON(FILEPATH.DEVICE_INFO_URL, function(data) { // load device specs
     chord.setup(data.deviceCapabilities, data.devices);
     viewer.init('dialog');
@@ -480,16 +482,22 @@ var scriptEntry = {
  * @constructor
  */
 var scriptManager = {
-  init: function(sameplId, openDirId, runId) {
+  /**
+   * Initializes the menu UI callbacks for loading scripts.
+   * @param {string} sampleId The sample icon class name.
+   * @param {string} openDirId The open directory icon class name.
+   * @param {string} runId The run icon class name.
+   */
+  init: function(sampleId, openDirId, runId) {
     var listOfSamples = '';
     for (var sampleName in FILEPATH.SAMPLES) {
       listOfSamples += '<p path="' + FILEPATH.SAMPLES[sampleName] + '">' +
         sampleName + '</p>';
     }
-    $(sameplId).click(function() { // run a sample from the list
+    $(sampleId).click(function() { // run a sample from the list
       viewer.showDialog(listOfSamples, {
           'p': function() {
-            loadScript($(this).attr('path'));
+            scriptManager.loadDir($(this).attr('path'));
             dialog.close();
             $('.folder-open').removeClass('folder-open').addClass('folder');
           }
@@ -512,27 +520,39 @@ var scriptManager = {
         Log.e('specify a directory to run script');
     });
   },
+  /**
+   * Loads a script directory.
+   * @param {Object, string} dir The directory.
+   */
   loadDir: function(dir) {
     scriptEntry.dir = null;
     scriptEntry.entries = [];
-    var reader = dir.createReader();
-    var readEntries = function() {
-      reader.readEntries(function(entries) {
-        if (entries.length) {
-          entries.forEach(function(item) {
-            if (item.isFile) {
-              scriptEntry.entries.push(item.name);
-            }
-          });
-          readEntries();
-        } else {
-          retrieveScript();
-        }
-      }, errorHandler);
+    if (typeof dir === 'string') {
+      scriptEntry.dir = dir;
+      retrieveScript(FILEPATH.SAMPLE_DIR + dir + '/');
+    } else {
+      var reader = dir.createReader();
+      var readEntries = function() {
+        reader.readEntries(function(entries) {
+          if (entries.length) {
+            entries.forEach(function(item) {
+              if (item.isFile) {
+                scriptEntry.entries.push(item.name);
+              }
+            });
+            readEntries();
+          } else {
+            retrieveScriptByDir();
+          }
+        }, errorHandler);
+      }
+      readEntries();
     }
-    readEntries();
 
-    function retrieveScript() {
+    /**
+     * Retrieve the main Chord script by user specified directory.
+     */
+    function retrieveScriptByDir() {
       if (scriptEntry.entries.length === 0 ||
           scriptEntry.entries.indexOf(FILEPATH.SCRIPT_NAME) < 0) {
         Log.e('no main Chord script found');
@@ -542,14 +562,22 @@ var scriptManager = {
         chrome.fileSystem.getDisplayPath(dir, function(path) {
           path = path.substring(path.lastIndexOf(FILEPATH.VIEWER) +
             FILEPATH.VIEWER.length, path.length) + '/';
-          scriptEntry.dirPath = path;
-          chord.setDir(path);
-          loadSample(path + FILEPATH.SCRIPT_NAME);
-          $(viewer.pathToShow).html(path);
-          $(viewer.runIcon).removeClass('disable');
-          $('.folder').removeClass('folder').addClass('folder-open');
+          retrieveScript(path);
         });
       }
+    }
+
+    /**
+     * Retrieve the main Chord script.
+     * @param {string} dirPath The directory path to the script.
+     */
+    function retrieveScript(dirPath) {
+      scriptEntry.dirPath = dirPath;
+      chord.setDir(dirPath);
+      loadSample(dirPath + FILEPATH.SCRIPT_NAME);
+      $(viewer.pathToShow).html(dirPath);
+      $(viewer.runIcon).removeClass('disable');
+      $('.folder').removeClass('folder').addClass('folder-open');
     }
 
     /**
@@ -560,9 +588,10 @@ var scriptManager = {
       $.get(scriptpath, function(content) {
         runScript(content);
       }).fail(function() {
-        Log.e('failed to load sample: ' + path);
+        Log.e('failed to load sample: ' + scriptpath);
       });
     }
+
     /**
      * Executes the Chord script by writing and retrieving from local storage.
      * @param {string} code The Chord script.
@@ -589,6 +618,7 @@ var scriptManager = {
           }, errorHandler);
         }, errorHandler);
       }
+
       /**
        * Loads the script.
        * @param {string} path The path to the script.
