@@ -24,7 +24,7 @@
  * The file paths to device spec, script, and info.
  * @constructor
  */
-var filepath = {
+var FILEPATH = {
   DEVICE_INFO_URL: '/device/deviceSpec.json',
   DEVICE_TEMPLATE: '/device/deviceTemplate.html',
   SAMPLES: {
@@ -32,19 +32,19 @@ var filepath = {
     'Bump': '/samples/bump',
     'Photo Launcher': '/samples/photoLauncher'
   },
-  curDir: null,
-  scriptName: 'service.js',
+  SCRIPT_NAME: 'service.js',
   VIEWER: 'viewer/'
 };
 
+// retrieve device info when UI is ready
 $(document).ready(function() {
   window.requestFileSystem = window.requestFileSystem ||
     window.webkitRequestFileSystem;
-  $.getJSON(filepath.DEVICE_INFO_URL, function(data) { // load device specs
+  $.getJSON(FILEPATH.DEVICE_INFO_URL, function(data) { // load device specs
     chord.setup(data.deviceCapabilities, data.devices);
     viewer.init('dialog');
     emulatorManager.init('devices', 'phone-watch-tablet');
-    scriptManager.init('.icon.sample', '.icon.folder')
+    scriptManager.init('.icon.sample', '.icon.folder', '.run');
     window.Log = emulatorManager.showSystemLog;
     Log.v('Chord plugin ready');
   });
@@ -68,11 +68,6 @@ var viewer = {
     this.dialog = document.querySelector('#' + dialogId);
     $('#' + dialogId + ' .dlg_close').click(function() {
       dialog.close();
-    });
-    $('.run').click(function() {
-      filepath.curDir ?
-        scriptManager.loadSample(filepath.curDir + filepath.scriptName) :
-        Log.e('specify a directory to run script');
     });
   },
   /**
@@ -119,7 +114,7 @@ var emulatorManager = {
     if (preset) { // emulator preset
       this.devicePreset = preset;
     }
-    $.get(filepath.DEVICE_TEMPLATE, function(content) {
+    $.get(FILEPATH.DEVICE_TEMPLATE, function(content) {
       self.deviceTemplate = content;
       self.updateDevicePreset(self.devicePreset, function() {
         setUpEvents(chord.actionCapabilityMap);
@@ -471,18 +466,27 @@ var emulatorManager = {
 };
 
 /**
+ * The scriptEntry object storing info of user's scripts.
+ * @constructor
+ */
+var scriptEntry = {
+  dir: null,
+  dirPath: '',
+  entries: []
+};
+
+/**
  * The scriptManager object handling sample and user's scripts.
  * @constructor
  */
 var scriptManager = {
-  init: function(sameplId, openDirId) {
-    var self = this;
+  init: function(sameplId, openDirId, runId) {
     var listOfSamples = '';
-    for (var sampleName in filepath.SAMPLES) {
-      listOfSamples += '<p path="' + filepath.SAMPLES[sampleName] + '">' +
+    for (var sampleName in FILEPATH.SAMPLES) {
+      listOfSamples += '<p path="' + FILEPATH.SAMPLES[sampleName] + '">' +
         sampleName + '</p>';
     }
-    $(sameplId).click(function() { // show list of samples
+    $(sameplId).click(function() { // run a sample from the list
       viewer.showDialog(listOfSamples, {
           'p': function() {
             loadScript($(this).attr('path'));
@@ -499,78 +503,109 @@ var scriptManager = {
             Log.e('unable to load the script directory: ' + dir);
             return;
           }
-          console.log(dir);
-          chrome.fileSystem.getDisplayPath(dir, function(path) {
-            path = path.substring(path.lastIndexOf(filepath.VIEWER) +
-              filepath.VIEWER.length, path.length);
-            loadScript(path);
-            $('.folder').removeClass('folder').addClass('folder-open');
-          });
+          scriptManager.loadDir(dir);
         });
     });
-
-    function loadScript(dir) {
-      filepath.curDir = dir + '/';
-      scriptManager.loadSample(filepath.curDir + filepath.scriptName);
-      $(viewer.pathToShow).html(filepath.curDir);
-      $(viewer.runIcon).removeClass('disable');
-    }
+    $(runId).click(function() { // run button
+      scriptEntry.dir ?
+        scriptManager.loadDir(scriptEntry.dir) :
+        Log.e('specify a directory to run script');
+    });
   },
-  /**
-   * Executes the Chord script by writing and retrieving from local storage.
-   * @param {string} code The Chord script.
-   */
-  runScript: function(code) {
-    chord.resetDevices();
-    emulatorManager.resetAll();
-    window.requestFileSystem(window.TEMPORARY, 1024*1024,
-      onInitFs, errorHandler);
-    function onInitFs(fs) {
-      fs.root.getFile('chord.js', {create: true}, function(fileEntry) {
-        fileEntry.createWriter(function(fileWriter) {
-          fileWriter.truncate(0);
-          fileWriter.onwriteend = function(e) {
-            if (fileWriter.length === 0) {
-              var blob = new Blob([code], {type: 'text/plain'});
-              fileWriter.write(blob);
-              loadScript(fileEntry.toURL());
+  loadDir: function(dir) {
+    scriptEntry.dir = null;
+    scriptEntry.entries = [];
+    var reader = dir.createReader();
+    var readEntries = function() {
+      reader.readEntries(function(entries) {
+        if (entries.length) {
+          entries.forEach(function(item) {
+            if (item.isFile) {
+              scriptEntry.entries.push(item.name);
             }
-          };
-          fileWriter.onerror = function(e) {
-            Log.e('failed to load script: ' + e.toString());
-          };
-        }, errorHandler);
+          });
+          readEntries();
+        } else {
+          retrieveScript();
+        }
       }, errorHandler);
     }
+    readEntries();
+
+    function retrieveScript() {
+      if (scriptEntry.entries.length === 0 ||
+          scriptEntry.entries.indexOf(FILEPATH.SCRIPT_NAME) < 0) {
+        Log.e('no main Chord script found');
+        Log.e('did you name your script to "' + FILEPATH.SCRIPT_NAME + '"?');
+      } else {
+        scriptEntry.dir = dir;
+        chrome.fileSystem.getDisplayPath(dir, function(path) {
+          path = path.substring(path.lastIndexOf(FILEPATH.VIEWER) +
+            FILEPATH.VIEWER.length, path.length) + '/';
+          scriptEntry.dirPath = path;
+          chord.setDir(path);
+          loadSample(path + FILEPATH.SCRIPT_NAME);
+          $(viewer.pathToShow).html(path);
+          $(viewer.runIcon).removeClass('disable');
+          $('.folder').removeClass('folder').addClass('folder-open');
+        });
+      }
+    }
+
     /**
-     * Loads the script.
-     * @param {string} path The path to the script.
+     * Loads a sample script.
+     * @param {string} path The file path to the script.
      */
-    function loadScript(path) {
-      $.getScript(path, function() {
-        Log.d('script loaded: ' + filepath.curDir + filepath.scriptName);
-        service();
+    function loadSample(scriptpath) {
+      $.get(scriptpath, function(content) {
+        runScript(content);
       }).fail(function() {
-        Log.e('failed to load script: ' + path);
+        Log.e('failed to load sample: ' + path);
       });
     }
+    /**
+     * Executes the Chord script by writing and retrieving from local storage.
+     * @param {string} code The Chord script.
+     */
+    function runScript(code) {
+      chord.resetDevices();
+      emulatorManager.resetAll();
+      window.requestFileSystem(window.TEMPORARY, 1024*1024,
+        onInitFs, errorHandler);
+      function onInitFs(fs) {
+        fs.root.getFile('chord.js', {create: true}, function(fileEntry) {
+          fileEntry.createWriter(function(fileWriter) {
+            fileWriter.truncate(0);
+            fileWriter.onwriteend = function(e) {
+              if (fileWriter.length === 0) {
+                var blob = new Blob([code], {type: 'text/plain'});
+                fileWriter.write(blob);
+                loadScript(fileEntry.toURL());
+              }
+            };
+            fileWriter.onerror = function(e) {
+              Log.e('failed to load script: ' + e.toString());
+            };
+          }, errorHandler);
+        }, errorHandler);
+      }
+      /**
+       * Loads the script.
+       * @param {string} path The path to the script.
+       */
+      function loadScript(path) {
+        $.getScript(path, function() {
+          Log.d('script loaded: ' + scriptEntry.dirPath + FILEPATH.SCRIPT_NAME);
+          service();
+        }).fail(errorHandler);
+      }
+    }
+
     /**
      * Handles file I/O error.
      */
     function errorHandler() {
+      Log.e('failed to load file');
     }
-  },
-  /**
-   * Loads a sample script.
-   * @param {string} path The file path to the script.
-   */
-  loadSample: function(path) {
-    var self = this;
-    $.get(path, function(content) {
-      chord.setDir(filepath.curDir);
-      self.runScript(content);
-    }).fail(function() {
-      Log.e('failed to load sample: ' + path);
-    });
   }
 };
