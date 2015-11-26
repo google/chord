@@ -14,16 +14,17 @@
  * limitations under the License.
  */
 
- /* Cross-device launch pad for multiple apps */
+ /* Cross-device one app launcher */
 
 chord.launchMethod = chord.launchOption.default;
 
 function service() {
   chord.select('.showable[size="small"].touchable')
-    .show(chord.getLayoutById('panel'))
+    .show('<button value="Calendar">Calendar</button>')
     .on('tap:button', function(event) {
+      event.getDevice().show('launching app...');
       chord.select('.showable[size="normal"]')
-        .not(event.getDevice())
-        .startApp(event.getValue()); // e.g. 'GoogleMaps'
+        .show('retrieving calendar data...')
+        .startApp('Calendar');
     });
 }

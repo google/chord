@@ -30,11 +30,17 @@ var FILEPATH = {
   SAMPLE_DIR: 'samples/',
   SAMPLES: {
     'Launch Pad': 'launchPad',
-    'Bump': 'bump',
-    'Photo Launcher': 'photoLauncher'
+    'One App Launcher': 'oneAppLauncher',
+    'Photo Launcher': 'photoLauncher',
+    'Photo Slideshow': 'slideshow',
+    'Multi-device Bump': 'bump'
   },
   SCRIPT_NAME: 'service.js',
-  VIEWER: 'viewer/'
+  VIEWER: 'viewer/',
+  LAYOUT: {
+    launchPad: ['panel.html'],
+    slideshow: ['controller.html']
+  }
 };
 
 // retrieve device info when UI is ready
@@ -474,7 +480,8 @@ var emulatorManager = {
 var scriptEntry = {
   dir: null,
   dirPath: '',
-  entries: []
+  entries: [],
+  layouts: []
 };
 
 /**
@@ -525,11 +532,18 @@ var scriptManager = {
    * @param {Object, string} dir The directory.
    */
   loadDir: function(dir) {
-    scriptEntry.dir = null;
-    scriptEntry.entries = [];
+    scriptEntry = {
+      dir: null,
+      dirPath: '',
+      entries: [],
+      layouts: []
+    };
     if (typeof dir === 'string') {
       scriptEntry.dir = dir;
-      retrieveScript(FILEPATH.SAMPLE_DIR + dir + '/');
+      if (FILEPATH.LAYOUT[dir] !== undefined) { // html layouts
+        scriptEntry.layouts = FILEPATH.LAYOUT[dir];
+      }
+      retrieveScript(FILEPATH.SAMPLE_DIR + dir + '/', scriptEntry.layouts);
     } else {
       var reader = dir.createReader();
       var readEntries = function() {
@@ -538,6 +552,9 @@ var scriptManager = {
             entries.forEach(function(item) {
               if (item.isFile) {
                 scriptEntry.entries.push(item.name);
+                if (item.name.endsWith('.html')) {
+                  scriptEntry.layouts.push(item.name);
+                }
               }
             });
             readEntries();
@@ -547,6 +564,43 @@ var scriptManager = {
         }, errorHandler);
       }
       readEntries();
+    }
+
+    /**
+     * Retrieve the main Chord script.
+     * @param {!string} dirPath The directory path to the script.
+     * @param {!Array<string>} entries The file entries under dirPath.
+     */
+    function retrieveScript(dirPath, layouts) {
+      // retrieve layouts
+      var layoutContent = {};
+      if (layouts.length === 0) {
+        readyToLoadSample(null);
+      } else {
+        for (var i = 0, layoutName; layoutName = layouts[i]; i++) {
+          $.get(dirPath + layoutName, function(content) {
+            var layoutName = this.url.substring(this.url.lastIndexOf('/') + 1,
+              this.url.lastIndexOf('.'));
+            layoutContent[layoutName] = content;
+            if (Object.keys(layoutContent).length === layouts.length) {
+              readyToLoadSample(layoutContent);
+            }
+          });
+        }
+      }
+
+      function readyToLoadSample(layouts) {
+        chord.loadLayouts(layouts);
+        // set directory path
+        scriptEntry.dirPath = dirPath;
+        chord.setDir(dirPath);
+        // load sample to run Chord
+        loadSample(dirPath + FILEPATH.SCRIPT_NAME);
+        // update viewer UI
+        $(viewer.pathToShow).html(dirPath);
+        $(viewer.runIcon).removeClass('disable');
+        $('.folder').removeClass('folder').addClass('folder-open');
+      }
     }
 
     /**
@@ -562,22 +616,9 @@ var scriptManager = {
         chrome.fileSystem.getDisplayPath(dir, function(path) {
           path = path.substring(path.lastIndexOf(FILEPATH.VIEWER) +
             FILEPATH.VIEWER.length, path.length) + '/';
-          retrieveScript(path);
+          retrieveScript(path, scriptEntry.layouts);
         });
       }
-    }
-
-    /**
-     * Retrieve the main Chord script.
-     * @param {string} dirPath The directory path to the script.
-     */
-    function retrieveScript(dirPath) {
-      scriptEntry.dirPath = dirPath;
-      chord.setDir(dirPath);
-      loadSample(dirPath + FILEPATH.SCRIPT_NAME);
-      $(viewer.pathToShow).html(dirPath);
-      $(viewer.runIcon).removeClass('disable');
-      $('.folder').removeClass('folder').addClass('folder-open');
     }
 
     /**

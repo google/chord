@@ -963,7 +963,7 @@ chord = (function() {
       return this;
     };
     this.show = function(html, fn) {
-      if (canRunService('show')) {
+      if (html && canRunService('show')) {
         html = resetDir(html);
         var analysis = UiManager.getUIElements(html);
         this.UIelements = analysis[0];
@@ -1197,8 +1197,7 @@ chord = (function() {
     return 1;
   };
 
-  Device.fn.renderUI = function(html, UIelements, numElements) {
-    this.UIelements = UIelements;
+  Device.fn.renderUI = function(html, numElements) {
     if (this.type === chord.deviceType.watch ||
         this.type === chord.deviceType.glass) {
       return this.UIelements;
@@ -1246,7 +1245,7 @@ chord = (function() {
     for (var i = 0, element; element = this.UIelements[i]; i++) {
       for (var j = 0, item; item = element.members[j]; j++) {
         if (item.id === id) {
-          this.UIelements[i].members[j][String(attr)] = value;
+          this.UIelements[i].members[j][String(attr)] = chord.scriptDir + value;
           found = true;
           break;
         }
@@ -1383,6 +1382,7 @@ chord = (function() {
       UIelements = analysis[0];
       numElements = analysis[1];
     }
+    this.UIelements = UIelements;
     this.wakeup();
     this.UI = this.emulator.showUI(this,
       renderEmulatorUI(this.html, this.type, UIelements));
@@ -1444,7 +1444,7 @@ chord = (function() {
     this.wakeup();
     if (isWebUI) {
       if (!filepath.startsWith('http')) {
-        filepath = filepaths.curDir + filepath;
+        filepath = chord.scriptDir + filepath;
       }
       var audioElement = document.createElement('audio');
       audioElement.setAttribute('src', filepath);

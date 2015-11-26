@@ -14,16 +14,38 @@
  * limitations under the License.
  */
 
- /* Cross-device launch pad for multiple apps */
+ /* Slideshow using default operator */
 
 chord.launchMethod = chord.launchOption.default;
 
 function service() {
+  var photoIdx = 1, numOfPhotos = 4;
+  var img = '<img id="imgView" src="img/' + photoIdx + '.jpg"/>';
+
+  // photo viewer
+  var viewer = chord.select('.showable[size="normal"]')
+    .show(img);
+
+  // remote control
   chord.select('.showable[size="small"].touchable')
-    .show(chord.getLayoutById('panel'))
+    .show(chord.getLayoutById('controller'))
     .on('tap:button', function(event) {
-      chord.select('.showable[size="normal"]')
-        .not(event.getDevice())
-        .startApp(event.getValue()); // e.g. 'GoogleMaps'
+      if (event.getValue() === 'prev') {
+        photoIdx--;
+        if (photoIdx < 1) {
+          photoIdx = numOfPhotos;
+        }
+      } else if (event.getValue() === 'next') {
+        photoIdx++;
+        if (photoIdx > numOfPhotos) {
+          photoIdx = 1;
+        }
+      }
+      updatePhoto(viewer, photoIdx);
     });
+
+  function updatePhoto(viewer, photoIdx) {
+    viewer.updateUIAttr('imgView', 'src', 'img/' + photoIdx + '.jpg');
+  }
 }
+

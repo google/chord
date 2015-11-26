@@ -231,29 +231,32 @@ h3 {
       }
 
       .watchSkin .UI .prev {
-        background-image: url('../img/icon/prev.bmp');
+        background-image: url('../img/icon/prev.png');
       }
 
       .watchSkin .UI .next {
-        background-image: url('../img/icon/next.bmp');
+        background-image: url('../img/icon/next.png');
       }
 
       .watchSkin .UI .play {
-        background-image: url('../img/icon/play.bmp');
+        background-image: url('../img/icon/play.png');
       }
 
       .watchSkin .UI .GoogleMaps {
-        background-image: url('../img/icon/GoogleMaps.jpg');
+        background-image: url('../img/icon/maps.png');
       }
 
       .watchSkin .UI .Gmail {
-        background-image: url('../img/icon/Gmail.png');
+        background-image: url('../img/icon/gmail.png');
       }
 
       .watchSkin .UI .Calendar {
-        background-image: url('../img/icon/Calendar.png');
+        background-image: url('../img/icon/calendar.png');
       }
 
+      .watchSkin .UI .Photos {
+        background-image: url('../img/icon/photos.png');
+      }
       .watchSkin .activeUI {
         background-color: black!important;
       }
@@ -389,6 +392,7 @@ button span {
   width: 100%;
   height: 100%;
   background-size: contain;
+  background-repeat: no-repeat!important;
 }
 
   .appGmail {
