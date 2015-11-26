@@ -95,15 +95,10 @@ chord = (function() {
      */
     layouts: {},
     /**
-     * Available Chord application IDs.
-     * @type {!Array<string>}
-     */
-    services: [],
-    /**
      * Current user ID.
      * @type {string}
      */
-    userID: null,
+    userId: null,
     /**
      * Current username.
      * @type {string}
@@ -181,8 +176,8 @@ chord = (function() {
      * @return {Device} The device of the specific ID.
      */
     getDeviceById: function(id) {
-      var idx = this.getdeviceIdx(id);
-      return (idx >= 0) ? this.devices[this.getdeviceIdx(id)] : null;
+      var idx = this.getDeviceIdx(id);
+      return (idx >= 0) ? this.devices[this.getDeviceIdx(id)] : null;
     },
 
     /**
@@ -236,23 +231,13 @@ chord = (function() {
      * @return {!number} The device index on the device list,
      *     or -1 if the device doesn't exist.
      */
-    getdeviceIdx: function(id) {
+    getDeviceIdx: function(id) {
       for (var i = this.devices.length - 1; i >= 0; i--) {
         if (this.devices[i].id === id) {
           return i;
         }
       }
       return -1;
-    },
-
-    /**
-     * Returns the service (application) name by service ID.
-     * @param {!string} appID The service ID.
-     * @return {!string} The service name.
-     */
-    getServiceName: function(appID) {
-      return (this.services[appID] !== undefined) ?
-          this.services[appID].name : 'Error: no service exists';
     },
 
     /**
@@ -413,127 +398,6 @@ chord = (function() {
     },
 
     /**
-     * Creates a selector based on a set of devices.
-     * @param {!Array<string>} deviceIds A list of device IDs to be included.
-     * @param {!Array<string>} excludedIds A list of device IDs to be excluded.
-     */
-    createSelectors: function(deviceIds, excludedIds) {
-      var suggestions = [];
-      var self = this;
-      if (deviceIds.length !== 0) {
-        var selectedDevices = [];
-        for (var i = 0, device; device = this.devices[i]; i++) {
-          if (deviceIds.indexOf(device.id) >= 0)
-            selectedDevices.push(device);
-        }
-        var cap = '*', subselector = {};
-        // match general properties
-        for (var i = 0, attr; attr = this.propertyList[i]; i++) {
-          subselector[attr] = findCommonProperty(selectedDevices, attr);
-        }
-        addSuggestion(suggestSelector(cap, (function(s) {
-          delete s.name;
-          return s;
-        })(subselector), true));
-        // match capabilities
-        for (var i = 0; cap = this.capabilityList[i]; i++) {
-          var values = [];
-          // find the common capability
-          for (var j = 0; j < selectedDevices.length; j++) {
-            var val = selectedDevices[j].capability[cap];
-            if (val === undefined) break;
-            values.push(val);
-          }
-          // match the capability attributes
-          if (values.length === selectedDevices.length) {
-            var subselector = {};
-            for (var k in values[0]) {
-              if (k != 'on') {
-                var val = values[0][k];
-                var match = true;
-                for (var m = 1; m < values.length && match; m++) {
-                  match = values[m][k] === val;
-                }
-                if (match) {
-                  subselector[k] = val;
-                }
-              }
-            }
-            // match sub-attributes
-            addSuggestion(suggestSelector(cap, subselector, false));
-          }
-        }
-      }
-      suggestions.sort(function(a, b) { // sort the suggestions by coverage
-        return a.selection.length - b.selection.length;
-      });
-      if (deviceIds.length !== 0) { // add names
-        addSuggestion(suggestSelector('*', {
-          name: selectedDevices.map(function(e) {return e['name'];})}, true));
-      }
-      return suggestions;
-
-      /**
-       * Examines if all the devices in the set have the same property.
-       * @param {!Array<Object>} devices The device set.
-       * @param {!string} prop The target property.
-       * @return {string} The common value of the target capability.
-       */
-      function findCommonProperty(devices, prop) {
-        var vals = devices.map(function(e) {return e[prop];});
-        var allVals = self.devices.map(function(e) {return e[prop];});
-        var uniqueValues = vals.filter(function onlyUnique(val, idx, self) {
-            return self.indexOf(val) === idx;
-          });
-        for (var i = 0, v; v = uniqueValues[i]; i++) {
-          // vals.
-        }
-        return uniqueValues;
-        // other properties
-        return devices.map(function(e) {return e[prop]})
-            .reduce(function(a, b) {
-              return (a === b) ? a : null;
-            });
-      }
-
-      function suggestSelector(key, subselector, mainProp) {
-        if (subselector.type !== undefined) {
-          key = ':' + subselector.type.join(',');
-          delete subselector['type'];
-        }
-        if (!mainProp) key = '.' + key;
-        var selectorStr = generateSelector(key, subselector, mainProp);
-        var selector = self.parseSelector(selectorStr);
-        var selection = self.select(selector, true);
-        // selector['mainProp'] = mainProp;
-        return {
-          selector: selector,
-          selection: selection.getdeviceIds()
-        };
-      }
-
-      function generateSelector(key, subselector, mainProp) {
-        var selectorStr = key;
-        var matchedKeys = Object.keys(subselector);
-        if (matchedKeys.length > 0) {
-          for (var i = 0, k; k = matchedKeys[i]; i++) {
-            if (k !== 'type') {
-              selectorStr += '[' + k + '="' + subselector[k] + '"]';
-            }
-          }
-        }
-        return selectorStr;
-      }
-
-      function addSuggestion(suggestion) {
-        suggestion.selection.filter(function(el) {
-          return excludedIds.indexOf(el) === -1;
-        });
-        suggestions.push(suggestion);
-      }
-    },
-
-    /**
      * Creates a Chord-capable device.
      * @param {!string} id The device id.
      * @param {!string} type The device type.
@@ -554,7 +418,7 @@ chord = (function() {
      * @return {!boolean} Whether the deletion is successful.
      */
     deleteDevice: function(id) {
-      var i = this.getdeviceIdx(id);
+      var i = this.getDeviceIdx(id);
       if (i >= 0) {
         this.devices.splice(i, 1);
         return true;
@@ -922,7 +786,6 @@ chord = (function() {
         }
       }
     };
-    /** action methods **/
     this.on = function(eventType, fn) {
       var selector = chord.parseSelector(eventType); // parse selector
       if (canRunService(eventType)) {
@@ -1196,7 +1059,6 @@ chord = (function() {
   Device.fn.size = function() {
     return 1;
   };
-
   Device.fn.renderUI = function(html, numElements) {
     if (this.type === chord.deviceType.watch ||
         this.type === chord.deviceType.glass) {

@@ -29,8 +29,8 @@ var FILEPATH = {
   DEVICE_TEMPLATE: '/device/deviceTemplate.html',
   SAMPLE_DIR: 'samples/',
   SAMPLES: {
-    'Launch Pad': 'launchPad',
     'One App Launcher': 'oneAppLauncher',
+    'Launch Pad': 'launchPad',
     'Photo Launcher': 'photoLauncher',
     'Photo Slideshow': 'slideshow',
     'Multi-device Bump': 'bump'
