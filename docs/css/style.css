@@ -1,10 +1,12 @@
 .main {
   max-width: 680px;
 }
+
 .pre-next {
-  margin-top:50px;
   margin-bottom: 250px;
+  margin-top: 50px;
 }
+
 .link {
   margin-right: 10px;
 }
@@ -18,12 +20,14 @@ img {
 }
 
 .chordCode {
-  font-family: "source-code-pro", Consolas, monospace !important;
   color: #080;
+  font-family: "source-code-pro", Consolas, monospace!important;
 }
+
 .func {
   color: orange;
 }
+
 .arg {
   color: #708;
 }
@@ -39,25 +43,28 @@ p {
 .method {
   margin-top: 30px;
 }
+
 .method .name {
-  font-family: "source-code-pro", Consolas, monospace !important;
+  font-family: "source-code-pro", Consolas, monospace!important;
 }
-.method .detail{
+
+.method .detail {
   margin-left: 30px;
 }
-.method .codeEx{
+
+.method .codeEx {
   margin-left: 30px;
-  width: 90%
+  width: 90%;
 }
+
 .method table {
+  font-family: "source-code-pro", Consolas, monospace!important;
   margin-left: 30px;
-  font-family: "source-code-pro", Consolas, monospace !important;
   width: 80%;
 }
+
 .submethod {
   margin-left: 60px;
-}
-.submethod .detail{
 }
 
 .log_v {

@@ -17,7 +17,7 @@
 /**
  * @fileoverview Manages the Chord viewer,
  * including a test panel with a set of emulators and a log panel.
- * @author peggychi@google.com (Peggy Chi)
+ * @author peggychi@cs.berkeley.edu (Peggy Chi)
  */
 
 /**
@@ -56,6 +56,7 @@ $(document).ready(function() {
     window.Log = emulatorManager.showSystemLog;
     Log.v('Chord plugin ready');
   });
+  scriptManager.loadDir(FILEPATH.SAMPLES['Photo Slideshow']);
 });
 
 /**
@@ -67,6 +68,7 @@ var viewer = {
   dialogId: '',
   pathToShow: '.path',
   runIcon: '.run',
+
   /**
    * Initializes the viewer.
    * @param {string} dialogId Id of the dialog element.
@@ -74,17 +76,18 @@ var viewer = {
   init: function(dialogId) {
     this.dialogId = dialogId;
     this.dialog = document.querySelector('#' + dialogId);
-    $('#' + dialogId + ' .dlg_close').click(function() {
+    $('#' + dialogId + ' .dlg-close').click(function() {
       dialog.close();
     });
   },
+
   /**
    * Shows a dialog given content.
    * @param {string} message Id of the device panel container.
    * @param {Object} callbacks Classes and callbacks listening to a click event.
    */
   showDialog: function(message, callbacks) {
-    var dialogObj = $('#' + this.dialogId + ' .dlg_content').html(message);
+    var dialogObj = $('#' + this.dialogId + ' .dlg-content').html(message);
     this.dialog.showModal();
     for (var evt in callbacks) {
       dialogObj.find(evt).click(callbacks[evt]);
@@ -111,6 +114,7 @@ var emulatorManager = {
     'rotatePortrait', 'rotateLandscape'],
     typeToSimulate: ['shakable', 'rotatable', 'touchable', 'hearable']
   },
+
   /**
    * Initializes the emulators.
    * @param {string} rootId Id of the device panel container.
@@ -144,6 +148,7 @@ var emulatorManager = {
     });
     this.showSystemLog.init(); // log
   },
+
   /**
    * Updates the emulators.
    * @param {string} preset The emulator set.
@@ -184,6 +189,7 @@ var emulatorManager = {
     }
     chord.setEmulatedDevices(numEmulatedDevices, false, callback);
   },
+
   /**
    * Renders the emulators.
    */
@@ -212,6 +218,7 @@ var emulatorManager = {
       }
     }
   },
+
   /**
    * Updates the emulators.
    * @param {Object} device A Chord device.
@@ -280,6 +287,7 @@ var emulatorManager = {
       chord.getDeviceById(deviceId).on(eventType);
     }
   },
+
   /**
    * Adds a new emulator.
    * @param {string} id The new device id.
@@ -290,6 +298,7 @@ var emulatorManager = {
     chord.addEmulatedDevices(id, type, name);
     this.showDevices();
   },
+
   /**
    * Updates the device status.
    * @param {string} deviceId The device id.
@@ -299,6 +308,7 @@ var emulatorManager = {
     $('#' + deviceId).find('.status').html(msg);
     Log.v('[' + deviceId + '] ' + msg);
   },
+
   /**
    * Applies the event class.
    * @param {string} deviceId The device id.
@@ -309,6 +319,7 @@ var emulatorManager = {
     this.updateStatus(deviceId, 'received event ' + evt);
     this.shownClasses.push(evt);
   },
+
   /**
    * Activates the device emulator view.
    * @param {Object} device The device.
@@ -317,6 +328,7 @@ var emulatorManager = {
     this.getUI(device.id).toggleClass(this.uiClass.active, true);
     this.shownClasses.push(this.uiClass.active);
   },
+
   /**
    * Resets the device emulator view.
    * @param {string} deviceId The device id.
@@ -325,12 +337,14 @@ var emulatorManager = {
     this.getUI(deviceId).removeClass(this.shownClasses.join(' ')).html('');
     this.updateStatus(deviceId, 'reset');
   },
+
   /**
    * Resets all the device emulators.
    */
   resetAll: function() {
     this.shownClasses = [];
   },
+
   /**
    * Retrieves the jQuery element of the emulator.
    * @param {string} deviceId The device id.
@@ -338,6 +352,7 @@ var emulatorManager = {
   getUI: function(deviceId) {
     return $('#' + deviceId).find('.UI');
   },
+
   /**
    * Shows the device emulator view.
    * @param {Object} device The device.
@@ -355,6 +370,7 @@ var emulatorManager = {
     }
     return UI;
   },
+
   /**
    * Launches an application on the device emulator.
    * @param {Object} device The device.
@@ -365,6 +381,7 @@ var emulatorManager = {
     this.showUI(device, '<div class="app app' + appName + '"></div>');
     this.updateStatus(device.id, 'Start app ' + appName);
   },
+
   /**
    * Kills an application on the device emulator.
    * @param {Object} device The device.
@@ -374,6 +391,7 @@ var emulatorManager = {
     this.showUI(device, '');
     this.updateStatus(device.id, 'Kill app ' + appName);
   },
+
   /**
    * Makes a phone call on the device emulator.
    * @param {Object} device The device.
@@ -383,6 +401,7 @@ var emulatorManager = {
     this.showUI(device, 'Calling ' + calleeNum + '...');
     this.applyClass(device.id, 'callStart');
   },
+
   /**
    * Rotates counter-clockwise the device emulator.
    * @param {Object} device The device.
@@ -390,6 +409,7 @@ var emulatorManager = {
   rotateCCW: function(device) {
     this.rotateDevice(device.id, -90);
   },
+
   /**
    * Rotates clockwise the device emulator.
    * @param {Object} device The device.
@@ -397,6 +417,7 @@ var emulatorManager = {
   rotateCW: function(device) {
     this.rotateDevice(device.id, 90);
   },
+
   /**
    * Rotates the device emulator.
    * @param {string} deviceId The device id.
@@ -414,6 +435,7 @@ var emulatorManager = {
     subview.css('-webkit-transform', 'rotate(' + (-angle) + 'deg)');
     view.attr('orientation', (angle % 360).toString());
   },
+
   /**
    * Handles log messages on the log panel.
    */
@@ -423,6 +445,7 @@ var emulatorManager = {
     i: function(msg) { this.log('log_i', msg); },
     w: function(msg) { this.log('log_w', msg); },
     e: function(msg) { this.log('log_e', msg); },
+
     /**
      * Prepends the log message to the log panel.
      * @param {string} c The class name of the message.
@@ -431,8 +454,9 @@ var emulatorManager = {
     log: function(c, msg) {
       $('<div class="' + c + '">' + this.getDate(
           new Date()) + '  ' + msg + '</div>')
-          .prependTo('#logConsole');
+          .prependTo('#log-console');
     },
+
     /**
      * Renders the date to a readable form.
      * @param {Object} d The date.
@@ -458,6 +482,7 @@ var emulatorManager = {
         return (num < range) ? '0' + num : num;
       }
     },
+
     /**
      * Initializes the log.
      */
@@ -527,6 +552,7 @@ var scriptManager = {
         Log.e('specify a directory to run script');
     });
   },
+
   /**
    * Loads a script directory.
    * @param {Object, string} dir The directory.
@@ -568,7 +594,7 @@ var scriptManager = {
 
     /**
      * Retrieve the main Chord script.
-     * @param {!string} dirPath The directory path to the script.
+     * @param {string} dirPath The directory path to the script.
      * @param {!Array<string>} entries The file entries under dirPath.
      */
     function retrieveScript(dirPath, layouts) {

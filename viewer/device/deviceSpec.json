@@ -1251,7 +1251,7 @@
       "name": "iPhon6",
       "os": "iOS",
       "joint": "hand",
-      "img": "iphone6.jpeg"
+      "img": "iphone6.jpg"
     },
     "phone_lumia520": {
       "id": "phone_lumia520",
@@ -1260,7 +1260,7 @@
       "name": "Lumia520",
       "os": "Windows",
       "joint": "hand",
-      "img": "NokiaLumia520.jpg"
+      "img": "nokia-lumia-520.jpg"
     },
     "phone_galaxy-s5": {
       "id": "phone_galaxy-s5",
@@ -1278,7 +1278,7 @@
       "name": "Xperia-Z3",
       "os": "Android",
       "joint": "hand",
-      "img": "SonyXperiaZ3.jpeg"
+      "img": "sony-xperia-z3.jpg"
     },
     "phone_galaxy-note4": {
       "id": "phone_galaxy-note4",
@@ -1287,7 +1287,7 @@
       "name": "Galaxy-Note4",
       "os": "Android",
       "joint": "hand",
-      "img": "SamsungGalaxyNote4.jpeg"
+      "img": "samsung-galaxy-note4.jpg"
     },
     "phone_galaxy-s6-edge": {
       "id": "phone_galaxy-s6-edge",
@@ -1296,7 +1296,7 @@
       "name": "Galaxy-S6-Edge",
       "os": "Android",
       "joint": "hand",
-      "img": "GalaxyS6Edge.jpeg"
+      "img": "galaxy-s6-edge.jpg"
     },
     "phone_htc-one-m9": {
       "id": "phone_htc-one-m9",
@@ -1305,7 +1305,7 @@
       "name": "HTC-One-M9",
       "os": "Android",
       "joint": "hand",
-      "img": "HTCOneM9.png"
+      "img": "htc-one-m9.png"
     },
     "tablet_nexus9": {
       "id": "tablet_nexus9",
@@ -1323,7 +1323,7 @@
       "name": "Galaxy-Tab4",
       "os": "Android",
       "joint": "hand",
-      "img": "GalaxyTab4.jpeg"
+      "img": "Galaxy-tab-4.jpg"
     },
     "tablet_surface3": {
       "id": "tablet_surface3",
@@ -1341,7 +1341,7 @@
       "name": "LG-G-watch",
       "os": "Android",
       "joint": "wrist",
-      "img": "wear_LG_G.png"
+      "img": "wear-lg-g.png"
     },
     "watch_moto360": {
       "id": "watch_moto360",
@@ -1350,7 +1350,7 @@
       "name": "Moto360",
       "os": "Android",
       "joint": "wrist",
-      "img": "wear_Moto360.png"
+      "img": "wear-moto-360.png"
     },
     "watch_samsung-gear-llive": {
       "id": "watch_samsung-gear-llive",
@@ -1359,7 +1359,7 @@
       "name": "Samsung-Gear-Llive",
       "os": "Android",
       "joint": "wrist",
-      "img": "wear_SamsungGearLive.png"
+      "img": "wear-samsung-gear-live.png"
     },
     "watch_sony-smartwatch3": {
       "id": "watch_sony-smartwatch3",
@@ -1368,7 +1368,7 @@
       "name": "Sony-Smartwatch3",
       "os": "Android",
       "joint": "wrist",
-      "img": "wear_SonySmartWatch3.png"
+      "img": "wear-sony-smart-watch-3.png"
     },
     "eyewear_google-glass": {
       "id": "eyewear_google-glass",
@@ -1377,7 +1377,7 @@
       "name": "Google-Glass",
       "os": "Android",
       "joint": "head",
-      "img": "Google-Glass.jpg"
+      "img": "google-glass.jpg"
     },
     "keyboard_mac-keyboard": {
       "id": "keyboard_mac-keyboard",
@@ -1411,7 +1411,7 @@
       "type": "lightbulb",
       "name": "Philips-Lightbulb",
       "joint": "",
-      "img": "philips_lightbulb.jpg"
+      "img": "philips-lightbulb.jpg"
     }
   }
 }

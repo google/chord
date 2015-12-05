@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
- /**
+/**
  * @fileoverview Implements the Chord framework that handles
  * the device selection, actions, and events.
- * @author peggychi@google.com (Peggy Chi)
+ * @author peggychi@cs.berkeley.edu (Peggy Chi)
  */
 
 chord = (function() {
@@ -48,7 +48,7 @@ chord = (function() {
     deviceTemplates: {},
     /**
      * Emulator types and numbers.
-     * @type {!Object<string, !number>}
+     * @type {!Object<string, number>}
      */
     numEmulatedDevices: {},
     /**
@@ -68,12 +68,12 @@ chord = (function() {
     capabilityList: [],
     /**
      * The map between device actions and capabilities.
-     * @type {!Object<string, !string>}
+     * @type {!Object<string, string>}
      */
     actionCapabilityMap: {},
     /**
      * Available device types.
-     * @type {!Object<string, !string>}
+     * @type {!Object<string, string>}
      */
     deviceType: {},
     /**
@@ -121,7 +121,7 @@ chord = (function() {
 
     /**
      * Selects a set of devices that match the selector.
-     * @param {!string} selectorStr The device selection criteria.
+     * @param {string} selectorStr The device selection criteria.
      * @param {boolean=} skipReport
      *    Whether this should not report to the server.
      * @return {!ChordSelection} A collection of devices.
@@ -172,7 +172,7 @@ chord = (function() {
 
     /**
      * Retrieves a device by its ID.
-     * @param {!string} id The device id to be found.
+     * @param {string} id The device id to be found.
      * @return {Device} The device of the specific ID.
      */
     getDeviceById: function(id) {
@@ -182,7 +182,7 @@ chord = (function() {
 
     /**
      * Retrieves a set of device by joint.
-     * @param {!string} joint The joint of interest.
+     * @param {string} joint The joint of interest.
      * @return {!ChordSelection} The devices that match the joint.
      */
     getDeviceByJoint: function(joint) {
@@ -197,7 +197,7 @@ chord = (function() {
 
     /**
      * Retrieves a set of device by type.
-     * @param {!string} type The device type of interest.
+     * @param {string} type The device type of interest.
      * @return {!ChordSelection} The devices that match the type.
      */
     getDeviceByType: function(type) {
@@ -227,8 +227,8 @@ chord = (function() {
 
     /**
      * Retrieves the index of a device by its ID.
-     * @param {!string} id The device id to be found.
-     * @return {!number} The device index on the device list,
+     * @param {string} id The device id to be found.
+     * @return {number} The device index on the device list,
      *     or -1 if the device doesn't exist.
      */
     getDeviceIdx: function(id) {
@@ -242,7 +242,7 @@ chord = (function() {
 
     /**
      * Returns the current username.
-     * @return {!string} The current username.
+     * @return {string} The current username.
      */
     getUserName: function() {
       return this.username;
@@ -258,7 +258,7 @@ chord = (function() {
 
     /**
      * Parses the device selector string.
-     * @param {!string} selectorStr The device selector.
+     * @param {string} selectorStr The device selector.
      * @return {!Object} The structured selector by capabilities and criteria.
      */
     parseSelector: function(selectorStr) {
@@ -399,9 +399,9 @@ chord = (function() {
 
     /**
      * Creates a Chord-capable device.
-     * @param {!string} id The device id.
-     * @param {!string} type The device type.
-     * @param {!string} name The device name.
+     * @param {string} id The device id.
+     * @param {string} type The device type.
+     * @param {string} name The device name.
      * @param {!boolean} live
      *    Whether it should a physical device on the network.
      * @return {!Device} The Chord-capable device.
@@ -414,7 +414,7 @@ chord = (function() {
 
     /**
      * Removes a device from the device list by its ID.
-     * @param {!string} id The device id to be removed.
+     * @param {string} id The device id to be removed.
      * @return {!boolean} Whether the deletion is successful.
      */
     deleteDevice: function(id) {
@@ -553,9 +553,9 @@ chord = (function() {
 
     /**
      * Adds a new emulator to the current emulator list.
-     * @param {!string} id The device id.
-     * @param {!string} type The device type.
-     * @param {!string} name The device name.
+     * @param {string} id The device id.
+     * @param {string} type The device type.
+     * @param {string} name The device name.
      */
     addEmulatedDevices: function(id, type, name) {
       if (id === null) id = Math.random().toString(36).substring(7);
@@ -567,9 +567,9 @@ chord = (function() {
     /**
      * Updates the available device list.
      * @param {!boolean} newAdded Whether this is a new device to be added.
-     * @param {!string} id The device id to be added.
-     * @param {!string} type The device type to be added.
-     * @param {!string} name The device name to be added.
+     * @param {string} id The device id to be added.
+     * @param {string} type The device type to be added.
+     * @param {string} name The device name to be added.
      * @return {!boolean} Whether the update is successful.
      */
     updateNetworkDevices: function(newAdded, id, type, name) {
@@ -603,8 +603,8 @@ chord = (function() {
 
     /**
      * Retrieves a HTML layout by ID.
-     * @param {!string} id The layout ID.
-     * @return {!string} The HTML layout of the id.
+     * @param {string} id The layout ID.
+     * @return {string} The HTML layout of the id.
      */
     getLayoutById: function(id) {
       var layout = this.layouts[id];
@@ -613,7 +613,7 @@ chord = (function() {
 
     /**
      * Sets the path to the script directory.
-     * @param {!string} path The directory path.
+     * @param {string} path The directory path.
      */
     setDir: function(path) {
       this.scriptDir = path;
@@ -649,7 +649,7 @@ chord = (function() {
 
     /**
      * Detects available Chord-capable devices in the device set.
-     * @param {!string} action The action.
+     * @param {string} action The action.
      * @return {!boolean} Whether there is any device available.
      */
     function canRunService(action) {
@@ -659,6 +659,11 @@ chord = (function() {
       }
       return true;
     }
+
+    /**
+     * Retrieves one device from the list of devices.
+     * @return {!Device} A device from this selection.
+     */
     function getOneDevice() {
       var liveDevices = []; // priority: live device
       for (var i = 0, device; device = devices[i]; i++) {
@@ -675,12 +680,12 @@ chord = (function() {
               {length: devices.length - 1}).map(Number.call, Number));
       return devices[idx];
     }
-    function removeByIdx(idx) {
-      if (idx > -1) {
-        devices.splice(idx, 1);
-      }
-    }
-    /** utility methods **/
+
+    /**
+     * Sets this selection to the all mode.
+     * @param {Object=} option Details options to manipulate the mode.
+     * @return {!ChordSelection} This collection of devices in 'all' mode.
+     */
     this.all = function(option) {
       this.setMode(SelectionMode.all);
       if (option !== undefined) {
@@ -688,6 +693,12 @@ chord = (function() {
       }
       return this;
     };
+
+    /**
+     * Sets this selection to the combine mode.
+     * @param {Object=} option Details options to manipulate the mode.
+     * @return {!ChordSelection} This collection of devices in 'combine' mode.
+     */
     this.combine = function(option) {
       this.setMode(SelectionMode.combine);
       if (option !== undefined) {
@@ -695,6 +706,12 @@ chord = (function() {
       }
       return this;
     };
+
+    /**
+     * Excludes devices from the device list.
+     * @param {Device or ChordSelection} exclusion Device(s) to exclude.
+     * @return {!ChordSelection} This collection of devices excluding exclusion.
+     */
     this.not = function(exclusion) {
       if (exclusion instanceof Device) { // directly remove the device
         removeByIdx(devices.indexOf(exclusion));
@@ -711,26 +728,77 @@ chord = (function() {
         this.not(exludeDevices);
       }
       return this;
+
+      /**
+       * Removes a device by its index in the device list.
+       * @param {Number} idx Index of the device to remove.
+       */
+      function removeByIdx(idx) {
+        if (idx > -1) {
+          devices.splice(idx, 1);
+        }
+      }
     };
+
+    /**
+     * Merges device selections.
+     * @param {ChordSelection} otherSelection Device(s) to append.
+     * @return {!ChordSelection} This collection of devices.
+     */
     this.append = function(otherSelection) {
       devices = devices.concat(otherSelection.getDevices());
+      return this;
     };
+
+    /**
+     * Sets to a new mode.
+     * @param {Number} newMode The new selection mode.
+     * @return {!ChordSelection} This collection of devices.
+     */
     this.setMode = function(newMode) {
       mode = newMode;
+      return this;
     };
+
+    /**
+     * Sets new selection option.
+     * @param {Object} newOption The selection option.
+     * @return {!ChordSelection} This collection of devices.
+     */
     this.setOption = function(newOption) {
       option = newOption;
+      return this;
     };
+
+    /**
+     * Retrieves the list of devices of this selection.
+     * @return {!Array<Device>} A device list.
+     */
     this.getDevices = function() {
       return devices;
     };
+
+    /**
+     * Retrieves the number of devices of this selection.
+     * @return {number} Number of devices.
+     */
     this.size = function() {
       if (devices === undefined) return 0;
       return devices.length;
     };
+
+    /**
+     * Retrieves the name(s) of device(s) of this selection.
+     * @return {string} Name(s) of devices.
+     */
     this.getDeviceName = function() {
       return this.getDeviceNames();
     };
+
+    /**
+     * Retrieves the name(s) of device(s) of this selection.
+     * @return {string} Name(s) of devices.
+     */
     this.getDeviceNames = function() {
       var names = [];
       for (var i = 0, device; device = devices[i]; i++) {
@@ -738,6 +806,11 @@ chord = (function() {
       }
       return names.join(', ');
     };
+
+    /**
+     * Retrieves the id(s) of device(s) of this selection.
+     * @return {string} Id(s) of devices.
+     */
     this.getdeviceIds = function() {
       var ids = [];
       for (var i = 0, device; device = devices[i]; i++) {
@@ -745,18 +818,40 @@ chord = (function() {
       }
       return ids;
     };
-    this.getSelector = function() {
-      return selector;
-    };
+
+    /**
+     * Retrieves the id of this selection.
+     * @return {string} Id of this selection.
+     */
     this.getId = function() {
       return id;
     };
+
+    /**
+     * Retrieves the selector of this selection.
+     * @return {string} Selector of this selection.
+     */
+    this.getSelector = function() {
+      return selector;
+    };
+
+    /**
+     * Retrieves the mode of this selection.
+     * @return {!Object} Mode of this selection.
+     */
     this.getMode = function() {
       return mode;
     };
+
+    /**
+     * Retrieves the option set for this selection.
+     * @return {!Object} Option of this selection.
+     */
     this.getOption = function() {
       return option;
     };
+
+
     this.getDeviceHasUIById = function(id) {
       var matchedDevices = [];
       for (var i = 0, device; device = devices[i]; i++) {
@@ -776,6 +871,8 @@ chord = (function() {
         return new ChordSelection(null, matchedDevices);
       }
     };
+
+
     this.updateUIAttr = function(id, attr, value) {
       var devices = this.getDeviceHasUIById(id);
       if ((devices instanceof Device)) {
@@ -786,6 +883,8 @@ chord = (function() {
         }
       }
     };
+
+
     this.on = function(eventType, fn) {
       var selector = chord.parseSelector(eventType); // parse selector
       if (canRunService(eventType)) {
@@ -818,13 +917,16 @@ chord = (function() {
       }
       return this;
     };
+
     this.when = function(eventType) {
       return this;
     };
+
     this.run = function(fn, data) {
       data !== undefined ? fn(this, data) : fn(this); // run the function
       return this;
     };
+
     this.show = function(html, fn) {
       if (html && canRunService('show')) {
         html = resetDir(html);
@@ -881,6 +983,7 @@ chord = (function() {
         return html.replace('src="', 'src="' + chord.scriptDir);
       }
     };
+
     this.play = function(filepath) {
       if (devices === undefined || devices.length === 0) {
         console.log('[chord] no device available');
@@ -901,12 +1004,14 @@ chord = (function() {
       }
       return this;
     };
+
     this.call = function(calleeNum, fn) { // only one device to make a call
       if (canRunService()) {
         getOneDevice().call(calleeNum, id, fn);
       }
       return this;
     };
+
     this.wakeup = function() {
       if (canRunService('wakeup')) {
         if (mode === SelectionMode.default) { // pick one
@@ -919,6 +1024,7 @@ chord = (function() {
       }
       return this;
     };
+
     this.startApp = function(appName) {
       var suc = false;
       if (canRunService('startApp')) {
@@ -948,6 +1054,7 @@ chord = (function() {
       }
       return this;
     };
+
     this.killApp = function(appName) {
       if (canRunService('killApp')) {
         if (mode === SelectionMode.default) {
@@ -964,10 +1071,10 @@ chord = (function() {
 
   /**
    * The class representing a Chord device.
-   * @param {!string} type The device type.
-   * @param {!string} name The device name.
-   * @param {!string} joint Human joint that the device will be operated.
-   * @param {!string} id The device id.
+   * @param {string} type The device type.
+   * @param {string} name The device name.
+   * @param {string} joint Human joint that the device will be operated.
+   * @param {string} id The device id.
    * @param {!Object} capabilities Device capabilities.
    * @param {!boolean} live Whether it should a physical device on the network.
    * @constructor
@@ -1004,11 +1111,13 @@ chord = (function() {
     this.emulator = null;
     this.init();
   };
+
   Device.fn = Device.prototype = {
     init: function() {
       this.initCallback();
     }
   };
+
   Device.fn.initCallback = function() {
     this.callbacks = {};
     for (var cap in this.capability) { // add automatic emulator update
@@ -1040,6 +1149,7 @@ chord = (function() {
       });
     }
   };
+
   Device.fn.attr = function(attr, val) {
     if (typeof val !== 'undefined') {
       this[attr] = val;
@@ -1047,18 +1157,23 @@ chord = (function() {
       return this[attr];
     }
   };
+
   Device.fn.is = function(capability) {
     return this.capability[capability] !== undefined;
   };
+
   Device.fn.addEmulator = function(callback) {
     this.emulator = callback;
   };
+
   Device.fn.getDeviceName = function() {
     return this.name;
   };
+
   Device.fn.size = function() {
     return 1;
   };
+
   Device.fn.renderUI = function(html, numElements) {
     if (this.type === chord.deviceType.watch ||
         this.type === chord.deviceType.glass) {
@@ -1389,7 +1504,7 @@ chord = (function() {
    * The class representing a Chord event.
    * @param {!Array<Device>} devices The devices in the event.
    * @param {!SelectionMode} mode The device mode.
-   * @param {!string} eventType The triggered event type.
+   * @param {string} eventType The triggered event type.
    * @param {!Object} vals The values related to the event.
    * @constructor
    */
@@ -1429,17 +1544,20 @@ chord = (function() {
   /**
    * The class representing a Chord single-device event.
    * @param {!Device} device The single device in the event.
-   * @param {!string} eventType The triggered event type.
+   * @param {string} eventType The triggered event type.
    * @param {!Object} val The values related to the event.
    * @constructor
    */
   var SingleDeviceEvent = function(device, eventType, val) {
     Event.call(this, [device], SelectionMode.default, eventType, [val]);
   };
+
   SingleDeviceEvent.prototype = new Event();
+
   SingleDeviceEvent.prototype.getDevice = function() {
     return this.devices.length > 0 ? this.devices[0] : null;
   };
+
   SingleDeviceEvent.prototype.getValue = function() {
     return this.devices.length > 0 ? this.vals[0] : null;
   };
@@ -1447,7 +1565,7 @@ chord = (function() {
   /**
    * The class representing a Chord event manager.
    * @param {!ChordSelection} selection The devices to attach to the event.
-   * @param {!string} eventType The triggered event type.
+   * @param {string} eventType The triggered event type.
    * @param {!function} fn The callback function.
    * @constructor
    */
@@ -1486,13 +1604,16 @@ chord = (function() {
       return true;
     };
   };
+
   EventManager.fn = EventManager.prototype = {
     init: function() {}
   };
+
   EventManager.fn.deviceNum = function() {
     return this.parent.getMode() === SelectionMode.default ?
         1 : this.parent.size();
   };
+
   EventManager.fn.eventTriggered = function(event) {
     if (this.parent.getMode() === SelectionMode.default) {
       // individual device event
@@ -1562,6 +1683,7 @@ chord = (function() {
       }
       return [UIelements, numElements];
     },
+
     addNewUIgroup: function(UIelements, numElements, groupName, group) {
       if (groupName !== null && group !== null) {
         UIelements.push({type: groupName, members: group});
@@ -1576,6 +1698,7 @@ chord = (function() {
       }
       return UIelements;
     },
+
     renderHTML: function(tag, items) {
       var html = '';
       for (var j = 0, item; item = items[j]; j++) {
@@ -1603,30 +1726,39 @@ chord = (function() {
     this.socket = null;
     this.callback = {};
   };
+
   ChordWebServer.prototype.addCallback = function(type, fn) {
     this.callback[type] = fn;
   };
+
   ChordWebServer.prototype.on = function(deviceId, evt) {
     this.socket.emit('on', deviceId, evt);
   };
+
   ChordWebServer.prototype.show = function(deviceId, selectionId, content) {
     this.socket.emit('show', deviceId, content);
   };
+
   ChordWebServer.prototype.play = function(deviceId, media) {
     this.socket.emit('play', deviceId, media);
   };
+
   ChordWebServer.prototype.call = function(deviceId, calleeNum) {
     this.socket.emit('call', deviceId, calleeNum);
   };
+
   ChordWebServer.prototype.wakeup = function(deviceId) {
     this.socket.emit('wakeup', deviceId);
   };
+
   ChordWebServer.prototype.reset = function(deviceId) {
     this.socket.emit('reset', deviceId);
   };
+
   ChordWebServer.prototype.startApp = function(deviceId, appName) {
     this.socket.emit('startApp', deviceId, appName);
   };
+
   ChordWebServer.prototype.killApp = function(deviceId, appName) {
     this.socket.emit('killApp', deviceId, appName);
   };
