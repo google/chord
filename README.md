@@ -44,8 +44,8 @@ This work has been published at [CHI 2015](http://chi2015.acm.org):
 * Pei-Yu (Peggy) Chi and Yang Li. 2015. Weave: Scripting Cross-Device Wearable
 Interaction. In *Proceedings of the 33rd Annual ACM Conference on Human Factors
 in Computing Systems (CHI 2015)*. ACM, New York, NY, USA, 3923-3932.
-[DOI=http://dx.doi.org/10.1145/2702123.2702451]
-(http://dx.doi.org/10.1145/2702123.2702451)
+[DOI=https://doi.org/10.1145/2702123.2702451]
+(https://doi.org/10.1145/2702123.2702451)
 
 ## Disclaimer
 
@@ -62,3 +62,4 @@ them to:
 Li](http://yangl.org/) ([yangli@acm.org](mailto:yangli@acm.org))
 
 ![Chord UI](/docs/img/chord_UI.png)
+ 
