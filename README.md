@@ -26,8 +26,7 @@ users’ ad-hoc network of mobile and wearable devices.
 
 Chord is implemented as a Chrome packaged app. Please install
 [Chrome](https://www.google.com/chrome/browser/) and load the directory viewer/
-(see [instructions to launch a Chrome app]
-(https://developer.chrome.com/apps/first_app#five)).
+(see [instructions to launch a Chrome app](https://developer.chrome.com/apps/first_app#five)).
 
 ## Progress
 
@@ -39,7 +38,7 @@ the network, and test with devices.
 
 ## Publication
 
-This work has been published at [CHI 2015](http://chi2015.acm.org):
+This work has been published at [CHI 2015](https://chi2015.acm.org/):
 
 * Pei-Yu (Peggy) Chi and Yang Li. 2015. Weave: Scripting Cross-Device Wearable
 Interaction. In *Proceedings of the 33rd Annual ACM Conference on Human Factors
@@ -57,7 +56,7 @@ libraries listed under the directory third_party/.
 This package is active and maintained. If you have any questions, please send
 them to:
 
-[Peggy Chi](http://www.cs.berkeley.edu/~peggychi/)
+[Peggy Chi](http://www.peggychi.me/)
 ([peggychi@cs.berkeley.edu](mailto:peggychi@cs.berkeley.edu)) and [Yang
 Li](http://yangl.org/) ([yangli@acm.org](mailto:yangli@acm.org))
 
